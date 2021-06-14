@@ -952,6 +952,7 @@
     "TicketTemplates": "תבניות כרטיסים",
     "ThumbnailUrl": "כתובת אתר של תמונה ממוזערת",
     "DeleteTicketTemplate": "מחק את תבנית הכרטיסים",
+    "ScanQR": "סרוק קוד QR",
     "Docxy": "דוקסי",
     "ESignatureForGoogleDocs": "חתימה אלקטרונית עבור מסמכי Google",
     "ReadyToSendDoc": "מוכן לשלוח מסמכים לחתימה אלקטרונית?",
@@ -1131,7 +1132,12 @@
       "AttendeeImportFailed": "ייבוא ​​המשתתף נכשל.",
       "TicketTemplateExists": "התבנית כבר קיימת",
       "DurationGreaterSessionMsg": "גודל החריצים צריך להיות קטן או שווה לזמן הכולל של ההפעלה.",
-      "RequestStartDate": "תאריך ההתחלה של הבקשה לא צריך להיות פחות מהתאריך הנוכחי"
+      "RequestStartDate": "תאריך ההתחלה של הבקשה לא צריך להיות פחות מהתאריך הנוכחי",
+      "GenericError": "חלה שגיאה",
+      "FailedCheckIn": "נכנס הצ'ק-אין למשתתף",
+      "AlreadyCheckedIn": "המשתתף כבר ביצע צ'ק-אין",
+      "AttendeeNotFound": "משתתף לא נמצא",
+      "InvalidQR": "קוד QR לא חוקי"
     },
     "Warn": {
       "AppClientDeleteWarn": "האם ברצונך למחוק לקוח זה?",
@@ -1176,7 +1182,8 @@
       "SetupConnection": "אנא הגדר את החיבור כדי שיהיה פעיל.",
       "DeletePrintTicketTemplate": "האם ברצונך למחוק תבנית כרטיס זה?",
       "ReplaceTicketTemplate": "תבנית הכרטיסים החדשה תחליף את תבנית הכרטיסים הקיימת שלך",
-      "UnassignPrintTicketTemplate": "שינויים שבוצעו בתבנית יאבדו, האם אתה בטוח להסיר את התבנית?"
+      "UnassignPrintTicketTemplate": "שינויים שבוצעו בתבנית יאבדו, האם אתה בטוח להסיר את התבנית?",
+      "EventEnded": "האירוע הסתיים"
     },
     "Success": {
       "ClientDeleteSuccessMsg": "הלקוח נמחק בהצלחה",
@@ -1240,7 +1247,8 @@
       "ContactImported": "צור קשר מיובא בהצלחה",
       "ContactImportedFailed": "ייבוא ​​אנשי הקשר נכשל",
       "DiscountCodeSuccessfully": "קוד ההנחה נוצר בהצלחה",
-      "DiscountCodeUpdateSuccessfully": "קוד ההנחה עודכן בהצלחה"
+      "DiscountCodeUpdateSuccessfully": "קוד ההנחה עודכן בהצלחה",
+      "AttendeeCheckedIn": "{attendee} נרשם"
     },
     "Information": {
       "SetupInProgressTitle": "ההתקנה בעיצומה",

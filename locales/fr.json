@@ -950,6 +950,7 @@
     "TicketTemplates": "Modèles de billets",
     "ThumbnailUrl": "URL de la miniature",
     "DeleteTicketTemplate": "Supprimer le modèle de ticket",
+    "ScanQR": "Scannez le code QR",
     "Docxy": "docxy",
     "ESignatureForGoogleDocs": "Signature électronique pour Google Docs",
     "ReadyToSendDoc": "Prêt à envoyer des documents pour la signature électronique ?",
@@ -1129,7 +1130,12 @@
       "AttendeeImportFailed": "L'importation des participants a échoué.",
       "TicketTemplateExists": "Le modèle existe déjà",
       "DurationGreaterSessionMsg": "La taille des emplacements doit être inférieure ou égale à la durée totale de la session.",
-      "RequestStartDate": "La date de début de la demande ne doit pas être inférieure à la date actuelle"
+      "RequestStartDate": "La date de début de la demande ne doit pas être inférieure à la date actuelle",
+      "GenericError": "Une erreur s'est produite",
+      "FailedCheckIn": "Échec de l'enregistrement du participant",
+      "AlreadyCheckedIn": "Participant déjà enregistré",
+      "AttendeeNotFound": "Participant introuvable",
+      "InvalidQR": "Code QR invalide"
     },
     "Warn": {
       "AppClientDeleteWarn": "Voulez-vous supprimer ce client ?",
@@ -1174,7 +1180,8 @@
       "SetupConnection": "Veuillez configurer la connexion pour la rendre active.",
       "DeletePrintTicketTemplate": "Voulez-vous supprimer ce modèle de ticket?",
       "ReplaceTicketTemplate": "Le nouveau modèle de ticket remplacera votre modèle de ticket existant",
-      "UnassignPrintTicketTemplate": "Les modifications apportées au modèle seront perdues, êtes-vous sûr de vouloir supprimer le modèle?"
+      "UnassignPrintTicketTemplate": "Les modifications apportées au modèle seront perdues, êtes-vous sûr de vouloir supprimer le modèle?",
+      "EventEnded": "L'événement est terminé"
     },
     "Success": {
       "ClientDeleteSuccessMsg": "Client supprimé avec succès",
@@ -1238,7 +1245,8 @@
       "ContactImported": "Contacts importé avec succès",
       "ContactImportedFailed": "L'importation des contacts a échoué",
       "DiscountCodeSuccessfully": "Code de réduction créé avec succès",
-      "DiscountCodeUpdateSuccessfully": "Code de réduction mis à jour avec succès"
+      "DiscountCodeUpdateSuccessfully": "Code de réduction mis à jour avec succès",
+      "AttendeeCheckedIn": "{attendee} enregistré"
     },
     "Information": {
       "SetupInProgressTitle": "configuration en cours",

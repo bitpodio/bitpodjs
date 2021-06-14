@@ -4,12 +4,12 @@
     <v-snackbar v-model="snackbar" :timeout="timeout" :top="true">
       <div class="text-center">{{ snackbarText }}</div>
     </v-snackbar>
+    <div class="col-md-9 mb-8 pa-0">
+      <v-text class="body-1 font-weight-light"
+        ><i18n path="Messages.Warn.FeedsSubline"
+      /></v-text>
+    </div>
     <div v-if="items.length">
-      <div class="col-md-9 mb-8 pa-0">
-        <v-text class="body-1 font-weight-light"
-          ><i18n path="Messages.Warn.FeedsSubline"
-        /></v-text>
-      </div>
       <v-card
         v-for="item in items"
         :key="item.id"
@@ -145,8 +145,8 @@
     </div>
     <div v-else>
       <v-row class="ma-0">
-        <div class="col-md-9">
-          <v-card class="mb-4 pa-0 py-4 elevation-1 rounded-lg feed-section"
+        <div class="col-md-9 pl-0">
+          <v-card class="mb-4 pa-4 elevation-1 rounded-lg feed-section"
             ><v-text class="body-1"
               ><i18n path="Messages.Warn.NoFeeds" /></v-text
           ></v-card>

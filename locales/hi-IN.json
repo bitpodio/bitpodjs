@@ -953,6 +953,7 @@
     "TicketTemplates": "टिकट टेम्पलेट्स",
     "ThumbnailUrl": "थंबनेल Url",
     "DeleteTicketTemplate": "टिकट टेम्पलेट हटाएं",
+    "ScanQR": "क्यू आर कोड स्कैन करें",
     "Docxy": "डॉक्सी",
     "ESignatureForGoogleDocs": "गूगल डॉक्स के लिए ई-हस्ताक्षर",
     "ReadyToSendDoc": "ई-हस्ताक्षर के लिए दस्तावेज़ भेजने के लिए तैयार हैं?",
@@ -1132,7 +1133,12 @@
       "AttendeeImportFailed": "सहभागी आयात विफल।",
       "TicketTemplateExists": "टेम्प्लेट पहले से मौजूद है",
       "DurationGreaterSessionMsg": "स्लॉट का आकार सत्र के कुल समय से कम या उसके बराबर होना चाहिए।",
-      "RequestStartDate": "अनुरोध प्रारंभ तिथि वर्तमान तिथि से कम नहीं होनी चाहिए"
+      "RequestStartDate": "अनुरोध प्रारंभ तिथि वर्तमान तिथि से कम नहीं होनी चाहिए",
+      "GenericError": "एक त्रुटि हुई",
+      "FailedCheckIn": "सहभागी में जाँच करने में विफल",
+      "AlreadyCheckedIn": "सहभागी पहले ही चेक इन कर चुका है",
+      "AttendeeNotFound": "सहभागी नहीं मिला",
+      "InvalidQR": "अमान्य क्यूआर कोड"
     },
     "Warn": {
       "AppClientDeleteWarn": "क्या आप इस क्लाइंट को हटाना चाहते हैं?",
@@ -1177,7 +1183,8 @@
       "SetupConnection": "कृपया इसे सक्रिय करने के लिए कनेक्शन सेटअप करें।",
       "DeletePrintTicketTemplate": "क्या आप इस टिकट टेम्पलेट को हटाना चाहते हैं?",
       "ReplaceTicketTemplate": "नया टिकट टेम्प्लेट आपके मौजूदा टिकट टेम्प्लेट को बदल देगा",
-      "UnassignPrintTicketTemplate": "टेम्प्लेट में किए गए परिवर्तन खो जाएंगे, क्या आप टेम्प्लेट को निकालना सुनिश्चित करते हैं?"
+      "UnassignPrintTicketTemplate": "टेम्प्लेट में किए गए परिवर्तन खो जाएंगे, क्या आप टेम्प्लेट को निकालना सुनिश्चित करते हैं?",
+      "EventEnded": "आयोजन समाप्त हो गया है"
     },
     "Success": {
       "ClientDeleteSuccessMsg": "क्लाइंट सफलतापूर्वक हटा दिया गया",
@@ -1241,7 +1248,8 @@
       "ContactImported": "आयातित आयात से संपर्क करें",
       "ContactImportedFailed": "संपर्क विफल हुआ",
       "DiscountCodeSuccessfully": "डिस्काउंट कोड सफलतापूर्वक बनाया गया",
-      "DiscountCodeUpdateSuccessfully": "डिस्काउंट कोड सफलतापूर्वक अपडेट किया गया"
+      "DiscountCodeUpdateSuccessfully": "डिस्काउंट कोड सफलतापूर्वक अपडेट किया गया",
+      "AttendeeCheckedIn": "{attendee} आगमन की सूचना दिया"
     },
     "Information": {
       "SetupInProgressTitle": "सेटअप प्रगति पर है",
