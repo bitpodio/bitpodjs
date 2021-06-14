@@ -267,6 +267,7 @@ export default {
       eventUrl: process.env.GET_EVENT_URL || 'event.test.bitpod.io',
       signatureUrl: process.env.GET_SIGNATURE_URL || 'signature.test.bitpod.io',
       crmUrl: process.env.GET_CRM_URL || 'crmivijd.test.bitpod.io',
+      activityId: process.env.GET_ACTIVITY_ID || '2000',
       primeOrgId: '1',
     },
     basePublicPath: process.env.PUBLIC_PATH || '',
