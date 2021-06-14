@@ -8,7 +8,7 @@
     <v-flex d-flex flex-md-row flex-lg-row flex-column>
       <v-flex column class="mxw-w70">
         <div
-          class="xs12 sm8 md8 lg8 boxview pa-3 mr-2 mb-4 pb-2 elevation-1 rounded-lg public-page-main"
+          class="xs12 sm8 md8 lg8 boxview pa-3 mr-2 mb-4 pb-2 elevation-1 rounded-lg public-page-main d-flex flex-column"
         >
           <v-flex class="d-flex pb-1 flex-column flex-md-row">
             <div class="text-h4 text-capitalize event-title">
@@ -123,18 +123,20 @@
               </v-menu>
             </div>
           </v-flex>
-          <v-chip
-            v-if="
-              data.event.StartDate !== undefined &&
-              data.event.EndDate !== undefined
-            "
-            small
-            class="mt-1 mb-3 event-datechip greybg"
-            label
-          >
-            {{ getEventStartDate() }} - {{ getEventEndDate() }} -
-            {{ formatField(data.event.Timezone) }}
-          </v-chip>
+          <div>
+            <v-chip
+              v-if="
+                data.event.StartDate !== undefined &&
+                data.event.EndDate !== undefined
+              "
+              small
+              class="mt-1 mb-3 event-datechip greybg"
+              label
+            >
+              {{ getEventStartDate() }} - {{ getEventEndDate() }} -
+              {{ formatField(data.event.Timezone) }}
+            </v-chip>
+          </div>
           <v-skeleton-loader
             :loading="!eventDataLoaded"
             :tile="true"
@@ -421,7 +423,7 @@
               </v-stepper-step>
             </v-stepper-header>
           </v-stepper>
-
+          <v-spacer></v-spacer>
           <v-divider></v-divider>
           <v-flex class="d-flex flex-row align-center flex-wrap pt-2 pt-sm-0">
             <v-chip pill class="greybg" v-on="on">
@@ -448,7 +450,7 @@
           </v-flex>
         </div>
         <div
-          class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-4 elevation-1 rounded-lg"
+          class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-4 elevation-1 rounded-lg image-view-grid"
         >
           <v-flex class="d-flex justify-center align-center pb-2">
             <h2 class="body-1 pb-0">

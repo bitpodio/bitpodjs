@@ -16,12 +16,19 @@ export default {
   },
   data: () => ({
     observer: null,
+    timeoutId: null,
   }),
   mounted() {
     const options = this.options || {}
     this.observer = new IntersectionObserver(([entry]) => {
       if (entry && entry.isIntersecting) {
-        this.$emit('intersect')
+        if (this.timeoutId) clearTimeout(this.timeoutId)
+        this.timeoutId = setTimeout(() => {
+          if (entry && entry.isIntersecting) {
+            this.$emit('intersect')
+            this.timeoutId = null
+          }
+        }, 150)
       }
     }, options)
 
