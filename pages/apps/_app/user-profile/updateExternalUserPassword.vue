@@ -61,6 +61,22 @@
                   @click:append="show2 = !show2"
                 ></v-text-field>
               </v-col>
+              <v-col cols="12" sm="12" md="12" class="pb-0">
+                <v-text-field
+                  v-model="confirmPassword"
+                  :append-icon="show3 ? 'mdi-eye' : 'mdi-eye-off'"
+                  :type="show3 ? 'text' : 'password'"
+                  :label="$t('Common.ConfirmPasswordReq')"
+                  :rules="
+                    passwordMismatchValidation().concat(
+                      rules.id4PasswordValidation
+                    )
+                  "
+                  outlined
+                  dense
+                  @click:append="show3 = !show3"
+                ></v-text-field>
+              </v-col>
             </v-row>
           </v-card-text>
           <v-divider></v-divider>
@@ -125,18 +141,32 @@ export default {
       valid: false,
       verificationCode: '',
       show2: false,
+      show3: false,
       rules: rules(this.$i18n),
       isVerified: false,
       beforeIsVerified: false,
       resetBtn: false,
       formData: {},
       newPassword: '',
+      confirmPassword: '',
     }
   },
   mounted() {
     this.getVerificationCode()
   },
   methods: {
+    passwordMismatchValidation() {
+      return [
+        (v) => {
+          const confirmPassword = v
+          let startDateMessage = ''
+          if (confirmPassword !== this.newPassword)
+            startDateMessage = this.$t('Messages.Error.PasswordMismatch')
+          else startDateMessage = ''
+          return startDateMessage || true
+        },
+      ]
+    },
     close() {
       this.updateExternalUserDialog = false
       this.$emit('update:updateExternalUserDialog', false)
@@ -178,6 +208,7 @@ export default {
             this.$t('Messages.Success.PasswordUpdateSuccesMsg')
           )
           this.$emit('update:snackbar', true)
+          this.$eventBus.$emit('refresh-page')
         }
       } catch (err) {
         this.resetBtn = !this.resetBtn
