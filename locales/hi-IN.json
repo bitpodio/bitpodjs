@@ -1,5 +1,8 @@
 {
   "Common": {
+    "VerifyOTPTemplate": "हमने एक ईमेल भेजा है जिसमें वन टाइम वेरिफिकेशन कोड है {emailId}",
+    "VerifyCode": "सत्यापन कोड",
+    "SetUpBitpodPassword": "बिटपॉड पासवर्ड सेट करें",
     "NewDiscountCode": "नया डिस्काउंट कोड",
     "EditDiscountCode": "डिस्काउंट कोड संपादित करें",
     "MemberList": "सदस्य सूची",

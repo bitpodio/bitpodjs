@@ -182,7 +182,6 @@ export default {
         const res = await this.$axios.$post(`${url}`, {
           OTP: this.verificationCode,
         })
-        console.log(res)
         if (res.statusCode === 200) {
           this.beforeIsVerified = false
           this.isVerified = true
@@ -190,7 +189,9 @@ export default {
           this.valid = false
         }
       } catch (err) {
-        console.error(`err:${err}`)
+        console.error(
+          `Error in apps/userprofile/updateExternalUserPasswordForm.vue in onSave method context:-\nURl:${url} \n OTP:${this.verificationCode} \nerror:${err}`
+        )
       }
     },
     async onUpdatePassword() {
@@ -212,7 +213,9 @@ export default {
         }
       } catch (err) {
         this.resetBtn = !this.resetBtn
-        console.error(err)
+        console.error(
+          `Error in apps/userprofile/updateExternalUserPasswordForm.vue in onUpdatePassword method context:-\nURl:${url} \nerror:${err}`
+        )
       }
     },
     async getVerificationCode() {
@@ -221,10 +224,11 @@ export default {
         this.$auth.state.user.data.email
       }/sendotppasswordupdate`
       try {
-        const res = await this.$axios.$get(`${url}`)
-        console.log(res)
+        await this.$axios.$get(`${url}`)
       } catch (err) {
-        console.error(err)
+        console.error(
+          `Error in apps/userprofile/updateExternalUserPasswordForm.vue in onSave method context:-\nURl:${url} \nerror:${err}`
+        )
       }
     },
   },

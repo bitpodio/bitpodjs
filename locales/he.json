@@ -1,5 +1,8 @@
 {
   "Common": {
+    "VerifyOTPTemplate": "שלחנו אימייל המכיל קוד אימות חד פעמי אל {emailId}",
+    "VerifyCode": "קוד אימות",
+    "SetUpBitpodPassword": "הגדר סיסמת Bitpod",
     "NewDiscountCode": "קוד הנחה חדש",
     "EditDiscountCode": "ערוך את קוד ההנחה",
     "MemberList": "רשימת חברים",
