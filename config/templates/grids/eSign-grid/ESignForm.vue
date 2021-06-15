@@ -1618,6 +1618,8 @@ export default {
           })
           this.templateItems = updatedTemplateItems
         }
+        this.snackbarText = 'The template has been edited successfully'
+        this.snackbar = true
       } catch (err) {
         this.snackbar = true
         this.snackbarText = 'Request Failed'
@@ -1642,8 +1644,16 @@ export default {
             (item) => item.id !== this.deleteTemplateId
           )
           this.templateItems = updatedTemplateItems
+          this.snackbarText = 'The template has been deleted successfully'
+          this.snackbar = true
         }
       } catch (err) {
+        this.snackbarText = 'Request Failed'
+        this.snackbar = true
+        console.error(
+          `Error in eSign-grid/ESignForm.vue in deleteTemplate while making a DELETE call to a built in API, context: ${bitpodURL}`,
+          err
+        )
       } finally {
         this.toggleLoading = !this.toggleLoading
         this.deleteTemplateDialog = false
