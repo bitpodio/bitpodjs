@@ -93,7 +93,7 @@ export default {
         strategy === 'google'
       ) {
         const filterApps = this.apps.filter((app) => {
-          return app.name !== 'UserProfile'
+          return app.name !== 'userprofile'
         })
         return filterApps
       }
@@ -105,7 +105,7 @@ export default {
         return filteredApps
       } else {
         const filterApps = filteredApps.filter((app) => {
-          return app.name !== 'UserProfile'
+          return app.name !== 'userprofile'
         })
         return filterApps
       }
