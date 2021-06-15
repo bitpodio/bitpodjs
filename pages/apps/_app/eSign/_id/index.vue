@@ -1,12 +1,20 @@
 <template>
   <div>
+    <v-snackbar v-model="snackbar" :top="true" :timeout="3000">
+      <div class="toast py-2 pr-1 pl-3 fs-16">
+        {{ snackbarText }}
+      </div>
+    </v-snackbar>
     <v-flex class="detailview-head mb-3 pl-8 my-8"
       ><v-btn class="ml-n3 back-icon" icon @click="goBack"
         ><v-icon class="fs-30">mdi-chevron-left</v-icon> </v-btn
       ><v-text class="fs-18 min-h36"><i18n path="Common.EsignRequest" /></v-text
     ></v-flex>
     <v-flex d-flex flex-md-row flex-lg-row flex-column>
-      <v-flex column class="mxw-w70 pl-8">
+      <v-flex
+        column
+        :class="{ 'mxw-w70': $vuetify.breakpoint.mdAndUp, 'pl-8': true }"
+      >
         <div
           class="xs12 sm8 md8 lg8 boxview pa-3 mr-2 mb-4 pb-2 elevation-1 rounded-lg"
         >
@@ -327,6 +335,8 @@ export default {
   mixins: [configLoaderMixin],
   data() {
     return {
+      snackbar: false,
+      snackbarText: '',
       loading: 0,
       data: {
         requestData: {},
@@ -397,6 +407,8 @@ export default {
     async copyDownloadLink(value) {
       try {
         await navigator.clipboard.writeText(value)
+        this.snackbar = true
+        this.snackbarText = 'Download link copied successfully'
       } catch (e) {
         console.error(
           'Error in eSign/index.vue in copyDownloadLink while copying the dowload link to thes clipboard',
