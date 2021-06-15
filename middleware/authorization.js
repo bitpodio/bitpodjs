@@ -6,8 +6,11 @@ const isValidPage = (store, route) => {
   if (!route.params.app) {
     return true
   }
+  debugger
   const userCurrentOrg = userUtils.userCurrentOrgInfo(store) || {}
+  console.log('userCurrentOrg', userCurrentOrg)
   const userRoles = userCurrentOrg.roles || []
+  console.log('userRoles', userRoles)
   if (
     userRoles.includes('$orgowner') &&
     userCurrentOrg &&
@@ -17,9 +20,12 @@ const isValidPage = (store, route) => {
   }
   const currentRouteApp =
     appList(store).find(({ name }) => name === route.params.app) || {}
+  console.log('currentRouteApp', currentRouteApp)
   const currentRouteAppRoles = currentRouteApp.roles || []
+  console.log('currentRouteAppRoles', currentRouteAppRoles)
   const isAuthorizedApp =
     intersection(currentRouteAppRoles, userRoles).length > 0
+  console.log('isAuthorizedApp', isAuthorizedApp)
   return isAuthorizedApp
 }
 

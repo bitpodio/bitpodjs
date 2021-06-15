@@ -71,19 +71,44 @@ export default {
   },
   computed: {
     userApps() {
+      const strategy = this.$auth.$storage.getCookies()['auth.strategy']
       const userInfo = userUtils.userCurrentOrgInfo(this.$store) || {}
       const userRoles = [
         ...(userInfo.roles || []),
         ...(this.$auth.$state.loggedIn ? ['$authenticated'] : []),
       ]
-      if (userRoles.includes('$orgowner') && userInfo && userInfo.id === 1) {
+      if (
+        userRoles.includes('$orgowner') &&
+        userInfo &&
+        userInfo.id === 1 &&
+        strategy === 'bitpod'
+      ) {
         return this.apps
+      }
+
+      if (
+        userRoles.includes('$orgowner') &&
+        userInfo &&
+        userInfo.id === 1 &&
+        strategy === 'google'
+      ) {
+        const filterApps = this.apps.filter((app) => {
+          return app.name !== 'UserProfile'
+        })
+        return filterApps
       }
       const filteredApps = this.apps.filter((app) => {
         const appRoles = [app.name, ...app.roles]
         return intersection(appRoles, userRoles).length > 0
       })
-      return filteredApps
+      if (filteredApps.length > 0 || strategy === 'bitpod') {
+        return filteredApps
+      } else {
+        const filterApps = filteredApps.filter((app) => {
+          return app.name !== 'UserProfile'
+        })
+        return filterApps
+      }
     },
   },
 }
