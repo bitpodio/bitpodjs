@@ -1116,9 +1116,7 @@
             :content="content"
             :no-action="!data.event.HasTickets"
             :has-custom-no-data-text="
-              !data.event.HasTickets
-                ? $t('Common.TicketsNotRequiredToggle')
-                : ''
+              !data.event.HasTickets ? $t('Common.DiscountCodeNotRequired') : ''
             "
             class="mt-n12"
           />
