@@ -1,6 +1,10 @@
 <template>
   <div>
-    <Observer :data-test-id="viewName" @intersect="intersected" />
+    <Observer
+      :data-test-id="viewName"
+      :height="height"
+      @intersect="intersected"
+    />
     <Grid
       v-if="shouldRender"
       :view-name="viewName"
@@ -268,7 +272,7 @@ export default {
     },
     height: {
       default: '400px',
-      type: [Number, String],
+      type: String,
     },
     width: {
       default: undefined,
