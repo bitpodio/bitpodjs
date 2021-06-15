@@ -75,10 +75,11 @@ export default {
             this.refresh()
           }
         }
-      } catch (err) {}
-      console.error(
-        `Error in config/templates/grids/connectedapps-grid/column-action.vue in revokeAction method context:-\nURl:${url} \nerror:${err}`
-      )
+      } catch (err) {
+        console.error(
+          `Error in config/templates/grids/connectedapps-grid/column-action.vue in revokeAction method context:-\nURl:${url} \nerror:${err}`
+        )
+      }
     },
   },
 }
