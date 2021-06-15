@@ -45,5 +45,8 @@ export function rules(i18n) {
           : i18n.t('Messages.Error.NumberCannotBeNegative')
         : i18n.t('Messages.Error.FieldRequired')
     },
+    id4PasswordValidation: (v) =>
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\da-zA-Z]).{6,}$/.test(v) ||
+      i18n.t('Messages.Error.ID4PasswordValidationMsg'),
   })
 }
