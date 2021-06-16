@@ -27,10 +27,9 @@
           </div>
         </v-card-title>
         <v-card-text>
-          <v-container class="pa-0">
-            <div v-if="content">
+          <v-container v-if="content" class="pa-0">
+            <div v-if="dialog">
               <Grid
-                v-if="content"
                 :value="selectedList"
                 view-name="Contacts"
                 :content="content"

@@ -1,8 +1,15 @@
 <template>
   <v-flex class="greybg">
     <div class="seatmap-inner">
-      <div class="fs-18 min-h36 mt-3">
-        <i18n path="Common.SeatMapNo" />
+      <div>
+        <v-text class="text-h5 mt-4 lh-36"
+          ><i18n path="Common.SeatMapNo"
+        /></v-text>
+      </div>
+      <div class="seatmap-subline">
+        <v-text class="body-1 font-weight-light"
+          ><i18n path="Messages.Warn.SeatmapSubline"
+        /></v-text>
       </div>
     </div>
     <v-col class="d-flex flex-wrap greybg pa-0 pt-10 seatmap-inner">
@@ -146,6 +153,12 @@ export default {
 .seatmap-inner {
   max-width: 65%;
   margin: auto;
+}
+.lh-36 {
+  line-height: 36px;
+}
+.seatmap-subline {
+  max-width: 740px;
 }
 @media (max-width: 600px) {
   .seatmap-inner {

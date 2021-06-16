@@ -23,6 +23,20 @@
         <v-spacer></v-spacer>
       </v-toolbar-title>
       <v-spacer></v-spacer>
+      <div>
+        <v-btn
+          v-bind="attrs"
+          color="blue darken-2"
+          dark
+          depressed
+          small
+          class="mx-3"
+          v-on="on"
+          @click="handleNewTemplate"
+        >
+          <i18n path="Common.SendDocforeSign" />
+        </v-btn>
+      </div>
       <Help class="d-none d-sm-inline" />
       <LanguageSwitcher />
       <AppDrawer />
@@ -104,11 +118,18 @@
       </div>
     </v-app-bar>
 
-    <v-main class="greybg seatmap esign-layout">
+    <v-main class="greybg">
       <v-container fluid>
         <v-row>
           <v-col class="pt-0">
-            <div>
+            <div class="esign-app-title">
+              <v-col
+                class="d-flex greybg px-0 mb-3 flex-row seatmap-inner align-center"
+              >
+                <v-text class="text-h5"
+                  ><i18n path="Common.ESignature"
+                /></v-text>
+              </v-col>
               <nuxt />
             </div>
           </v-col>
@@ -124,10 +145,14 @@
         @load="iframecookieDeleted"
       />
     </div>
+    <div v-if="dialog">
+      <ESignForm :new-template-dialog.sync="dialog" :refresh="refresh" />
+    </div>
   </v-app>
 </template>
 
 <script>
+import ESignForm from '~/config/templates/grids/eSign-grid/ESignForm.vue'
 import OrgnaizationList from '~/components/common/organization-list'
 import AppDrawer from '~/components/common/app-drawer'
 import Help from '~/components/common/help'
@@ -143,6 +168,14 @@ export default {
     Help,
     OldSite,
     Upgrade,
+    ESignForm,
+  },
+  props: {
+    refresh: {
+      type: Function,
+      default: () => false,
+      required: false,
+    },
   },
   data() {
     return {
@@ -210,6 +243,9 @@ export default {
         this.$apolloHelpers.onLogout()
       }
     },
+    handleNewTemplate() {
+      this.dialog = true
+    },
   },
   head() {
     return {
@@ -220,8 +256,24 @@ export default {
 </script>
 
 <style>
-.esign-layout {
-  padding-bottom: 24px !important;
-  margin-top: 24px !important;
+.esign-app-title {
+  width: 70% !important;
+  margin: 0 auto;
+}
+@media (min-width: 1900px) {
+  .esign-app-title {
+    padding-left: 80px;
+  }
+}
+@media (max-width: 1400px) {
+  .esign-app-title {
+    padding-left: 40px;
+  }
+}
+@media (max-width: 600px) {
+  .esign-app-title {
+    width: 100% !important;
+    padding-left: 0;
+  }
 }
 </style>

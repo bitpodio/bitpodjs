@@ -10,6 +10,7 @@ import startOfDay from 'date-fns/startOfDay'
 import endOfDay from 'date-fns/endOfDay'
 import MissingComponent from './missing-component.vue'
 import eventTours from '~/config/apps/tours'
+import nuxtconfig from '~/nuxt.config'
 
 export function importTemplate(templatePath) {
   return () => import(`~/config/${templatePath}`)
@@ -115,6 +116,10 @@ export const formValidationMixin = {
   },
 }
 
+export function getID4ServerUrl() {
+  const url = nuxtconfig.auth.strategies.bitpod.userInfoEndPointUrl
+  return url.split('auth/')[0]
+}
 export function getContentByName(ctx, contentName) {
   const contents = ctx.contentFactory(ctx)
   return contents[contentName]
@@ -331,7 +336,12 @@ export const configLoaderMixin = {
         if (token) {
           token = token.split(' ')[1]
         }
-        await this.$apolloHelpers.onLogin(token, undefined, { expires: 7 })
+        await this.$apolloHelpers.onLogin(
+          token,
+          undefined,
+          { expires: 7 },
+          true
+        )
       }
     }
     this.postUrlTracking()

@@ -871,7 +871,7 @@ export default {
       update(data) {
         const EventResult = formatGQLResult(data, 'Event')[0]
         EventResult.EventSpeakers = {
-          EventSpeakersFind: EventResult.EventSpeakers,
+          EventSpeakersFind: EventResult && EventResult.EventSpeakers,
         }
         const speakerResult = formatGQLResult(EventResult, 'EventSpeakers')
         if (speakerResult) {
