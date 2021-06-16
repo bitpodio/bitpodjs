@@ -67,11 +67,18 @@ export const appList = (store) => [
     roles: [],
   },
   {
-    name: 'UserProfile',
+    name: 'userprofile',
     label: 'Common.UserProfileApp',
     css: 'fa fa-user fs-36 success--text',
     type: 'route',
     route: '/apps/userprofile/user-profile',
-    roles: ['$authenticated'],
+    roles: [
+      '$authenticated',
+      '$orguser',
+      '$orgowner',
+      'EventAdmin',
+      'EventManager',
+      '$developer',
+    ],
   },
 ]

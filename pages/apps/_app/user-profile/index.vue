@@ -51,6 +51,7 @@
                     @change="toggle2FA"
                   ></v-switch>
                   <v-btn
+                    v-if="!isExternal"
                     depressed
                     color="primary"
                     class="mr-2"
@@ -59,6 +60,17 @@
                     @click="updatePasswordDialog = true"
                   >
                     <i18n path="Common.UpdatePassword" />
+                  </v-btn>
+                  <v-btn
+                    v-else
+                    depressed
+                    color="primary"
+                    class="mr-2"
+                    v-bind="attrs"
+                    v-on="on"
+                    @click="updateExternalUserPassword"
+                  >
+                    <i18n path="Common.SetUpBitpodPassword" />
                   </v-btn>
 
                   <v-menu
@@ -314,6 +326,14 @@
           :snackbar-text.sync="snackbarText"
         />
       </div>
+      <div v-if="updateExternalUserDialog">
+        <updateExternalUserPassword
+          :update-external-user-dialog.sync="updateExternalUserDialog"
+          :refresh="refresh"
+          :snackbar.sync="snackbar"
+          :snackbar-text.sync="snackbarText"
+        />
+      </div>
     </v-flex>
   </div>
 </template>
@@ -321,6 +341,7 @@
 <script>
 import editUserProfileForm from './editUserProfileInfo.vue'
 import updateUserPasswordForm from './updateUserPasswordForm.vue'
+import updateExternalUserPassword from './updateExternalUserPassword.vue'
 import deleteAccountForm from './deleteUserAccount.vue'
 import Grid from '~/components/common/grid'
 import { configLoaderMixin, getID4ServerUrl } from '~/utility'
@@ -330,6 +351,7 @@ export default {
     editUserProfileForm,
     updateUserPasswordForm,
     deleteAccountForm,
+    updateExternalUserPassword,
     Grid,
   },
   layout: 'user-profile',
@@ -347,9 +369,11 @@ export default {
       twoFactorStatus: false,
       updatePasswordDialog: false,
       deleteAccountDialog: false,
+      updateExternalUserDialog: false,
       timezoneItems: [],
       timezone: '',
       connectedApps: [],
+      isExternal: '',
     }
   },
   computed: {
@@ -366,6 +390,9 @@ export default {
     this.$eventBus.$off('refresh-page')
   },
   methods: {
+    updateExternalUserPassword() {
+      this.updateExternalUserDialog = true
+    },
     async getConnectedApps() {
       const url = `${getID4ServerUrl()}api/tiers/${
         this.$auth.state.user.data.TierHierarchy[0].Id
@@ -409,7 +436,7 @@ export default {
         const res = await this.$axios.$get(`${url}`)
         this.data.profileInfo = Object.entries(res).length > 0 ? res : {}
         this.getTimezone(this.data.profileInfo.timeZone)
-
+        this.isExternal = this.data.profileInfo.isExternal
         this.is2FAEnable = this.data.profileInfo.enableTwoFactor
       } catch (e) {
         console.error(

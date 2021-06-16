@@ -53,10 +53,11 @@
                   :append-icon="show3 ? 'mdi-eye' : 'mdi-eye-off'"
                   :type="show3 ? 'text' : 'password'"
                   :label="$t('Common.ConfirmPasswordReq')"
-                  :rules="[
-                    rules.id4PasswordValidation,
-                    passwordMismatchValidation,
-                  ]"
+                  :rules="
+                    passwordMismatchValidation().concat(
+                      rules.id4PasswordValidation
+                    )
+                  "
                   outlined
                   dense
                   @click:append="show3 = !show3"
@@ -113,21 +114,21 @@ export default {
       show1: false,
       show2: false,
       show3: false,
-      passwordMismatchValidation: [
-        (v) => {
-          const newPassword = this.newPassword
-          if (v !== newPassword) {
-            this.valid = false
-            return this.$t('Messages.Error.PasswordMismatch')
-          } else {
-            this.valid = true
-            return true
-          }
-        },
-      ],
     }
   },
   methods: {
+    passwordMismatchValidation() {
+      return [
+        (v) => {
+          const confirmPassword = v
+          let startDateMessage = ''
+          if (confirmPassword !== this.newPassword)
+            startDateMessage = this.$t('Messages.Error.PasswordMismatch')
+          else startDateMessage = ''
+          return startDateMessage || true
+        },
+      ]
+    },
     close() {
       this.updatePasswordDialog = false
       this.$emit('update:updatePasswordDialog', false)
