@@ -323,12 +323,18 @@ export default {
         this.formatAddressField(
           this.formData &&
             this.formData._CurrentAddress &&
+            this.formData._CurrentAddress.City !== null &&
+            this.formData &&
+            this.formData._CurrentAddress &&
             this.formData._CurrentAddress.City !== ''
             ? ',' + this.formData._CurrentAddress.City
             : ''
         ) +
         this.formatAddressField(
           this.formData &&
+            this.formData._CurrentAddress &&
+            this.formData._CurrentAddress.State !== null &&
+            this.formData &&
             this.formData._CurrentAddress &&
             this.formData._CurrentAddress.State !== ''
             ? ',' + this.formData._CurrentAddress.State
@@ -337,6 +343,9 @@ export default {
         this.formatAddressField(
           this.formData &&
             this.formData._CurrentAddress &&
+            this.formData._CurrentAddress.Country !== null &&
+            this.formData &&
+            this.formData._CurrentAddress &&
             this.formData._CurrentAddress.Country !== ''
             ? ',' + this.formData._CurrentAddress.Country
             : ''
@@ -344,11 +353,14 @@ export default {
         this.formatAddressField(
           this.formData &&
             this.formData._CurrentAddress &&
+            this.formData._CurrentAddress.PostalCode !== null &&
+            this.formData &&
+            this.formData._CurrentAddress &&
             this.formData._CurrentAddress.PostalCode !== ''
             ? ',' + this.formData._CurrentAddress.PostalCode
             : ''
         )
-      return fullAddress
+      return fullAddress !== '' ? fullAddress : '-'
     },
   },
 }
