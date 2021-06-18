@@ -64,6 +64,7 @@
             color="primary"
             :disabled="!valid"
             depressed
+            :reset="reset"
             type="submit"
             form="new-userRoles-item-form"
             ><i18n path="Drawer.Save"
@@ -118,6 +119,7 @@ export default {
       snackbarText: '',
       timeout: 3000,
       duplicateMessage: '',
+      reset: false,
     }
   },
   methods: {
@@ -127,11 +129,13 @@ export default {
     },
     onClose() {
       this.formData.emailId = ''
+      this.duplicateMessage = ''
       this.$refs.form.reset()
       this.dialog = false
       postGaData('Close', this.$t('Common.NewUser'))
     },
     async onSave() {
+      this.reset = false
       postGaData(this.$t('Drawer.Save'), this.$t('Common.NewUser'))
       if (this.valid) {
         const url = this.$bitpod.getApiUrl()
@@ -157,6 +161,7 @@ export default {
         } catch (error) {
           if (error.response.status === 400) {
             this.duplicateMessage = this.$t('Messages.Error.UserExists')
+            this.reset = !this.reset
           }
           console.log(
             `Error in templates/grids/userRoles-grid/actions/grid/new-item.vue while making a POST call to Users model from method onSave context:-URL:-${url}\n OrgId:-${orgId}\n formData:-${this.formData} `,

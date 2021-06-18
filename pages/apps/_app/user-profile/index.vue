@@ -44,6 +44,7 @@
               <div class="d-flex">
                 <div class="d-flex">
                   <v-switch
+                    v-if="!isExternal"
                     v-model="is2FAEnable"
                     inset
                     :label="$t('Common.TwoFactorAuth')"

@@ -35,16 +35,21 @@
                   @click:append="show1 = !show1"
                 ></v-text-field>
               </v-col>
-              <v-col cols="12" sm="12" md="12" class="pb-0">
+              <v-col cols="12" sm="12" md="12" class="pb-0 xs-3">
                 <v-text-field
                   v-model="newPassword"
                   :append-icon="show2 ? 'mdi-eye' : 'mdi-eye-off'"
                   :type="show2 ? 'text' : 'password'"
                   :label="$t('Common.NewPasswordReq')"
-                  :rules="[rules.id4PasswordValidation]"
+                  :rules="
+                    newPasswordMismatchValidation().concat(
+                      rules.id4PasswordValidation
+                    )
+                  "
                   outlined
                   dense
                   @click:append="show2 = !show2"
+                  @change="changeNewPassword()"
                 ></v-text-field>
               </v-col>
               <v-col cols="12" sm="12" md="12" class="pb-0">
@@ -54,15 +59,22 @@
                   :type="show3 ? 'text' : 'password'"
                   :label="$t('Common.ConfirmPasswordReq')"
                   :rules="
-                    passwordMismatchValidation().concat(
+                    confirmPasswordMismatchValidation().concat(
                       rules.id4PasswordValidation
                     )
                   "
                   outlined
                   dense
                   @click:append="show3 = !show3"
+                  @change="changeConfirmPassword()"
                 ></v-text-field>
               </v-col>
+              <div
+                v-if="message !== ''"
+                class="red--text pa-3 pt-0 body-1 mt-n5"
+              >
+                {{ message }}
+              </div>
             </v-row>
           </v-card-text>
           <v-divider></v-divider>
@@ -75,6 +87,7 @@
               :disabled="!valid"
               color="primary"
               depresseds
+              :reset="reset"
               :has-submit-action="true"
               :form-name="formName"
               class="ml-2"
@@ -114,39 +127,63 @@ export default {
       show1: false,
       show2: false,
       show3: false,
+      message: '',
+      reset: false,
     }
   },
   methods: {
-    passwordMismatchValidation() {
+    changeNewPassword() {
+      this.$refs.form && this.$refs.form.validate()
+    },
+    changeConfirmPassword() {
+      this.$refs.form && this.$refs.form.validate()
+    },
+    confirmPasswordMismatchValidation() {
       return [
         (v) => {
           const confirmPassword = v
-          let startDateMessage = ''
+          let errorMsg = ''
           if (confirmPassword !== this.newPassword)
-            startDateMessage = this.$t('Messages.Error.PasswordMismatch')
-          else startDateMessage = ''
-          return startDateMessage || true
+            errorMsg = this.$t('Messages.Error.PasswordMismatch')
+          else errorMsg = ''
+          return errorMsg || true
+        },
+      ]
+    },
+    newPasswordMismatchValidation() {
+      return [
+        (v) => {
+          const newPassword = v
+          let errorMessage = ''
+          if (newPassword !== this.confirmPassword)
+            errorMessage = this.$t('Messages.Error.PasswordMismatch')
+          else errorMessage = ''
+          return errorMessage || true
         },
       ]
     },
     close() {
+      this.message = ''
       this.updatePasswordDialog = false
       this.$emit('update:updatePasswordDialog', false)
+      this.$refs.form.reset()
     },
     submitForm() {
       this.$eventBus.$emit('form-submitted', this.formName)
     },
     async onSave() {
+      this.reset = false
       const url = `${getID4ServerUrl()}api/tiers/${
         this.$auth.state.user.data.TierHierarchy[0].Id
       }/users/${this.$auth.state.user.data.id}/UpdateCredentials`
       try {
-        await this.$axios.$put(`${url}`, {
+        const res = await this.$axios.$put(`${url}`, {
           ConfirmPassword: this.confirmPassword,
           Email: this.$auth.state.user.data.email,
           NewPassword: this.newPassword,
           OldPassword: this.oldPassword,
         })
+        console.log('res', res)
         this.close()
         this.$emit(
           'update:snackbarText',
@@ -155,6 +192,10 @@ export default {
         this.$emit('update:snackbar', true)
         this.$eventBus.$emit('refresh-page')
       } catch (err) {
+        if (err.response.status === 400) {
+          this.message = this.$t('Messages.Error.CredentialMismatch')
+          this.reset = !this.reset
+        }
         console.error(
           `Error in apps/userprofile/updateUserPasswordForm.vue in onSave method context:-\nURl:${url} \nerror:${err}`
         )

@@ -459,9 +459,11 @@ export default {
     onClose() {
       this.dialog = false
       this.onReset()
+      this.duplicateMessage = ''
     },
     onReset() {
       this.$refs.form.reset()
+      this.duplicateMessage = ''
     },
     async onSave() {
       if (this.valid) {

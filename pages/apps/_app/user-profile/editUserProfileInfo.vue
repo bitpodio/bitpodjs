@@ -27,6 +27,7 @@
                 <v-text-field
                   v-model="resData.firstName"
                   :label="$t('Common.FirstNameCaption')"
+                  :rules="[rules.required]"
                   outlined
                   dense
                 ></v-text-field>
@@ -35,6 +36,7 @@
                 <v-text-field
                   v-model="resData.lastName"
                   :label="$t('Common.LastNameCaption')"
+                  :rules="[rules.required]"
                   outlined
                   dense
                 ></v-text-field>
@@ -42,8 +44,7 @@
               <v-col cols="12" sm="6" md="6" class="pb-0">
                 <v-text-field
                   v-model="phone"
-                  :label="$t('Common.PhoneRequired')"
-                  :rules="[rules.required]"
+                  :label="$t('Common.Phone')"
                   outlined
                   dense
                 ></v-text-field>
@@ -82,7 +83,7 @@
               <v-col cols="12" sm="12" md="12" class="pb-0">
                 <v-text-field
                   v-model="address"
-                  :label="$t('Common.AddressRequired')"
+                  :label="$t('Common.Address')"
                   :rules="[rules.required]"
                   outlined
                   dense
@@ -91,7 +92,7 @@
               <v-col cols="12" sm="6" md="6" class="pb-0">
                 <v-text-field
                   v-model="city"
-                  :label="$t('Common.CityRequired')"
+                  :label="$t('Common.City')"
                   :rules="[rules.required]"
                   outlined
                   dense
@@ -100,7 +101,7 @@
               <v-col cols="12" sm="6" md="6" class="pb-0">
                 <v-text-field
                   v-model="state"
-                  :label="$t('Common.StateRequired')"
+                  :label="$t('Common.State')"
                   :rules="[rules.required]"
                   outlined
                   dense
@@ -109,7 +110,7 @@
               <v-col cols="12" sm="6" md="6" class="pb-0">
                 <v-text-field
                   v-model="country"
-                  :label="$t('Common.CountryRequired')"
+                  :label="$t('Common.Country')"
                   :rules="[rules.required]"
                   outlined
                   dense
@@ -118,7 +119,7 @@
               <v-col cols="12" sm="6" md="6" class="pb-0">
                 <v-text-field
                   v-model="zipCode"
-                  :label="$t('Common.ZipCodeRequired')"
+                  :label="$t('Common.ZipCode')"
                   :rules="[rules.required]"
                   outlined
                   dense
@@ -201,7 +202,7 @@ export default {
         },
       },
       languagefield: {
-        caption: 'Language *',
+        caption: 'Language',
         type: 'Language',
         fieldName: 'resData.Language',
       },
