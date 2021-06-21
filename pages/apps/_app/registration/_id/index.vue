@@ -532,12 +532,7 @@
             <i18n path="Common.TransactionId" class="body-2 text--secondary" />
 
             <div class="body-1">
-              {{
-                formatField(
-                  regData._CustomerPayment &&
-                    regData._CustomerPayment.processorAuthorizationCode
-                )
-              }}
+              {{ formatField(regData.TransactionReferenceId) }}
             </div>
           </v-flex>
         </div>
