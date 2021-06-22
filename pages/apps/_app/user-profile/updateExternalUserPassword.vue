@@ -55,10 +55,15 @@
                   :append-icon="show2 ? 'mdi-eye' : 'mdi-eye-off'"
                   :type="show2 ? 'text' : 'password'"
                   :label="$t('Common.NewPasswordReq')"
-                  :rules="[rules.id4PasswordValidation]"
+                  :rules="
+                    newPasswordMismatchValidation().concat(
+                      rules.id4PasswordValidation
+                    )
+                  "
                   outlined
                   dense
                   @click:append="show2 = !show2"
+                  @change="changeNewPassword"
                 ></v-text-field>
               </v-col>
               <v-col cols="12" sm="12" md="12" class="pb-0">
@@ -68,13 +73,14 @@
                   :type="show3 ? 'text' : 'password'"
                   :label="$t('Common.ConfirmPasswordReq')"
                   :rules="
-                    passwordMismatchValidation().concat(
+                    confirmPasswordMismatchValidation().concat(
                       rules.id4PasswordValidation
                     )
                   "
                   outlined
                   dense
                   @click:append="show3 = !show3"
+                  @change="changeConfirmPassword()"
                 ></v-text-field>
               </v-col>
             </v-row>
@@ -155,15 +161,33 @@ export default {
     this.getVerificationCode()
   },
   methods: {
-    passwordMismatchValidation() {
+    changeNewPassword() {
+      this.$refs.form && this.$refs.form.validate()
+    },
+    changeConfirmPassword() {
+      this.$refs.form && this.$refs.form.validate()
+    },
+    confirmPasswordMismatchValidation() {
       return [
         (v) => {
           const confirmPassword = v
-          let startDateMessage = ''
+          let errorMsg = ''
           if (confirmPassword !== this.newPassword)
-            startDateMessage = this.$t('Messages.Error.PasswordMismatch')
-          else startDateMessage = ''
-          return startDateMessage || true
+            errorMsg = this.$t('Messages.Error.PasswordMismatch')
+          else errorMsg = ''
+          return errorMsg || true
+        },
+      ]
+    },
+    newPasswordMismatchValidation() {
+      return [
+        (v) => {
+          const newPassword = v
+          let errorMessage = ''
+          if (newPassword !== this.confirmPassword)
+            errorMessage = this.$t('Messages.Error.PasswordMismatch')
+          else errorMessage = ''
+          return errorMessage || true
         },
       ]
     },

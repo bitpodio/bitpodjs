@@ -1065,6 +1065,7 @@
   },
   "Messages": {
     "Error": {
+      "CredentialMismatch":"Old Credentials did not match.",
       "PasswordMismatch": "New Password did not match with the Confirm Password",
       "ID4PasswordValidationMsg": "Passwords must contain at least six characters, including uppercase, lowercase letters, special character and numbers.",
       "DiscountCodeError": "Duplicate Discount Code, Please enter new Discount code",
