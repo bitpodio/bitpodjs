@@ -1,5 +1,7 @@
 {
   "Common": {
+    "NewBusinessUnit":"יחידה עסקית חדשה",
+    "EditBusinessUnit":"ערוך את היחידה העסקית",
     "VerifyOTPTemplate": "שלחנו אימייל המכיל קוד אימות חד פעמי אל {emailId}",
     "VerifyCode": "קוד אימות",
     "SetUpBitpodPassword": "הגדר סיסמת Bitpod",

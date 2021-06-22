@@ -1,5 +1,7 @@
 {
   "Common": {
+    "NewBusinessUnit":"नई व्यावसायिक इकाई",
+    "EditBusinessUnit":"व्यापार इकाई संपादित करें",
     "VerifyOTPTemplate": "हमने एक ईमेल भेजा है जिसमें वन टाइम वेरिफिकेशन कोड है {emailId}",
     "VerifyCode": "सत्यापन कोड",
     "SetUpBitpodPassword": "बिटपॉड पासवर्ड सेट करें",
