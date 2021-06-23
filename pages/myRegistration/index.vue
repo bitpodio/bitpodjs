@@ -13,6 +13,9 @@
         {{ $t('Common.ViewCancelationCharges') }}
       </div>
       <div class="mt-3 fs-14 pl-4">{{ $t('Common.EmailUsed') }}</div>
+      <div v-if="dataNotFound" class="mt-3 fs-14 pl-4 red--text">
+        {{ $t('Common.RegistrationNotFound') }}
+      </div>
       <v-card-text class="pt-0">
         <v-form
           :id="formName"
@@ -48,7 +51,7 @@
           type="submit"
           :disabled="!valid"
           form="search-form"
-          @click="route()"
+          @click="getRegistration()"
         >
           {{ $t('Common.Search') }}
         </v-btn></v-card-actions
@@ -84,9 +87,28 @@ export default {
       valid: false,
       rules: rules(this.$i18n),
       show: false,
+      dataNotFound: false,
     }
   },
   methods: {
+    async getRegistration() {
+      const url = `${this.$bitpod.getApiUrl()}Registrations/findRegistration?registrationId=${
+        this.formData.id
+      }&email=${this.formData.email}`
+      try {
+        const res = await this.$axios.$get(url)
+        if (res.result.status === 'Not Found') {
+          this.dataNotFound = true
+        } else {
+          this.route()
+        }
+      } catch (err) {
+        console.error(
+          `Error in pages/myRegistration while fetching the registration context: Url: ${url} Id:${this.formData.id}`,
+          err
+        )
+      }
+    },
     route() {
       this.$router.push(
         this.localePath(
