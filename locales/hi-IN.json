@@ -1,5 +1,6 @@
 {
   "Common": {
+    "NoDecimalNumberAllowed":"कोई दशमलव संख्या की अनुमति नहीं है",
     "NewBusinessUnit":"नई व्यावसायिक इकाई",
     "EditBusinessUnit":"व्यापार इकाई संपादित करें",
     "VerifyOTPTemplate": "हमने एक ईमेल भेजा है जिसमें वन टाइम वेरिफिकेशन कोड है {emailId}",
@@ -586,7 +587,7 @@
     "TicketQuantity": "टिकट की मात्रा *",
     "Session": "Session*",
     "RegistrationTypeRequired": "Registration Type*",
-    "MerchantAccounts": "Merchant Accounts(e.g USD:merchantId)",
+    "MerchantAccounts": "व्यापारी खाते (e.g USD:merchantId) *",
     "Key": "Key *",
     "AccountId": "Account ID *",
     "MaxFileSizeAllowed": "Max File Size Allowed (in bytes) *",

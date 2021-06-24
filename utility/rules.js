@@ -1,5 +1,6 @@
 export function rules(i18n) {
   const regex = RegExp(/^\d*[0-9]\d*$/)
+  const decimalRegex = RegExp(/^\d*\.?\d*$/)
   return Object.freeze({
     required: (v) => {
       if (v && v.length && /^\s+/.test(v)) {
@@ -36,7 +37,9 @@ export function rules(i18n) {
       if (!v || regex.test(v)) {
         return true
       }
-      return i18n.t('Messages.Error.NumberCannotBeNegative')
+      return decimalRegex.test(v)
+        ? i18n.t('Common.NoDecimalNumberAllowed')
+        : i18n.t('Messages.Error.NumberCannotBeNegative')
     },
     offerCountRules: (v) => {
       return v !== ''
