@@ -1,5 +1,6 @@
 {
   "Common": {
+    "NoDecimalNumberAllowed":"Aucun nombre décimal autorisé",
     "NewBusinessUnit":"Nouvelle unité commerciale",
     "EditBusinessUnit":"Modifier l'unité commerciale",
     "VerifyOTPTemplate": "Nous avons envoyé un e-mail contenant un code de vérification à usage unique à{emailId}",
@@ -584,7 +585,7 @@
     "TicketQuantity": "Quantité de ticket *",
     "Session": "Session *",
     "RegistrationTypeRequired": "Type d'enregistrement *",
-    "MerchantAccounts": "Comptes de commerçant (.g USD :merchantId)",
+    "MerchantAccounts": "Comptes de commerçant (e.g USD:merchantId) *",
     "Key": "Clé *",
     "AccountId": "ID de compte *",
     "MaxFileSizeAllowed": "Taille maximale du fichier autorisée (en octets) *",
