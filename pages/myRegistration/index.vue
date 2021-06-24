@@ -1,7 +1,7 @@
 <template>
   <div>
     <Header />
-    <div class="search-section mt-6">
+    <div class="search-section mt-2">
       <div class="text-center">
         <div>
           <h2 class="black--text pt-5 pb-0 text-h5">
@@ -71,7 +71,7 @@
         </div>
       </v-card>
     </div>
-    <Footer />
+    <Footer class="footer-section" />
   </div>
 </template>
 
@@ -111,5 +111,9 @@ export default {
 .search-section {
   max-width: 450px;
   margin: 0 auto;
+}
+.footer-section {
+  position: fixed;
+  bottom: 0;
 }
 </style>
