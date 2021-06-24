@@ -7,7 +7,7 @@
             ><v-text class="fs-14 lh-28 text-decoration-none"
               ><i18n path="Common.MyRegistrations" /></v-text
           ></a>
-          <span class="px-2 lh-28">|</span>
+          <span class="px-2 lh-28"><i18n path="Common.Pipe" /></span>
           <a
             class="text-decoration-none"
             href="https://www.bitpod.io/terms"
@@ -15,7 +15,7 @@
             ><v-text class="fs-14 lh-28"
               ><i18n path="Common.TermsofUse" /></v-text
           ></a>
-          <span class="px-2 lh-28">|</span>
+          <span class="px-2 lh-28"><i18n path="Common.Pipe" /></span>
           <a
             class="text-decoration-none"
             href="https://www.bitpod.io/privacy-policy"
