@@ -1,5 +1,8 @@
 {
   "Common": {
+    "NoDecimalNumberAllowed":"אין מספר עשרוני מותר",
+    "NewBusinessUnit":"יחידה עסקית חדשה",
+    "EditBusinessUnit":"ערוך את היחידה העסקית",
     "VerifyOTPTemplate": "שלחנו אימייל המכיל קוד אימות חד פעמי אל {emailId}",
     "VerifyCode": "קוד אימות",
     "SetUpBitpodPassword": "הגדר סיסמת Bitpod",
@@ -587,7 +590,7 @@
     "TicketQuantity": "כמות כרטיסים *",
     "Session": "Session*",
     "RegistrationTypeRequired": "Registration Type*",
-    "MerchantAccounts": "Merchant Accounts(e.g USD:merchantId)",
+    "MerchantAccounts": "חשבונות סוחרים(e.g USD:merchantId) *",
     "Key": "Key *",
     "AccountId": "Account ID *",
     "MaxFileSizeAllowed": "Max File Size Allowed (in bytes) *",

@@ -2,7 +2,7 @@
   <div
     :data-test-id="`grid-${dataTestId}`"
     class="observer observer-position"
-    :style="{ height: observerHeight }"
+    :style="{ height: height }"
   />
 </template>
 
@@ -26,13 +26,6 @@ export default {
     observer: null,
     timeoutId: null,
   }),
-  computed: {
-    observerHeight() {
-      const heightNum = parseInt(this.height, 10)
-      const heightUnit = this.height.replace(/[0-9]/g, '')
-      return `${Math.ceil(heightNum / 2)}${heightUnit}`
-    },
-  },
   mounted() {
     const options = this.options || {}
     this.observer = new IntersectionObserver(([entry]) => {

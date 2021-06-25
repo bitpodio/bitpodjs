@@ -1,5 +1,8 @@
 {
   "Common": {
+    "NoDecimalNumberAllowed":"No Decimal number allowed",
+    "NewBusinessUnit":"New Business Unit",
+    "EditBusinessUnit":"Edit Business Unit",
     "RegistrationNotFound":"Registration Data not found",
     "CancelledSuccessfully":"Your Registration has been cancelled successfully!",
     "AlreadyCancelled":"Registration has been cancelled",
@@ -583,7 +586,7 @@
     "TicketQuantity": "Ticket Quantity*",
     "Session": "Session*",
     "RegistrationTypeRequired": "Registration Type*",
-    "MerchantAccounts": "Merchant Accounts(e.g USD:merchantId)",
+    "MerchantAccounts": "Merchant Accounts(e.g USD:merchantId) *",
     "Key": "Key *",
     "AccountId": "Account ID *",
     "MaxFileSizeAllowed": "Max File Size Allowed (in bytes) *",
