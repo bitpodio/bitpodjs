@@ -196,10 +196,16 @@
                 <tr>
                   <td></td>
                   <td></td>
-                  <td><i18n path="Common.Total" /></td>
+                  <td
+                    v-if="formData && formData.Currency && formData.TotalAmount"
+                  >
+                    <i18n path="Common.Total" />
+                  </td>
                   <td>
                     <i18n-n
-                      v-if="formData && formData.Currency"
+                      v-if="
+                        formData && formData.Currency && formData.TotalAmount
+                      "
                       :value="formData && formData.TotalAmount"
                       :format="{
                         key: 'currency',

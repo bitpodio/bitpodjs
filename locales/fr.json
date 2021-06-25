@@ -6,7 +6,7 @@
     "VerifyOTPTemplate": "Nous avons envoyé un e-mail contenant un code de vérification à usage unique à{emailId}",
     "VerifyCode": "Code de vérification",
     "SetUpBitpodPassword": "Configurer le mot de passe Bitpod",
-    "RegistrationNotFound": "Données d'inscription introuvables",
+    "RegistrationNotFound": "Inscription non trouvée",
     "CancelledSuccessfully": "Votre inscription a été annulée avec succès !",
     "AlreadyCancelled": "L'inscription a été annulée",
     "TicketsAttendee": "Billets et participant",

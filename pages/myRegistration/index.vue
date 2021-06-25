@@ -53,7 +53,7 @@
             type="submit"
             :disabled="!valid"
             form="search-form"
-            @click="route()"
+            @click="getRegistration()"
           >
             {{ $t('Common.Search') }}
           </v-btn></v-card-actions
