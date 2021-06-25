@@ -2,22 +2,26 @@
   <v-footer padless class="footer-main">
     <v-container>
       <v-row>
-        <v-flex class="d-flex">
+        <v-flex class="d-flex px-2">
           <a class="text-decoration-none" href="/myRegistration"
             ><v-text class="fs-14 lh-28 text-decoration-none"
               ><i18n path="Common.MyRegistrations" /></v-text
           ></a>
-          <span class="px-2 lh-28"><i18n path="Common.Pipe" /></span>
+          <span class="px-2 lh-28 d-none d-sm-inline-flex"
+            ><i18n path="Common.Pipe"
+          /></span>
           <a
             class="text-decoration-none"
             href="https://www.bitpod.io/terms"
             target="_blank"
-            ><v-text class="fs-14 lh-28"
+            ><v-text class="fs-14 lh-28 d-none d-sm-inline-flex"
               ><i18n path="Common.TermsofUse" /></v-text
           ></a>
-          <span class="px-2 lh-28"><i18n path="Common.Pipe" /></span>
+          <span class="px-2 lh-28 d-none d-sm-inline-flex"
+            ><i18n path="Common.Pipe"
+          /></span>
           <a
-            class="text-decoration-none"
+            class="text-decoration-none d-none d-sm-inline-flex"
             href="https://www.bitpod.io/privacy-policy"
             target="_blank"
             ><v-text class="fs-14 lh-28"
