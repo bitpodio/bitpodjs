@@ -282,13 +282,8 @@
                       :rules="[rules.email, rules.required]"
                       outlined
                       dense
+                      :error-messages="duplicateMessage"
                     ></v-text-field>
-                    <div
-                      v-if="duplicateMessage !== ''"
-                      class="red--text pa-3 pt-0 body-1 mt-n5"
-                    >
-                      {{ duplicateMessage }}
-                    </div>
                   </v-col>
                 </v-row>
               </v-form>
@@ -484,6 +479,9 @@ export default {
         } catch (e) {
           if (e.response.status === 400) {
             this.duplicateMessage = this.$t('Messages.Error.UserExists')
+            setTimeout(() => {
+              this.duplicateMessage = ''
+            }, 1000)
           }
           console.log(
             `Error in layouts/admin.vue while making a POST call to Users model from method onSave context:-URL:-${url}\n OrgId:-${orgId}\n formData:-${this.formData} `,

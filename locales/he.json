@@ -1004,6 +1004,7 @@
     "SingleEventAction": "Single Event",
     "RecurringEventAction": "Recurring Event",
     "CreateUser": "צור משתמש",
+    "DeleteAccount": "מחק חשבון",
     "EditBadge": "ערוך את התג",
     "DeleteEvent": "מחק אירוע",
     "DeleteFeed": "מחק אירוע",
@@ -1214,6 +1215,8 @@
       "EventEnded": "האירוע הסתיים"
     },
     "Success": {
+      "AccountDeleteSuccess": "החשבון שלך נמחק בהצלחה",
+      "MemberInfoUpdatedSuccessMsg": "פרטי החבר עודכנו בהצלחה",
       "ClientDeleteSuccessMsg": "הלקוח נמחק בהצלחה",
       "TwoFactorUpdateSuccessMsg": "אימות שני גורמים {type} בהצלחה",
       "UserProfileUpdatedSuccessMsg": "פרופיל המשתמש עודכן בהצלחה",

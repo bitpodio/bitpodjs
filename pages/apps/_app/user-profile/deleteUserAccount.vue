@@ -56,10 +56,11 @@
               :disabled="!valid"
               color="primary"
               depresseds
+              :label="$t('Drawer.Delete')"
               :has-submit-action="true"
               :form-name="formName"
               class="ml-2"
-              ><i18n path="Drawer.Save"
+              ><i18n path="Drawer.Delete"
             /></SaveButton>
           </v-card-actions>
         </v-card>
@@ -110,6 +111,13 @@ export default {
           Password: this.password,
           UserName: this.email,
         })
+        this.close()
+        this.$emit(
+          'update:snackbarText',
+          this.$t('Messages.Success.AccountDeleteSuccess')
+        )
+        this.$emit('update:snackbar', true)
+        this.$eventBus.$emit('refresh-page')
       } catch (err) {
         console.error(
           `Error in apps/userprofile/deleteUserAccount.vue in onSave method context:-\nURl:${url} \nerror:${err}`

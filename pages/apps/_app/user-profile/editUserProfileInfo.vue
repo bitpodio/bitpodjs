@@ -74,7 +74,7 @@
                   :value="timezoneItems.displayName"
                   item-text="displayName"
                   item-value="id"
-                  :label="$t('Common.Timezone')"
+                  :label="$t('Common.TimeZone')"
                   required
                   outlined
                   dense
@@ -84,7 +84,6 @@
                 <v-text-field
                   v-model="address"
                   :label="$t('Common.Address')"
-                  :rules="[rules.required]"
                   outlined
                   dense
                 ></v-text-field>
@@ -93,7 +92,6 @@
                 <v-text-field
                   v-model="city"
                   :label="$t('Common.City')"
-                  :rules="[rules.required]"
                   outlined
                   dense
                 ></v-text-field>
@@ -102,7 +100,6 @@
                 <v-text-field
                   v-model="state"
                   :label="$t('Common.State')"
-                  :rules="[rules.required]"
                   outlined
                   dense
                 ></v-text-field>
@@ -111,7 +108,6 @@
                 <v-text-field
                   v-model="country"
                   :label="$t('Common.Country')"
-                  :rules="[rules.required]"
                   outlined
                   dense
                 ></v-text-field>
@@ -120,7 +116,6 @@
                 <v-text-field
                   v-model="zipCode"
                   :label="$t('Common.ZipCode')"
-                  :rules="[rules.required]"
                   outlined
                   dense
                 ></v-text-field>
@@ -140,7 +135,7 @@
               :has-submit-action="true"
               :form-name="formName"
               class="ml-2"
-              ><i18n path="Drawer.Save"
+              ><i18n path="Drawer.DeleteAccount"
             /></SaveButton>
           </v-card-actions>
         </v-card>

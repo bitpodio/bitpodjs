@@ -487,7 +487,17 @@ export default {
           }
         )
         if (res) {
+          this.snackbarText = this.$t(
+            'Messages.Success.MemberInfoUpdatedSuccessMsg'
+          )
+          this.viewName = 'memberProductSubscription'
           this.close()
+          this.$eventBus.$emit(
+            'toggle-snackbar',
+            this.viewName,
+            this.snackbarText,
+            3000
+          )
           this.refresh()
           return (this.customerData = res)
         }
