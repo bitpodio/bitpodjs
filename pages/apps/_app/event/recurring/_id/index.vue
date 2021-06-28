@@ -1222,28 +1222,6 @@
               {{ formatField(data.event.RegistrationSiteTemplate) }}
             </div>
           </v-flex>
-          <v-flex>
-            <v-checkbox
-              v-model="registrationSetting.showimagegallery"
-              dense
-              height="20"
-              class="ma-0 pa-0"
-              :label="$t('Common.ShowImageGallery')"
-              color="green"
-              @change="updateReg1()"
-            ></v-checkbox>
-          </v-flex>
-          <v-flex>
-            <v-checkbox
-              v-model="registrationSetting.showeventreviews"
-              dense
-              height="20"
-              class="ma-0 pa-0"
-              :label="$t('Common.ShowEventReviews')"
-              color="green"
-              @change="updateReg1()"
-            ></v-checkbox>
-          </v-flex>
         </div>
         <v-snackbar v-model="snackbar" :timeout="timeout" :top="true">
           <div class="toast py-2 pr-1 pl-3">

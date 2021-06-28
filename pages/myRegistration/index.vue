@@ -133,9 +133,10 @@ export default {
 .search-section {
   max-width: 450px;
   margin: 0 auto;
+  min-height: calc(100vh - 110px);
+  max-height: calc(100vh - 110px);
 }
 .footer-section {
-  position: fixed;
-  bottom: 0;
+  margin-bottom: -12px !important;
 }
 </style>

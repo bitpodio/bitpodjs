@@ -547,6 +547,11 @@ export default {
   .v-tooltip__content {
     margin-left: -90px !important;
   }
+  @media (min-width: 1500px) {
+    .grid-actions-container {
+      max-width: calc(calc(var(--esign-tile-width) * 4) + 30px);
+    }
+  }
   @media (min-width: 1904px) {
     .grid-actions-container {
       max-width: calc(calc(var(--esign-tile-width) * 5) + 52px);
