@@ -3,7 +3,7 @@
     <v-container>
       <v-row>
         <v-flex class="d-flex px-2">
-          <a class="text-decoration-none" href="/myRegistration"
+          <a class="text-decoration-none" href="/admin/myRegistration"
             ><v-text class="fs-14 lh-28 text-decoration-none"
               ><i18n path="Common.MyRegistrations" /></v-text
           ></a>
@@ -46,11 +46,11 @@
     </v-container>
   </v-footer>
 </template>
-<style scoped>
+<style>
 .footer-main {
-  background: #333;
-  color: #b3b3b3;
-  width: 100%;
+  background: #333 !important;
+  color: #b3b3b3 !important;
+  width: 100% !important;
 }
 .footer-main a {
   color: #b3b3b3 !important;
