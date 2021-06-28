@@ -251,9 +251,6 @@ export default {
         scanString.indexOf('AttendeeId:') + 11,
         scanString.indexOf(',')
       )
-      const attendeeName = scanString.substring(
-        scanString.indexOf(',AttendeeName:') + 14
-      )
       if (attendeeId) {
         const url = this.$bitpod.getApiUrl()
         try {
@@ -276,7 +273,7 @@ export default {
                 'toggle-snackbar',
                 this.viewName,
                 this.$t('Messages.Success.AttendeeCheckedIn', {
-                  attendee: attendeeName,
+                  attendee: this.attendeeInfo.FullName,
                 }),
                 7000,
                 true

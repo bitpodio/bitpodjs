@@ -1,225 +1,241 @@
 <template>
-  <div class="search-section mt-6">
-    <v-card
-      v-if="formData && formData.status === 'Not Found'"
-      class="not-found"
-    >
-      <div class="text-lg-center pt-16 fs-22 red--text">
-        {{ $t('Common.RegistrationNotFound') }}
-      </div>
-    </v-card>
-    <v-card v-else>
-      <v-card-title>
-        <v-skeleton-loader
-          :loading="!loading"
-          class="rounded-lg"
-          type="heading"
-          height="30"
-          width="600"
-        >
-          <h2>
-            {{ $t('Common.OrderFor') }} {{ formData && formData.EventName }}
-          </h2>
-        </v-skeleton-loader></v-card-title
+  <div>
+    <Header />
+    <div class="search-section mt-6">
+      <v-card
+        v-if="formData && formData.status === 'Not Found'"
+        class="not-found"
       >
-      <v-card-text>
-        <div class="black--text fs-15">
-          <div
-            v-if="
-              formData && formData.EventList && formData.EventList.StartDate
-            "
-          >
-            {{ getEventStartDate() }} - {{ getEventEndDate() }} -
-            {{
-              formatField(
-                formData && formData.EventList && formData.EventList.Timezone
-              )
-            }}
-          </div>
-
-          <div v-if="formData && formData.RegistrationId">
-            #{{ formData && formData.RegistrationId }}
-            {{ $t('Common.RegisteredOnSerach') }}
-
-            {{
-              $d(
-                new Date(formData && formData.createdDate),
-                'short',
-                $i18n.locale
-              )
-            }}
-          </div>
+        <div class="text-lg-center pt-16 fs-22 red--text">
+          {{ $t('Common.RegistrationNotFound') }}
         </div>
-        <div v-if="Object.keys(formData).length">
-          <div v-if="formData && formData.Status !== 'Cancelled'">
+      </v-card>
+      <v-card v-else>
+        <v-card-title>
+          <v-skeleton-loader
+            :loading="!loading"
+            class="rounded-lg"
+            type="heading"
+            height="30"
+            width="600"
+          >
+            <h2>
+              {{ $t('Common.OrderFor') }} {{ formData && formData.EventName }}
+            </h2>
+          </v-skeleton-loader></v-card-title
+        >
+        <v-card-text>
+          <div class="black--text fs-15">
+            <div
+              v-if="
+                formData && formData.EventList && formData.EventList.StartDate
+              "
+            >
+              {{ getEventStartDate() }} - {{ getEventEndDate() }} -
+              {{
+                formatField(
+                  formData && formData.EventList && formData.EventList.Timezone
+                )
+              }}
+            </div>
+
+            <div v-if="formData && formData.RegistrationId">
+              #{{ formData && formData.RegistrationId }}
+              {{ $t('Common.RegisteredOnSerach') }}
+
+              {{
+                $d(
+                  new Date(formData && formData.createdDate),
+                  'short',
+                  $i18n.locale
+                )
+              }}
+            </div>
+          </div>
+          <div v-if="Object.keys(formData).length">
+            <div v-if="formData && formData.Status !== 'Cancelled'">
+              <div
+                v-if="
+                  formData &&
+                  formData.Status !== 'Cancelled' &&
+                  cancelledNow === false
+                "
+              >
+                <v-btn
+                  v-if="formData && formData.Status !== 'Cancelled'"
+                  depressed
+                  :disabled="
+                    formData &&
+                    formData.EventList &&
+                    !formData.EventList.isRefundable
+                  "
+                  color="primary"
+                  class="mr-1 mt-2"
+                  @click="cancelRegistration()"
+                >
+                  {{
+                    formData &&
+                    formData.EventList &&
+                    formData.EventList.isRefundable
+                      ? $t('Common.CancelRegistration')
+                      : $t('Common.CancelationNotAllowed')
+                  }}
+                </v-btn>
+
+                <div>
+                  <v-btn
+                    v-if="
+                      formData &&
+                      formData.EventList &&
+                      formData.EventList.isRefundable &&
+                      formData &&
+                      formData.EventList &&
+                      formData.EventList.CancellationPolicy !== ''
+                    "
+                    plain
+                    text
+                    color="primary"
+                    class="mt-2 pl-0"
+                    @click="show = !show"
+                  >
+                    <v-icon>{{
+                      show ? 'mdi-chevron-up' : 'mdi-chevron-down'
+                    }}</v-icon>
+                    <span class="fs-14">{{
+                      $t('Common.CancellationPolicy')
+                    }}</span>
+                  </v-btn>
+                </div>
+              </div>
+              <!-- eslint-disable-next-line vue/no-v-html -->
+              <div
+                v-show="show"
+                class="px-4 fs-14"
+                v-html="
+                  formData &&
+                  formData.EventList &&
+                  formData.EventList.CancellationPolicy
+                "
+              />
+            </div>
+            <div
+              v-if="formData && formData.Status !== 'Cancelled' && cancelledNow"
+              class="red--text fs-20 d-flex align-center mt-4"
+            >
+              <v-icon color="error" class="mr-2">fa fa-info-circle</v-icon
+              ><i18n path="Common.CancelledSuccessfully" />
+            </div>
             <div
               v-if="
                 formData &&
-                formData.Status !== 'Cancelled' &&
+                formData.Status === 'Cancelled' &&
                 cancelledNow === false
               "
+              class="red--text fs-20 d-flex align-center mt-4"
             >
-              <v-btn
-                v-if="formData && formData.Status !== 'Cancelled'"
-                depressed
-                :disabled="
-                  formData &&
-                  formData.EventList &&
-                  !formData.EventList.isRefundable
-                "
-                color="primary"
-                class="mr-1 mt-2"
-                @click="cancelRegistration()"
-              >
-                {{
-                  formData &&
-                  formData.EventList &&
-                  formData.EventList.isRefundable
-                    ? $t('Common.CancelRegistration')
-                    : $t('Common.CancelationNotAllowed')
-                }}
-              </v-btn>
-
-              <div>
-                <v-btn
-                  v-if="
-                    formData &&
-                    formData.EventList &&
-                    formData.EventList.isRefundable &&
-                    formData &&
-                    formData.EventList &&
-                    formData.EventList.CancellationPolicy !== ''
-                  "
-                  plain
-                  text
-                  color="primary"
-                  class="mt-2 pl-0"
-                  @click="show = !show"
-                >
-                  <v-icon>{{
-                    show ? 'mdi-chevron-up' : 'mdi-chevron-down'
-                  }}</v-icon>
-                  <span class="fs-14">{{
-                    $t('Common.CancellationPolicy')
-                  }}</span>
-                </v-btn>
-              </div>
+              <v-icon color="error" class="mr-2">fa fa-info-circle</v-icon
+              ><i18n path="Common.AlreadyCancelled" />
             </div>
-            <!-- eslint-disable-next-line vue/no-v-html -->
-            <div
-              v-show="show"
-              class="px-4 fs-14"
-              v-html="
-                formData &&
-                formData.EventList &&
-                formData.EventList.CancellationPolicy
-              "
-            />
           </div>
-          <div
-            v-if="formData && formData.Status !== 'Cancelled' && cancelledNow"
-            class="red--text fs-20 d-flex align-center mt-4"
-          >
-            <v-icon color="error" class="mr-2">fa fa-info-circle</v-icon
-            ><i18n path="Common.CancelledSuccessfully" />
+          <div class="mt-4">{{ $t('Common.ContactInformation') }}</div>
+          <v-divider></v-divider>
+          <div class="black--text">
+            <div class="mt-2">{{ $t('Common.FullName') }}</div>
+            <div class="mt-1">
+              {{ formatField(formData && formData.FullName) }}
+            </div>
+            <div class="mt-2">
+              <i18n path="Common.EmailCaption" />
+            </div>
+            <div class="mt-1">
+              {{ formatField(formData && formData.Email) }}
+            </div>
+            <div class="mt-2">
+              <i18n path="Common.Phone" />
+            </div>
+            <div class="mt-1">
+              {{ formatField(formData && formData.Phone) }}
+            </div>
+            <div class="mt-2">
+              <i18n path="Common.Address" />
+            </div>
+            <div class="mt-1">
+              {{ formatField(getAddress()) }}
+            </div>
           </div>
-          <div
-            v-if="
-              formData &&
-              formData.Status === 'Cancelled' &&
-              cancelledNow === false
-            "
-            class="red--text fs-20 d-flex align-center mt-4"
-          >
-            <v-icon color="error" class="mr-2">fa fa-info-circle</v-icon
-            ><i18n path="Common.AlreadyCancelled" />
+          <div class="mt-8">
+            <i class="fa fa-ticket" aria-hidden="true"></i>
+            {{ $t('Common.TicketsAttendee') }}
           </div>
-        </div>
-        <div class="mt-4">{{ $t('Common.ContactInformation') }}</div>
-        <v-divider></v-divider>
-        <div class="black--text">
-          <div class="mt-2">{{ $t('Common.FullName') }}</div>
-          <div class="mt-1">
-            {{ formatField(formData && formData.FullName) }}
-          </div>
-          <div class="mt-2">
-            <i18n path="Common.EmailCaption" />
-          </div>
-          <div class="mt-1">
-            {{ formatField(formData && formData.Email) }}
-          </div>
-          <div class="mt-2">
-            <i18n path="Common.Phone" />
-          </div>
-          <div class="mt-1">
-            {{ formatField(formData && formData.Phone) }}
-          </div>
-          <div class="mt-2">
-            <i18n path="Common.Address" />
-          </div>
-          <div class="mt-1">
-            {{ formatField(getAddress()) }}
-          </div>
-        </div>
-        <div class="mt-8">
-          <i class="fa fa-ticket" aria-hidden="true"></i>
-          {{ $t('Common.TicketsAttendee') }}
-        </div>
-        <v-divider></v-divider>
-        <v-simple-table dense>
-          <template v-slot:default>
-            <thead>
-              <tr>
-                <th class="text-left">
-                  <i18n path="Common.Name" />
-                </th>
-                <th class="text-left">
-                  <i18n path="Common.EmailCaption" />
-                </th>
-                <th class="text-left">
-                  <i18n path="Common.Ticket" />
-                </th>
-                <th class="text-left">
-                  <i18n path="Common.Amount" />
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr v-for="item in formData && formData.attendee" :key="item">
-                <td>{{ item.FullName }}</td>
-                <td>{{ item.Email }}</td>
-                <td>{{ item.TicketName }}</td>
-                <td>{{ item.TicketAmount }}</td>
-              </tr>
-              <tr>
-                <td></td>
-                <td></td>
-                <td><i18n path="Common.Total" /></td>
-                <td>
-                  <i18n-n
-                    v-if="formData && formData.Currency"
-                    :value="formData && formData.TotalAmount"
-                    :format="{
-                      key: 'currency',
-                      currency: formData && formData.Currency,
-                    }"
-                    :locale="$i18n.locale"
+          <v-divider></v-divider>
+          <v-simple-table dense>
+            <template v-slot:default>
+              <thead>
+                <tr>
+                  <th class="text-left">
+                    <i18n path="Common.Name" />
+                  </th>
+                  <th class="text-left">
+                    <i18n path="Common.EmailCaption" />
+                  </th>
+                  <th class="text-left">
+                    <i18n path="Common.Ticket" />
+                  </th>
+                  <th class="text-left">
+                    <i18n path="Common.Amount" />
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="item in formData && formData.attendee" :key="item">
+                  <td>{{ item.FullName }}</td>
+                  <td>{{ item.Email }}</td>
+                  <td>{{ item.TicketName }}</td>
+                  <td>{{ item.TicketAmount }}</td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td></td>
+                  <td
+                    v-if="formData && formData.Currency && formData.TotalAmount"
                   >
-                  </i18n-n>
-                </td>
-              </tr>
-            </tbody>
-          </template>
-        </v-simple-table>
-      </v-card-text>
-    </v-card>
+                    <i18n path="Common.Total" />
+                  </td>
+                  <td>
+                    <i18n-n
+                      v-if="
+                        formData && formData.Currency && formData.TotalAmount
+                      "
+                      :value="formData && formData.TotalAmount"
+                      :format="{
+                        key: 'currency',
+                        currency: formData && formData.Currency,
+                      }"
+                      :locale="$i18n.locale"
+                    >
+                    </i18n-n>
+                  </td>
+                </tr>
+              </tbody>
+            </template>
+          </v-simple-table>
+        </v-card-text>
+      </v-card>
+    </div>
+    <Footer />
   </div>
 </template>
 <script>
 import format from 'date-fns/format'
 import { utcToZonedTime } from 'date-fns-tz'
+import Header from '~/components/common/header'
+import Footer from '~/components/common/footer'
 export default {
   layout: 'public',
+  components: {
+    Header,
+    Footer,
+  },
   data() {
     return {
       formData: {},
