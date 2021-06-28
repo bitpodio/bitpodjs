@@ -99,7 +99,10 @@
                           /></v-list-item-title>
                         </v-list-item-content>
                       </v-list-item>
-                      <v-list-item @click="deleteAccountDialog = true">
+                      <v-list-item
+                        v-if="!isExternal"
+                        @click="deleteAccountDialog = true"
+                      >
                         <v-list-item-icon class="mr-2">
                           <i
                             class="fa-cross-circle mt-1"

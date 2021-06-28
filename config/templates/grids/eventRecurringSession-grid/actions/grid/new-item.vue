@@ -1353,7 +1353,7 @@ export default {
         this.session.MinimumSchedulingNotice = parseInt(
           this.session.MinimumSchedulingNotice
         )
-
+        this.session.isActive = true
         this.session.BufferBefore =
           this.session.BufferBefore && parseInt(this.session.BufferBefore)
         this.session.BufferAfter =

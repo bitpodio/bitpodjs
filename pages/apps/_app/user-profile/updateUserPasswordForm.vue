@@ -30,6 +30,7 @@
                   :type="show1 ? 'text' : 'password'"
                   :label="$t('Common.OldPasswordReq')"
                   :rules="[rules.id4PasswordValidation]"
+                  :error-messages="message"
                   outlined
                   dense
                   @click:append="show1 = !show1"
@@ -69,12 +70,6 @@
                   @change="changeConfirmPassword()"
                 ></v-text-field>
               </v-col>
-              <div
-                v-if="message !== ''"
-                class="red--text pa-3 pt-0 body-1 mt-n5"
-              >
-                {{ message }}
-              </div>
             </v-row>
           </v-card-text>
           <v-divider></v-divider>
@@ -195,6 +190,9 @@ export default {
         if (err.response.status === 400) {
           this.message = this.$t('Messages.Error.CredentialMismatch')
           this.reset = !this.reset
+          setTimeout(() => {
+            this.message = ''
+          }, 1000)
         }
         console.error(
           `Error in apps/userprofile/updateUserPasswordForm.vue in onSave method context:-\nURl:${url} \nerror:${err}`

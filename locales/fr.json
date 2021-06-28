@@ -44,7 +44,7 @@
     "NewPasswordReq": "Nouveau mot de passe *",
     "ConfirmPasswordReq": "Confirmez le mot de passe *",
     "EditUserProfileInfo": "Modifier les informations du profil utilisateur",
-    "DeleteAccount": "Supprimer le compte",
+    "DeleteAccount": "Supprimer le compte Bitpod",
     "TwoFactorAuth": "Authentification à deux facteurs",
     "ConnectedApps": "Applications et sites connectés",
     "ApplicationName": "Nom de l'application sur Bitpod",
@@ -995,6 +995,7 @@
     "SingleEventAction": "Evénement unique",
     "RecurringEventAction": "Evénement récurrent",
     "CreateUser": "Créer un utilisateur",
+    "DeleteAccount": "Supprimer le compte",
     "EditBadge": "Editer un insigne",
     "DeleteUser": "Supprimer l'utilisateur",
     "DeleteEvent": "Supprimer l'événement",
@@ -1063,7 +1064,7 @@
   },
   "Messages": {
     "Error": {
-      "CredentialMismatch":"Les anciennes informations d'identification ne correspondaient pas.",
+      "CredentialMismatch": "Les anciennes informations d'identification ne correspondaient pas.",
       "PasswordMismatch": "Le nouveau mot de passe ne correspond pas au mot de passe de confirmation",
       "ID4PasswordValidationMsg": "Les mots de passe doivent contenir au moins six caractères, dont des majuscules, des minuscules, des caractères spéciaux et des chiffres.",
       "DiscountCodeError": "Code de réduction en double, veuillez saisir un nouveau code de réduction",
@@ -1205,6 +1206,8 @@
       "EventEnded": "L'événement est terminé"
     },
     "Success": {
+      "AccountDeleteSuccess": "Votre compte est supprimé avec succès",
+      "MemberInfoUpdatedSuccessMsg": "Informations sur le membre mises à jour avec succès",
       "ClientDeleteSuccessMsg": "Client supprimé avec succès",
       "PasswordUpdateSuccesMsg": "Mot de passe mis à jour avec succès",
       "TwoFactorUpdateSuccessMsg": "Authentification à deux facteurs {type} réussie",

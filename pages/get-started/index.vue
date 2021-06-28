@@ -450,6 +450,7 @@ export default {
       }
     },
     async createOrg() {
+      this.orgName = this.orgName.split(' ').join('')
       try {
         const res = await this.$axios.$get(
           `${this.$bitpod.getApiUrl()}OrganizationInfos/createOrg?name=${
@@ -522,7 +523,7 @@ export default {
     async checkAvailablity() {
       if (this.allowable) {
         try {
-          const orgName = this.orgName.toLowerCase()
+          const orgName = this.orgName.toLowerCase().split(' ').join('')
           const res = await this.$axios.$get(
             `${this.$bitpod.getApiUrl()}OrganizationInfos/orgAvailable?name=${orgName}`
           )
