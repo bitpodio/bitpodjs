@@ -39,7 +39,7 @@
                   :rules="[
                     (v) => {
                       let valid =
-                        !v || !/^[a-z0-9]+$/i.test(v)
+                        !v || !/^[a-z0-9 ]+$/i.test(v)
                           ? $t('Messages.Warn.UniqueLinkFormat')
                           : v.length < 3
                           ? $t('Messages.Error.MinimumCharacter')
@@ -65,7 +65,7 @@
                 >
                   {{
                     $t('Messages.Success.OrgNameSuccess', {
-                      orgName: orgName,
+                      orgName: orgName.split(' ').join(''),
                       suffixRoute: $config.setting.domains.defaultPublicDomain,
                     })
                   }}

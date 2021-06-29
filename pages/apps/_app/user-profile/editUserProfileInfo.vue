@@ -26,7 +26,7 @@
               <v-col cols="12" sm="6" md="6" class="pb-0">
                 <v-text-field
                   v-model="resData.firstName"
-                  :label="$t('Common.FirstNameCaption')"
+                  :label="$t('Common.FirstName')"
                   :rules="[rules.required]"
                   outlined
                   dense
@@ -35,7 +35,7 @@
               <v-col cols="12" sm="6" md="6" class="pb-0">
                 <v-text-field
                   v-model="resData.lastName"
-                  :label="$t('Common.LastNameCaption')"
+                  :label="$t('Common.LastName')"
                   :rules="[rules.required]"
                   outlined
                   dense
@@ -274,6 +274,8 @@ export default {
       this.formData.contact.state = this.state || ''
       this.formData.contact.country = this.country || ''
       this.formData.contact.zipCode = this.zipCode || ''
+      this.formData.enableTwoFactor = this.resData.enableTwoFactor
+      this.formData.isExternal = this.resData.isExternal
       const url = `${getID4ServerUrl()}api/tiers/${
         this.$auth.state.user.data.TierHierarchy[0].Id
       }/users/${this.$auth.state.user.data.id}`
