@@ -39,6 +39,7 @@
                   :type="show1 ? 'text' : 'password'"
                   :label="$t('Common.PasswordReq')"
                   :rules="[rules.required]"
+                  :error-messages="message"
                   outlined
                   dense
                   @click:append="show1 = !show1"
@@ -55,6 +56,7 @@
               :action="onSave"
               :disabled="!valid"
               color="primary"
+              :reset="reset"
               depresseds
               :label="$t('Drawer.Delete')"
               :has-submit-action="true"
@@ -92,6 +94,9 @@ export default {
       email: this.$auth.state.user.data.email,
       password: '',
       formName: 'delete-account',
+      message: '',
+      formData: {},
+      reset: false,
     }
   },
   methods: {
@@ -103,14 +108,13 @@ export default {
       this.$eventBus.$emit('form-submitted', this.formName)
     },
     async onSave() {
+      this.reset = false
       const url = `${getID4ServerUrl()}api/tiers/${
         this.$auth.state.user.data.TierHierarchy[0].Id
       }/users/${this.$auth.state.user.data.id}`
+      this.formData.OldPassword = this.password
       try {
-        await this.$axios.$delete(`${url}`, {
-          Password: this.password,
-          UserName: this.email,
-        })
+        await this.$axios.$delete(`${url}`, { data: this.formData })
         this.close()
         this.$emit(
           'update:snackbarText',
@@ -119,6 +123,13 @@ export default {
         this.$emit('update:snackbar', true)
         this.$eventBus.$emit('refresh-page')
       } catch (err) {
+        if (err.response.status === 400) {
+          this.message = this.$t('Messages.Error.CredentialMismatch')
+          this.reset = !this.reset
+          setTimeout(() => {
+            this.message = ''
+          }, 1000)
+        }
         console.error(
           `Error in apps/userprofile/deleteUserAccount.vue in onSave method context:-\nURl:${url} \nerror:${err}`
         )

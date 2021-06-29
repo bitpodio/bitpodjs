@@ -230,7 +230,7 @@
             </v-col>
             <v-col class="col-md-12 col-12">
               <i18n path="Common.Address" class="body-2 text--secondary" />
-              <div class="body-1">
+              <div class="body-1 address">
                 {{
                   formatField(
                     data &&
@@ -479,3 +479,9 @@ export default {
   },
 }
 </script>
+
+<style scoped>
+.address {
+  word-wrap: break-word;
+}
+</style>
