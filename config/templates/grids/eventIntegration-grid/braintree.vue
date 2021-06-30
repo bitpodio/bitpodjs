@@ -20,7 +20,7 @@
           ref="form"
           v-model="valid"
           :lazy-validation="lazy"
-          @submit.prevent="onSave(formData, $t('Common.EditSetting'))"
+          @submit.prevent="beforeOnSave()"
         >
           <v-row>
             <v-col cols="12">
@@ -63,8 +63,10 @@
               <v-text-field
                 v-model="formData.MerchantAccounts"
                 :label="$t('Common.MerchantAccounts')"
+                :rules="[rules.required]"
                 outlined
                 dense
+                @change="createMerchantAccountArray()"
               ></v-text-field>
             </v-col>
           </v-row>
@@ -111,7 +113,6 @@ export default {
       default: null,
     },
   },
-
   data() {
     return {
       valid: false,
@@ -125,6 +126,14 @@ export default {
       if (newVal) {
         postGaData('New', this.$t('Common.EditSetting'))
       }
+    },
+  },
+  methods: {
+    beforeOnSave() {
+      this.onSave(this.formData, this.$t('Common.EditSetting'))
+    },
+    createMerchantAccountArray() {
+      this.formData.MerchantAccounts = this.formData.MerchantAccounts.split(',')
     },
   },
 }
