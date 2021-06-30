@@ -187,22 +187,29 @@
           class="ml-0 mr-0 d-lg-none"
           @click.stop="drawer = !drawer"
         ></v-app-bar-nav-icon>
-        <span v-if="!$vuetify.theme.dark" class="bitpod-logo logo-ds px-3">
+        <span class="bitpod-logo logo-ds px-3">
           <a href="/admin/apps/event/eventboard">
             <v-img
+              v-if="!toggleFallbackImage"
+              :src="$config.cdnUri + getDomain() + '/logo.svg'"
+              class="logofull mr-2"
+              @error="setAltImg"
+            ></v-img>
+            <v-img
+              v-else
               :src="$config.cdnUri + 'bitpod-logo-blk2.svg'"
               class="logofull mr-2"
-            ></v-img
-          ></a>
+            ></v-img>
+          </a>
         </span>
-        <span v-if="$vuetify.theme.dark" class="bitpod-logo logo-ds px-3">
+        <!-- <span v-if="$vuetify.theme.dark" class="bitpod-logo logo-ds px-3">
           <a href="/admin/apps/event/eventboard">
             <v-img
               :src="$config.cdnUri + 'bitpod-logo-white.svg'"
               class="logofull mr-2"
             ></v-img>
           </a>
-        </span>
+        </span> -->
         <v-spacer></v-spacer>
       </v-toolbar-title>
       <v-spacer></v-spacer>
@@ -409,6 +416,7 @@ export default {
     activeClass: ' v-list-item--active',
     userPlanData: '',
     logoutClicked: false,
+    toggleFallbackImage: false,
     items: [
       {
         icon: 'fa fa-grid',
@@ -487,6 +495,18 @@ export default {
     onLogout(context) {
       if (this.$store.state.auth.loggedIn) {
         this.logoutClicked = true
+      }
+    },
+    setAltImg() {
+      this.toggleFallbackImage = true
+    },
+    getDomain() {
+      if (process.client) {
+        if (window && window.location) {
+          const url = window.location.hostname.split('.').slice(-2).join('.')
+          console.log(url)
+          return url
+        }
       }
     },
     closeSingleEventForm() {
