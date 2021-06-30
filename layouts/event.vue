@@ -202,14 +202,6 @@
             ></v-img>
           </a>
         </span>
-        <!-- <span v-if="$vuetify.theme.dark" class="bitpod-logo logo-ds px-3">
-          <a href="/admin/apps/event/eventboard">
-            <v-img
-              :src="$config.cdnUri + 'bitpod-logo-white.svg'"
-              class="logofull mr-2"
-            ></v-img>
-          </a>
-        </span> -->
         <v-spacer></v-spacer>
       </v-toolbar-title>
       <v-spacer></v-spacer>
