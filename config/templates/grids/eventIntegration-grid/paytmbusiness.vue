@@ -103,7 +103,6 @@ export default {
       default: null,
     },
   },
-
   data() {
     return {
       valid: false,
