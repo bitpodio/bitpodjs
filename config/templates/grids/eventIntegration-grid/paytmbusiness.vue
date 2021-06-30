@@ -35,7 +35,7 @@
             <v-col cols="12">
               <v-text-field
                 v-model="formData.AccessKey"
-                :label="$t('Common.MerchantId')"
+                :label="$t('Common.MerchantKey')"
                 :rules="[rules.required]"
                 outlined
                 dense
@@ -44,7 +44,16 @@
             <v-col cols="12">
               <v-text-field
                 v-model="formData.Token"
-                :label="$t('Common.MerchantKey')"
+                :label="$t('Common.MerchantId')"
+                :rules="[rules.required]"
+                outlined
+                dense
+              ></v-text-field>
+            </v-col>
+            <v-col cols="12">
+              <v-text-field
+                v-model="formData.Website"
+                :label="$t('Common.Website')"
                 :rules="[rules.required]"
                 outlined
                 dense
@@ -94,7 +103,6 @@ export default {
       default: null,
     },
   },
-
   data() {
     return {
       valid: false,
