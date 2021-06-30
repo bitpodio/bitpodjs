@@ -66,6 +66,7 @@
                 :rules="[rules.required]"
                 outlined
                 dense
+                @change="createMerchantAccountArray()"
               ></v-text-field>
             </v-col>
           </v-row>
@@ -112,7 +113,6 @@ export default {
       default: null,
     },
   },
-
   data() {
     return {
       valid: false,
@@ -130,8 +130,10 @@ export default {
   },
   methods: {
     beforeOnSave() {
-      this.formData.MerchantAccounts = this.formData.MerchantAccounts.split(',')
       this.onSave(this.formData, this.$t('Common.EditSetting'))
+    },
+    createMerchantAccountArray() {
+      this.formData.MerchantAccounts = this.formData.MerchantAccounts.split(',')
     },
   },
 }
