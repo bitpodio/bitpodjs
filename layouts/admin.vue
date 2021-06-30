@@ -140,22 +140,7 @@
           class="ml-0 mr-0 d-lg-none"
           @click.stop="drawer = !drawer"
         ></v-app-bar-nav-icon>
-        <span v-if="!$vuetify.theme.dark" class="bitpod-logo logo-ds px-3">
-          <a href="/admin/apps/event/eventboard">
-            <v-img
-              :src="$config.cdnUri + 'bitpod-logo-blk2.svg'"
-              class="logofull mr-2"
-            ></v-img>
-          </a>
-        </span>
-        <span v-if="$vuetify.theme.dark" class="bitpod-logo logo-ds px-3">
-          <a href="/admin/apps/event/eventboard">
-            <v-img
-              :src="$config.cdnUri + 'bitpod-logo-white.svg'"
-              class="logofull mr-2"
-            ></v-img>
-          </a>
-        </span>
+        <AppLogo />
         <v-spacer></v-spacer>
       </v-toolbar-title>
       <v-spacer></v-spacer>
@@ -348,6 +333,7 @@ import Help from '~/components/common/help'
 import OldSite from '~/components/common/oldsite'
 import Upgrade from '~/components/common/upgrade'
 import Theme from '~/components/common/theme'
+import AppLogo from '~/components/common/app-logo'
 import userUtils from '~/utility/userApps'
 export default {
   middleware: ['auth', 'authorization'],
@@ -358,6 +344,7 @@ export default {
     OldSite,
     Upgrade,
     Theme,
+    AppLogo,
   },
   props: {
     refresh: {
@@ -384,6 +371,7 @@ export default {
       rules: rules(this.$i18n),
       userPlanData: '',
       duplicateMessage: '',
+      toggleFallbackImage: false,
       formData: {
         emailId: '',
       },
@@ -449,6 +437,18 @@ export default {
     onLogout(context) {
       if (this.$store.state.auth.loggedIn) {
         this.logoutClicked = true
+      }
+    },
+    setAltImg() {
+      this.toggleFallbackImage = true
+    },
+    getDomain() {
+      if (process.client) {
+        if (window && window.location) {
+          const url = window.location.hostname.split('.').slice(-2).join('.')
+          console.log(url)
+          return url
+        }
       }
     },
     onClose() {
