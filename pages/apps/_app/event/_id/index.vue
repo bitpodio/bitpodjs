@@ -2734,7 +2734,6 @@ export default {
           this.eventData.EndDate < new Date().toISOString() &&
           this.eventData.Status !== 'Registration closed'
         ) {
-          // this.eventData.Status = 'Registration closed'
           this.checkEventStatus()
         }
         this.getOrgInfo()
