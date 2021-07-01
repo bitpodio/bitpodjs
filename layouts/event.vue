@@ -187,22 +187,7 @@
           class="ml-0 mr-0 d-lg-none"
           @click.stop="drawer = !drawer"
         ></v-app-bar-nav-icon>
-        <span v-if="!$vuetify.theme.dark" class="bitpod-logo logo-ds px-3">
-          <a href="/admin/apps/event/eventboard">
-            <v-img
-              :src="$config.cdnUri + 'bitpod-logo-blk2.svg'"
-              class="logofull mr-2"
-            ></v-img
-          ></a>
-        </span>
-        <span v-if="$vuetify.theme.dark" class="bitpod-logo logo-ds px-3">
-          <a href="/admin/apps/event/eventboard">
-            <v-img
-              :src="$config.cdnUri + 'bitpod-logo-white.svg'"
-              class="logofull mr-2"
-            ></v-img>
-          </a>
-        </span>
+        <AppLogo />
         <v-spacer></v-spacer>
       </v-toolbar-title>
       <v-spacer></v-spacer>
@@ -373,6 +358,7 @@ import AppDrawer from '~/components/common/app-drawer'
 import Help from '~/components/common/help'
 import OldSite from '~/components/common/oldsite'
 import Theme from '~/components/common/theme'
+import AppLogo from '~/components/common/app-logo'
 import Upgrade from '~/components/common/upgrade'
 import userUtils from '~/utility/userApps'
 import { postGaData } from '~/utility/index.js'
@@ -385,6 +371,7 @@ export default {
     OldSite,
     Upgrade,
     Theme,
+    AppLogo,
   },
   props: {
     source: { type: String, default: '' },
@@ -409,6 +396,7 @@ export default {
     activeClass: ' v-list-item--active',
     userPlanData: '',
     logoutClicked: false,
+    toggleFallbackImage: false,
     items: [
       {
         icon: 'fa fa-grid',
