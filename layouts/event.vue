@@ -477,18 +477,6 @@ export default {
         this.logoutClicked = true
       }
     },
-    setAltImg() {
-      this.toggleFallbackImage = true
-    },
-    getDomain() {
-      if (process.client) {
-        if (window && window.location) {
-          const url = window.location.hostname.split('.').slice(-2).join('.')
-          console.log(url)
-          return url
-        }
-      }
-    },
     closeSingleEventForm() {
       this.dialog1 = false
     },

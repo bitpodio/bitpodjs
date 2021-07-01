@@ -33,7 +33,6 @@ export default {
       if (process.client) {
         if (window && window.location) {
           const url = window.location.hostname.split('.').slice(-2).join('.')
-          console.log(url)
           return url
         }
       }
