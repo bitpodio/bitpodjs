@@ -13,6 +13,7 @@ import eventTasks from '../gql/eventTasks.gql'
 import location from '../gql/location.gql'
 import eventRecurringSession from '../gql/eventRecurringSession.gql'
 import { getData, getLookupData, getCustomData } from '../rest'
+import { emailRule } from '~/utility/index.js'
 import marketingTemplates from '~/config/apps/admin/gql/marketingTemplates.gql'
 
 export default {
@@ -202,13 +203,7 @@ export default {
           editForm: true,
           rules: [
             function (v) {
-              return !!v || this.$t('Messages.Error.EmailRequired')
-            },
-            function (value, data) {
-              return (
-                /.+@.+\..+/.test(value) ||
-                this.$t('Messages.Error.EmailRequired')
-              )
+              return emailRule(v, this.$i18n)
             },
           ],
         },
@@ -1048,13 +1043,7 @@ export default {
           editForm: true,
           rules: [
             function (v) {
-              return !!v || this.$t('Messages.Error.EmailRequired')
-            },
-            function (value, data) {
-              return (
-                /.+@.+\..+/.test(value) ||
-                this.$t('Messages.Error.EmailRequired')
-              )
+              return emailRule(v, this.$i18n)
             },
           ],
         },
@@ -1507,13 +1496,7 @@ export default {
           editForm: true,
           rules: [
             function (v) {
-              return !!v || this.$t('Messages.Error.EmailRequired')
-            },
-            function (value, data) {
-              return (
-                /.+@.+\..+/.test(value) ||
-                this.$t('Messages.Error.EmailRequired')
-              )
+              return emailRule(v, this.$i18n)
             },
           ],
         },
@@ -2080,13 +2063,7 @@ export default {
           editForm: true,
           rules: [
             function (v) {
-              return !!v || this.$t('Messages.Error.EmailRequired')
-            },
-            function (value, data) {
-              return (
-                /.+@.+\..+/.test(value) ||
-                this.$t('Messages.Error.EmailRequired')
-              )
+              return emailRule(v, this.$i18n)
             },
           ],
         },
@@ -2543,13 +2520,7 @@ export default {
           editForm: true,
           rules: [
             function (v) {
-              return !!v || this.$t('Messages.Error.EmailRequired')
-            },
-            function (value, data) {
-              return (
-                /.+@.+\..+/.test(value) ||
-                this.$t('Messages.Error.EmailRequired')
-              )
+              return emailRule(v, this.$i18n)
             },
           ],
         },
@@ -2946,13 +2917,7 @@ export default {
           editForm: true,
           rules: [
             function (v) {
-              return !!v || this.$t('Messages.Error.EmailRequired')
-            },
-            function (value, data) {
-              return (
-                /.+@.+\..+/.test(value) ||
-                this.$t('Messages.Error.EmailRequired')
-              )
+              return emailRule(v, this.$i18n)
             },
           ],
         },
@@ -4273,13 +4238,7 @@ export default {
           editForm: true,
           rules: [
             function (v) {
-              return !!v || this.$t('Messages.Error.EmailRequired')
-            },
-            function (value, data) {
-              return (
-                /.+@.+\..+/.test(value) ||
-                this.$t('Messages.Error.EmailRequired')
-              )
+              return emailRule(v, this.$i18n)
             },
           ],
         },
@@ -5955,10 +5914,7 @@ export default {
           cssClasses: 'col-6 col-md-6',
           rules: [
             function (v) {
-              return !!v || this.$t('Messages.Error.EmailRequired')
-            },
-            function (value, data) {
-              return /.+@.+\..+/.test(value) || 'E-mail must be valid'
+              return emailRule(v, this.$i18n)
             },
           ],
         },

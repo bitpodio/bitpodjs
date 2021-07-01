@@ -3,6 +3,7 @@ import contactList from '../gql/contactList.gql'
 import registrationList from '../gql/registrationList.gql'
 import eventInvites from '../gql/eventInvites.gql'
 import eventTasks from '../gql/eventTasks.gql'
+import { emailRule } from '~/utility/index.js'
 
 export default {
   dataSouce: {
@@ -201,10 +202,7 @@ export default {
           cssClasses: 'col-6 col-md-6',
           rules: [
             function (v) {
-              return !!v || this.$t('Messages.Error.EmailRequired')
-            },
-            function (value, data) {
-              return /.+@.+\..+/.test(value) || 'E-mail must be valid'
+              return emailRule(v, this.$i18n)
             },
           ],
         },

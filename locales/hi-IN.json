@@ -1,5 +1,6 @@
 {
   "Common": {
+    "RemoveBlankSpace":"कृपया रिक्त स्थान हटा दें",
     "NoDecimalNumberAllowed":"कोई दशमलव संख्या की अनुमति नहीं है",
     "NewBusinessUnit":"नई व्यावसायिक इकाई",
     "EditBusinessUnit":"व्यापार इकाई संपादित करें",

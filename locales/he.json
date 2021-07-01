@@ -1,5 +1,6 @@
 {
   "Common": {
+    "RemoveBlankSpace":"אנא הסר את החללים הריקים",
     "NoDecimalNumberAllowed":"אין מספר עשרוני מותר",
     "NewBusinessUnit":"יחידה עסקית חדשה",
     "EditBusinessUnit":"ערוך את היחידה העסקית",

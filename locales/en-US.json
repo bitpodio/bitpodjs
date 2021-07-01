@@ -1,5 +1,6 @@
 {
   "Common": {
+    "RemoveBlankSpace":"Please remove the blank spaces",
     "NoDecimalNumberAllowed": "No Decimal number allowed",
     "NewBusinessUnit": "New Business Unit",
     "EditBusinessUnit": "Edit Business Unit",

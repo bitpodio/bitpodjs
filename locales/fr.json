@@ -1,5 +1,6 @@
 {
   "Common": {
+    "RemoveBlankSpace":"Veuillez supprimer les espaces vides",
     "NoDecimalNumberAllowed":"Aucun nombre décimal autorisé",
     "NewBusinessUnit":"Nouvelle unité commerciale",
     "EditBusinessUnit":"Modifier l'unité commerciale",
