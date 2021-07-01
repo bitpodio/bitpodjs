@@ -101,7 +101,7 @@ export default {
         const appRoles = [app.name, ...app.roles]
         return intersection(appRoles, userRoles).length > 0
       })
-      if (filteredApps.length > 0 || strategy === 'bitpod') {
+      if (filteredApps.length > 0 && strategy === 'bitpod') {
         return filteredApps
       } else {
         const filterApps = filteredApps.filter((app) => {

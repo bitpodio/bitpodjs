@@ -12,391 +12,395 @@
           ><i18n path="Common.EditItem" />
         </v-btn>
       </template>
-      <v-card>
-        <v-card-title
-          class="pl-md-10 pl-lg-10 pl-xl-15 pr-1 pb-0 pt-1 d-flex align-start"
-        >
-          <h2 class="black--text pt-5 pb-2 text-h5">
-            <i18n path="Common.EditEvent" />
-          </h2>
-          <v-spacer></v-spacer>
-          <div>
-            <v-btn icon @click="onClose">
-              <v-icon>mdi-close</v-icon>
-            </v-btn>
-          </div>
-        </v-card-title>
-        <v-card-text class="px-xs-2 px-md-10 px-lg-10 px-xl-15 pt-0">
-          <v-row>
-            <v-col cols="12" class="mt-3 pb-0">
-              <v-text-field
-                v-model="formData.Title"
-                :label="$t('Common.Title')"
-                :rules="[rules.required]"
-                required
-                outlined
-                dense
-              ></v-text-field>
-            </v-col>
-            <v-col cols="12" class="mb-5">
-              <span><i18n path="Common.Description" /> </span>
-              <RichText v-model="formData.Description" />
-            </v-col>
-            <v-form
-              ref="dateform"
-              v-model="datevalid"
-              :lazy-validation="lazy"
-              class="px-3 v-data-table__wrapper"
-            >
-              <v-row>
-                <v-col
-                  v-if="formData.BusinessType === 'Single'"
-                  class="col-6 col-md-6"
-                >
-                  <v-datetime-picker
-                    ref="dateTimeComponent"
-                    v-model="StartDate"
-                    :label="$t('Common.StartD')"
-                    :text-field-props="eventStartDateProps"
-                    :on-change="changeStartDate()"
-                  >
-                    <template slot="dateIcon">
-                      <v-icon>fas fa-calendar</v-icon>
-                    </template>
-                    <template slot="timeIcon">
-                      <v-icon>fas fa-clock</v-icon>
-                    </template>
-                  </v-datetime-picker>
-                </v-col>
-                <v-col
-                  v-if="formData.BusinessType === 'Single'"
-                  class="col-6 col-md-6"
-                >
-                  <v-datetime-picker
-                    ref="dateTimeComponent1"
-                    v-model="EndDate"
-                    :label="$t('Common.EndD')"
-                    :text-field-props="eventEndDateProps"
-                    :on-change="changeEndDate()"
-                  >
-                    <template slot="dateIcon">
-                      <v-icon>fas fa-calendar</v-icon>
-                    </template>
-                    <template slot="timeIcon">
-                      <v-icon>fas fa-clock</v-icon>
-                    </template>
-                  </v-datetime-picker>
-                </v-col>
-                <v-col
-                  v-if="formData.BusinessType === 'Single'"
-                  class="d-flex pb-0"
-                  cols="12"
-                  sm="6"
-                  md="6"
-                >
-                  <Timezone
-                    v-model="formData.Timezone"
-                    :field="timezonefield"
-                    :value="formData.Timezone"
-                  />
-                </v-col>
-              </v-row>
-            </v-form>
-            <v-col cols="12" md="6" sm="6" class="pb-0">
-              <v-select
-                v-model="status"
-                :items="statusDropdown"
-                :label="$t('Common.Status')"
-                outlined
-                persistent-hint
-                dense
-              ></v-select>
-            </v-col>
-            <v-col cols="12" md="6" sm="6" class="pb-0">
-              <v-text-field
-                v-model="formData.Organizer"
-                :label="$t('Common.EventOrganizer')"
-                :rules="[rules.required]"
-                outlined
-                required
-                dense
-              ></v-text-field>
-            </v-col>
-            <v-col cols="12" md="6" sm="6" class="pb-0">
-              <v-text-field
-                v-model="formData.EventManager"
-                :label="$t('Common.EventManagerTeamEmail')"
-                :rules="[rules.required, rules.email]"
-                outlined
-                required
-                dense
-              ></v-text-field>
-            </v-col>
-            <v-col
-              v-if="formData.BusinessType === 'Recurring'"
-              cols="12"
-              md="6"
-              sm="6"
-            >
-              <v-text-field
-                v-model="formData.MaxNoRegistrations"
-                type="number"
-                :label="$t('Common.MaxRegistrationsPerDay')"
-                min="0"
-                outlined
-                dense
-              ></v-text-field>
-            </v-col>
-            <v-col cols="12" md="6" sm="6" class="pb-0">
-              <v-select
-                v-model="privacy"
-                :items="privacyDropdown"
-                :label="$t('Common.Privacy')"
-                outlined
-                persistent-hint
-                dense
-              ></v-select>
-            </v-col>
-            <v-col cols="12" md="6" sm="6" class="pb-0">
-              <v-select
-                v-model="currency"
-                :items="currencyDropdown"
-                :label="$t('Common.CurrencyReq')"
-                outlined
-                persistent-hint
-                dense
-              ></v-select>
-            </v-col>
-            <v-col cols="12">
-              <v-select
-                v-model="tags"
-                :items="tagsDropdown"
-                :label="$t('Common.Tags')"
-                multiple
-                chips
-                small-chips
-                outlined
-                persistent-hint
-                dense
-              ></v-select>
-            </v-col>
-            <v-col cols="12" class="pb-0">
-              <v-text-field
-                v-if="formData.LocationType === 'Bitpod Virtual'"
-                :label="$t('Common.BitpodVirtualLink')"
-                outlined
-                dense
-                disabled
-                :value="virtualLink"
-              ></v-text-field>
-            </v-col>
-            <v-col cols="12" class="pb-0">
-              <v-text-field
-                v-if="formData.LocationType === 'Online event'"
-                v-model="formData.WebinarLink"
-                :label="$t('Common.OnlineEventLinkReq')"
-                :rules="[rules.required]"
-                outlined
-                required
-                dense
-              ></v-text-field>
-            </v-col>
-            <v-col cols="12" class="pb-0">
-              <v-textarea
-                v-if="formData.LocationType === 'Online event'"
-                v-model="formData.JoiningInstruction"
-                :label="$t('Common.AdditionalOnlineEventJoining')"
-                outlined
-                required
-                dense
-              ></v-textarea>
-            </v-col>
-            <div
-              v-if="formData.LocationType === 'Venue'"
-              style="display: contents;"
-            >
-              <v-col cols="12" class="mt-n6 positionRelative">
-                <div v-if="addressClicked" class="address-legend">
-                  {{ $t('Common.AddressRequired') }}
-                </div>
-                <no-ssr>
-                  <vue-google-autocomplete
-                    id="map"
-                    ref="address"
-                    v-model="VenueAddress.AddressLine"
-                    outlined
-                    :label="$t('Common.VenueAddress')"
-                    classname="form-control"
-                    :rules="[addressValidation]"
-                    :placeholder="!addressClicked && $t('Common.Address')"
-                    @placechanged="getAddressData"
-                    @change="addressChanged"
-                    @focus="focusIn"
-                    @blur="focusOut"
-                  >
-                  </vue-google-autocomplete>
-                  <span v-if="errorAlert.message != ''" style="color: red;">{{
-                    errorAlert.message
-                  }}</span>
-                </no-ssr>
-              </v-col>
-              <v-col cols="12" class="mt-6">
-                <v-text-field
-                  v-model="formData.VenueName"
-                  :label="$t('Common.VenueName')"
-                  outlined
-                  dense
-                  @change="changeVenueName"
-                ></v-text-field>
-              </v-col>
-              <v-col cols="12">
-                <v-text-field
-                  v-model="VenueAddress.City"
-                  :label="$t('Common.City')"
-                  outlined
-                  dense
-                  @change="changeCity"
-                ></v-text-field>
-              </v-col>
-              <v-col cols="12">
-                <v-text-field
-                  v-model="VenueAddress.State"
-                  :label="$t('Common.State')"
-                  outlined
-                  dense
-                  @change="changeState"
-                ></v-text-field>
-              </v-col>
-              <v-col cols="12">
-                <v-text-field
-                  v-model="VenueAddress.Country"
-                  :label="$t('Common.Country')"
-                  outlined
-                  dense
-                  @change="changeCountry"
-                ></v-text-field>
-              </v-col>
-              <v-col cols="12">
-                <v-text-field
-                  v-model="VenueAddress.PostalCode"
-                  :label="$t('Common.ZipCode')"
-                  outlined
-                  dense
-                  @change="changeZipCode"
-                ></v-text-field>
-              </v-col>
+      <v-form ref="form" v-model="valid">
+        <v-card>
+          <v-card-title
+            class="pl-md-10 pl-lg-10 pl-xl-15 pr-1 pb-0 pt-1 d-flex align-start"
+          >
+            <h2 class="black--text pt-5 pb-2 text-h5">
+              <i18n path="Common.EditEvent" />
+            </h2>
+            <v-spacer></v-spacer>
+            <div>
+              <v-btn icon @click="onClose">
+                <v-icon>mdi-close</v-icon>
+              </v-btn>
             </div>
-            <v-col cols="12" class="mb-5">
-              <span><i18n path="Common.CancellationPolicy" /> </span>
-              <RichText v-model="formData.CancellationPolicy" />
-            </v-col>
-            <v-col cols="12" class="mb-5">
-              <span><i18n path="Common.Message" /> </span>
-              <RichText v-model="formData.Message" />
-            </v-col>
-            <v-col cols="12" sm="6" md="6" class="pb-0">
-              <v-checkbox
-                v-model="formData.isRefundable"
-                :label="$t('Common.AllowCancelation')"
-                dense
-                height="20"
-                class="ma-0 pa-0"
-              ></v-checkbox>
-            </v-col>
-            <v-col cols="12" sm="6" md="6" class="pb-0">
-              <v-checkbox
-                v-model="formData.SessionTimingConflict"
-                :label="$t('Common.ValidateSessionTimingConflict')"
-                dense
-                height="20"
-                class="ma-0 pa-0"
-              ></v-checkbox>
-            </v-col>
-            <v-col cols="12" sm="6" md="6" class="pb-0">
-              <v-checkbox
-                v-model="formData.ShowRemainingTickets"
-                :label="$t('Common.ShowRemainingTicketsCount')"
-                dense
-                height="20"
-                class="ma-0 pa-0"
-              ></v-checkbox>
-            </v-col>
-            <v-col cols="12" sm="6" md="6" class="pb-0">
-              <v-checkbox
-                v-model="formData.ShowAttendeeForm"
-                :label="$t('Common.ShowAttendeeForm')"
-                dense
-                height="20"
-                class="ma-0 pa-0"
-              ></v-checkbox>
-            </v-col>
-            <v-col cols="12" sm="6" md="6" class="pb-0">
-              <v-checkbox
-                v-model="formData.NotifyOrganizer"
-                :label="$t('Common.NotifyOrganizer')"
-                dense
-                height="20"
-                class="ma-0 pa-0"
-              ></v-checkbox>
-            </v-col>
-            <v-col
-              v-if="formData.BusinessType === 'Single'"
-              cols="12"
-              sm="6"
-              md="6"
-              class="pb-0"
-            >
-              <v-checkbox
-                v-model="formData.printBadgeOnCheckIn"
-                :label="$t('Common.AskToPrintBadgeAfterCheckin')"
-                dense
-                height="20"
-                class="ma-0 pa-0"
-              ></v-checkbox>
-            </v-col>
-            <v-col
-              v-if="formData.BusinessType === 'Recurring'"
-              cols="12"
-              sm="6"
-              md="4"
-              class="pb-0"
-            >
-              <v-checkbox
-                v-model="formData.showTimezone"
-                :label="
-                  $t('Common.Allowusertoselectatimezoneforrecurringevent')
-                "
-                dense
-                height="20"
-                class="ma-0 pa-0"
-              ></v-checkbox>
-            </v-col>
-            <v-col cols="12" sm="6" md="4" class="pb-0">
-              <div class="mb-5 black--text">
-                <i18n path="Common.UploadImages" />
+          </v-card-title>
+          <v-card-text class="px-xs-2 px-md-10 px-lg-10 px-xl-15 pt-0">
+            <v-row>
+              <v-col cols="12" class="mt-3 pb-0">
+                <v-text-field
+                  v-model="formData.Title"
+                  :label="$t('Common.Title')"
+                  :rules="[rules.required]"
+                  required
+                  outlined
+                  dense
+                ></v-text-field>
+              </v-col>
+              <v-col cols="12" class="mb-5">
+                <span><i18n path="Common.Description" /> </span>
+                <RichText v-model="formData.Description" />
+              </v-col>
+              <v-form
+                ref="dateform"
+                v-model="datevalid"
+                :lazy-validation="lazy"
+                class="px-3 v-data-table__wrapper"
+              >
+                <v-row>
+                  <v-col
+                    v-if="formData.BusinessType === 'Single'"
+                    class="col-6 col-md-6"
+                  >
+                    <v-datetime-picker
+                      ref="dateTimeComponent"
+                      v-model="StartDate"
+                      :label="$t('Common.StartD')"
+                      :text-field-props="eventStartDateProps"
+                      :on-change="changeStartDate()"
+                    >
+                      <template slot="dateIcon">
+                        <v-icon>fas fa-calendar</v-icon>
+                      </template>
+                      <template slot="timeIcon">
+                        <v-icon>fas fa-clock</v-icon>
+                      </template>
+                    </v-datetime-picker>
+                  </v-col>
+                  <v-col
+                    v-if="formData.BusinessType === 'Single'"
+                    class="col-6 col-md-6"
+                  >
+                    <v-datetime-picker
+                      ref="dateTimeComponent1"
+                      v-model="EndDate"
+                      :label="$t('Common.EndD')"
+                      :text-field-props="eventEndDateProps"
+                      :on-change="changeEndDate()"
+                    >
+                      <template slot="dateIcon">
+                        <v-icon>fas fa-calendar</v-icon>
+                      </template>
+                      <template slot="timeIcon">
+                        <v-icon>fas fa-clock</v-icon>
+                      </template>
+                    </v-datetime-picker>
+                  </v-col>
+                  <v-col
+                    v-if="formData.BusinessType === 'Single'"
+                    class="d-flex pb-0"
+                    cols="12"
+                    sm="6"
+                    md="6"
+                  >
+                    <Timezone
+                      v-model="formData.Timezone"
+                      :field="timezonefield"
+                      :value="formData.Timezone"
+                    />
+                  </v-col>
+                </v-row>
+              </v-form>
+              <v-col cols="12" md="6" sm="6" class="pb-0">
+                <v-select
+                  v-model="status"
+                  :items="statusDropdown"
+                  :label="$t('Common.Status')"
+                  outlined
+                  persistent-hint
+                  dense
+                ></v-select>
+              </v-col>
+              <v-col cols="12" md="6" sm="6" class="pb-0">
+                <v-text-field
+                  v-model="formData.Organizer"
+                  :label="$t('Common.EventOrganizer')"
+                  :rules="[rules.required]"
+                  outlined
+                  required
+                  dense
+                ></v-text-field>
+              </v-col>
+              <v-col cols="12" md="6" sm="6" class="pb-0">
+                <v-text-field
+                  v-model="formData.EventManager"
+                  :label="$t('Common.EventManagerTeamEmail')"
+                  :rules="[rules.required, rules.email]"
+                  outlined
+                  required
+                  dense
+                ></v-text-field>
+              </v-col>
+              <v-col
+                v-if="formData.BusinessType === 'Recurring'"
+                cols="12"
+                md="6"
+                sm="6"
+              >
+                <v-text-field
+                  v-model="formData.MaxNoRegistrations"
+                  type="number"
+                  :label="$t('Common.MaxRegistrationsPerDay')"
+                  min="0"
+                  outlined
+                  dense
+                ></v-text-field>
+              </v-col>
+              <v-col cols="12" md="6" sm="6" class="pb-0">
+                <v-select
+                  v-model="privacy"
+                  :items="privacyDropdown"
+                  :label="$t('Common.Privacy')"
+                  outlined
+                  persistent-hint
+                  dense
+                ></v-select>
+              </v-col>
+              <v-col cols="12" md="6" sm="6" class="pb-0">
+                <v-select
+                  v-model="currency"
+                  :items="currencyDropdown"
+                  :label="$t('Common.CurrencyReq')"
+                  outlined
+                  persistent-hint
+                  dense
+                ></v-select>
+              </v-col>
+              <v-col cols="12">
+                <v-select
+                  v-model="tags"
+                  :items="tagsDropdown"
+                  :label="$t('Common.Tags')"
+                  multiple
+                  chips
+                  small-chips
+                  outlined
+                  persistent-hint
+                  dense
+                ></v-select>
+              </v-col>
+              <v-col cols="12" class="pb-0">
+                <v-text-field
+                  v-if="formData.LocationType === 'Bitpod Virtual'"
+                  :label="$t('Common.BitpodVirtualLink')"
+                  outlined
+                  dense
+                  disabled
+                  :value="virtualLink"
+                ></v-text-field>
+              </v-col>
+              <v-col cols="12" class="pb-0">
+                <v-text-field
+                  v-if="formData.LocationType === 'Online event'"
+                  v-model="formData.WebinarLink"
+                  :label="$t('Common.OnlineEventLinkReq')"
+                  :rules="[rules.required]"
+                  outlined
+                  required
+                  dense
+                ></v-text-field>
+              </v-col>
+              <v-col cols="12" class="pb-0">
+                <v-textarea
+                  v-if="formData.LocationType === 'Online event'"
+                  v-model="formData.JoiningInstruction"
+                  :label="$t('Common.AdditionalOnlineEventJoining')"
+                  outlined
+                  required
+                  dense
+                ></v-textarea>
+              </v-col>
+              <div
+                v-if="formData.LocationType === 'Venue'"
+                style="display: contents;"
+              >
+                <v-col cols="12" class="mt-n6 positionRelative">
+                  <div v-if="addressClicked" class="address-legend">
+                    {{ $t('Common.AddressRequired') }}
+                  </div>
+                  <no-ssr>
+                    <vue-google-autocomplete
+                      id="map"
+                      ref="address"
+                      v-model="VenueAddress.AddressLine"
+                      outlined
+                      :label="$t('Common.VenueAddress')"
+                      classname="form-control"
+                      :rules="[addressValidation]"
+                      :placeholder="!addressClicked && $t('Common.Address')"
+                      @placechanged="getAddressData"
+                      @change="addressChanged"
+                      @focus="focusIn"
+                      @blur="focusOut"
+                    >
+                    </vue-google-autocomplete>
+                    <span v-if="errorAlert.message != ''" style="color: red;">{{
+                      errorAlert.message
+                    }}</span>
+                  </no-ssr>
+                </v-col>
+                <v-col cols="12" class="mt-6">
+                  <v-text-field
+                    v-model="formData.VenueName"
+                    :label="$t('Common.VenueName')"
+                    outlined
+                    dense
+                    @change="changeVenueName"
+                  ></v-text-field>
+                </v-col>
+                <v-col cols="12">
+                  <v-text-field
+                    v-model="VenueAddress.City"
+                    :label="$t('Common.City')"
+                    outlined
+                    dense
+                    @change="changeCity"
+                  ></v-text-field>
+                </v-col>
+                <v-col cols="12">
+                  <v-text-field
+                    v-model="VenueAddress.State"
+                    :label="$t('Common.State')"
+                    outlined
+                    dense
+                    @change="changeState"
+                  ></v-text-field>
+                </v-col>
+                <v-col cols="12">
+                  <v-text-field
+                    v-model="VenueAddress.Country"
+                    :label="$t('Common.Country')"
+                    outlined
+                    dense
+                    @change="changeCountry"
+                  ></v-text-field>
+                </v-col>
+                <v-col cols="12">
+                  <v-text-field
+                    v-model="VenueAddress.PostalCode"
+                    :label="$t('Common.ZipCode')"
+                    outlined
+                    dense
+                    @change="changeZipCode"
+                  ></v-text-field>
+                </v-col>
               </div>
-              <File
-                :field="fileField"
-                :value="selectedImage"
-                @input="fileUploadedEventBanner"
-              />
-            </v-col>
-          </v-row>
-        </v-card-text>
-        <v-divider></v-divider>
-        <v-card-actions
-          class="px-xs-3 px-md-10 px-lg-10 px-xl-15 px-xs-10 pl-xs-10"
-        >
-          <SaveBtn
-            v-if="dialog"
-            color="primary"
-            :disabled="VenueAddress.AddressLine === '' || !valid || !datevalid"
-            :label="this.$t('Drawer.Save')"
-            depressed
-            :action="onSave"
-          ></SaveBtn>
-        </v-card-actions>
-      </v-card>
+              <v-col cols="12" class="mb-5">
+                <span><i18n path="Common.CancellationPolicy" /> </span>
+                <RichText v-model="formData.CancellationPolicy" />
+              </v-col>
+              <v-col cols="12" class="mb-5">
+                <span><i18n path="Common.Message" /> </span>
+                <RichText v-model="formData.Message" />
+              </v-col>
+              <v-col cols="12" sm="6" md="6" class="pb-0">
+                <v-checkbox
+                  v-model="formData.isRefundable"
+                  :label="$t('Common.AllowCancelation')"
+                  dense
+                  height="20"
+                  class="ma-0 pa-0"
+                ></v-checkbox>
+              </v-col>
+              <v-col cols="12" sm="6" md="6" class="pb-0">
+                <v-checkbox
+                  v-model="formData.SessionTimingConflict"
+                  :label="$t('Common.ValidateSessionTimingConflict')"
+                  dense
+                  height="20"
+                  class="ma-0 pa-0"
+                ></v-checkbox>
+              </v-col>
+              <v-col cols="12" sm="6" md="6" class="pb-0">
+                <v-checkbox
+                  v-model="formData.ShowRemainingTickets"
+                  :label="$t('Common.ShowRemainingTicketsCount')"
+                  dense
+                  height="20"
+                  class="ma-0 pa-0"
+                ></v-checkbox>
+              </v-col>
+              <v-col cols="12" sm="6" md="6" class="pb-0">
+                <v-checkbox
+                  v-model="formData.ShowAttendeeForm"
+                  :label="$t('Common.ShowAttendeeForm')"
+                  dense
+                  height="20"
+                  class="ma-0 pa-0"
+                ></v-checkbox>
+              </v-col>
+              <v-col cols="12" sm="6" md="6" class="pb-0">
+                <v-checkbox
+                  v-model="formData.NotifyOrganizer"
+                  :label="$t('Common.NotifyOrganizer')"
+                  dense
+                  height="20"
+                  class="ma-0 pa-0"
+                ></v-checkbox>
+              </v-col>
+              <v-col
+                v-if="formData.BusinessType === 'Single'"
+                cols="12"
+                sm="6"
+                md="6"
+                class="pb-0"
+              >
+                <v-checkbox
+                  v-model="formData.printBadgeOnCheckIn"
+                  :label="$t('Common.AskToPrintBadgeAfterCheckin')"
+                  dense
+                  height="20"
+                  class="ma-0 pa-0"
+                ></v-checkbox>
+              </v-col>
+              <v-col
+                v-if="formData.BusinessType === 'Recurring'"
+                cols="12"
+                sm="6"
+                md="4"
+                class="pb-0"
+              >
+                <v-checkbox
+                  v-model="formData.showTimezone"
+                  :label="
+                    $t('Common.Allowusertoselectatimezoneforrecurringevent')
+                  "
+                  dense
+                  height="20"
+                  class="ma-0 pa-0"
+                ></v-checkbox>
+              </v-col>
+              <v-col cols="12" sm="6" md="4" class="pb-0">
+                <div class="mb-5 black--text">
+                  <i18n path="Common.UploadImages" />
+                </div>
+                <File
+                  :field="fileField"
+                  :value="selectedImage"
+                  @input="fileUploadedEventBanner"
+                />
+              </v-col>
+            </v-row>
+          </v-card-text>
+          <v-divider></v-divider>
+          <v-card-actions
+            class="px-xs-3 px-md-10 px-lg-10 px-xl-15 px-xs-10 pl-xs-10"
+          >
+            <SaveBtn
+              v-if="dialog"
+              color="primary"
+              :disabled="
+                VenueAddress.AddressLine === '' || !valid || !datevalid
+              "
+              :label="this.$t('Drawer.Save')"
+              depressed
+              :action="onSave"
+            ></SaveBtn>
+          </v-card-actions>
+        </v-card>
+      </v-form>
     </v-dialog>
   </v-col>
 </template>
@@ -446,8 +450,8 @@ export default {
       eventId: this.items[0].id,
       selectedImage: '',
       loading: 0,
-      valid: true,
-      datevalid: true,
+      valid: false,
+      datevalid: false,
       addressClicked: false,
       startdateMessage: '',
       enddateMessage: '',
