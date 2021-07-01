@@ -5,6 +5,7 @@ import registrationList from '../gql/registrationList.gql'
 import eventAttendees from '../gql/eventAttendees.gql'
 import eventTasks from '../gql/eventTasks.gql'
 import { getData, getLookupData } from '../rest'
+import { emailRule } from '~/utility/index.js'
 
 export default {
   views: {
@@ -153,20 +154,7 @@ export default {
           editForm: true,
           rules: [
             function (v) {
-              return !!v || this.$t('Messages.Error.EmailRequired')
-            },
-            function (value, data) {
-              return (
-                /.+@.+\..+/.test(value) ||
-                this.$t('Messages.Error.EmailRequired')
-              )
-            },
-            function (value, data) {
-              return (
-                /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/.test(
-                  value
-                ) || this.$t('Common.RemoveBlankSpace')
-              )
+              return emailRule(v, this.$i18n)
             },
           ],
         },
@@ -626,20 +614,7 @@ export default {
           editForm: true,
           rules: [
             function (v) {
-              return !!v || this.$t('Messages.Error.EmailRequired')
-            },
-            function (value, data) {
-              return (
-                /.+@.+\..+/.test(value) ||
-                this.$t('Messages.Error.EmailRequired')
-              )
-            },
-            function (value, data) {
-              return (
-                /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/.test(
-                  value
-                ) || this.$t('Common.RemoveBlankSpace')
-              )
+              return emailRule(v, this.$i18n)
             },
           ],
         },
@@ -1359,20 +1334,7 @@ export default {
           editForm: true,
           rules: [
             function (v) {
-              return !!v || this.$t('Messages.Error.EmailRequired')
-            },
-            function (value, data) {
-              return (
-                /.+@.+\..+/.test(value) ||
-                this.$t('Messages.Error.EmailRequired')
-              )
-            },
-            function (value, data) {
-              return (
-                /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/.test(
-                  value
-                ) || this.$t('Common.RemoveBlankSpace')
-              )
+              return emailRule(v, this.$i18n)
             },
           ],
         },
@@ -1958,20 +1920,7 @@ export default {
           editForm: true,
           rules: [
             function (v) {
-              return !!v || this.$t('Messages.Error.EmailRequired')
-            },
-            function (value, data) {
-              return (
-                /.+@.+\..+/.test(value) ||
-                this.$t('Messages.Error.EmailRequired')
-              )
-            },
-            function (value, data) {
-              return (
-                /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/.test(
-                  value
-                ) || this.$t('Common.RemoveBlankSpace')
-              )
+              return emailRule(v, this.$i18n)
             },
           ],
         },

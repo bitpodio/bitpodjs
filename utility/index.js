@@ -408,3 +408,17 @@ export function getPriceWithCurrency(price, currency) {
   })
   return totalPrice
 }
+
+export function emailRule(value, that) {
+  if (!/.+@.+\..+/.test(value)) {
+    return that.t('Messages.Error.EmailRequired')
+  } else if (
+    !/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/.test(
+      value
+    )
+  ) {
+    return that.t('Common.RemoveBlankSpace')
+  } else {
+    return true
+  }
+}
