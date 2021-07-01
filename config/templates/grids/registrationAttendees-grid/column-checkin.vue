@@ -266,9 +266,7 @@ export default {
       const url = this.$bitpod.getApiUrl()
       try {
         const res = await this.$axios.$get(`${url}Events/${this.eventId}`)
-        console.debug('id', this.eventId)
         if (res) {
-          console.debug(res)
           this.eventStatus = res.data.Status
         }
       } catch (err) {

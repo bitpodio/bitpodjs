@@ -305,7 +305,6 @@ export default {
           },
         })
         if (result) {
-          debugger
           const orgInfo = formatGQLResult(result.data, 'OrganizationInfo')
           if (this.context.event.Logo && this.context.event.Logo.length > 0) {
             this.logoId = this.context.event.Logo[0]
