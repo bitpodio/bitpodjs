@@ -1928,6 +1928,7 @@ export default {
           if (res) {
             this.snackbarText = this.$t('Common.PastEventMessage')
             this.snackbar = true
+            this.refresh()
           }
         } catch (err) {
           console.error(
@@ -2733,7 +2734,7 @@ export default {
           this.eventData.EndDate < new Date().toISOString() &&
           this.eventData.Status !== 'Registration closed'
         ) {
-          this.eventData.Status = 'Registration closed'
+          // this.eventData.Status = 'Registration closed'
           this.checkEventStatus()
         }
         this.getOrgInfo()

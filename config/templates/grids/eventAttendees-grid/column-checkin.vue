@@ -11,7 +11,10 @@
       </div>
       <v-chip
         v-else
-        :disabled="item.Status === 'Cancelled'"
+        :disabled="
+          item.Status === 'Cancelled' ||
+          context.event.Status === 'Registration closed'
+        "
         class="ma-2 pb-0 mt-1"
         height="20"
         color="blue"
@@ -302,6 +305,7 @@ export default {
           },
         })
         if (result) {
+          debugger
           const orgInfo = formatGQLResult(result.data, 'OrganizationInfo')
           if (this.context.event.Logo && this.context.event.Logo.length > 0) {
             this.logoId = this.context.event.Logo[0]

@@ -6,7 +6,9 @@
       style="height: 10px;"
     >
       <v-chip
-        :disabled="item.Status === 'Cancelled'"
+        :disabled="
+          item.Status === 'Cancelled' || eventStatus === 'Registration closed'
+        "
         class="ma-2 pb-0 mt-1"
         height="13"
         color="blue"
@@ -142,10 +144,12 @@ export default {
       eventTitle: '',
       eventType: '',
       printBadgeOnCheckIn: false,
+      eventStatus: '',
     }
   },
   mounted() {
     this.getEventId()
+
     this.getOrgInfo()
     setTimeout(this.openPrint, 5000)
   },
@@ -249,11 +253,27 @@ export default {
         if (result) {
           const badgeTemplate = formatGQLResult(result.data, 'Badge')
           this.Template = badgeTemplate[0].Template
+          this.getEventDetails()
         }
       } catch (e) {
         console.error(
           `Errors in config/templates/grids/registrationAttendees-grid/column-checkin.vue while making a GQL call to Badge model in method getEventSelectedBadge context: EventId: ${this.eventId}`,
           e
+        )
+      }
+    },
+    async getEventDetails() {
+      const url = this.$bitpod.getApiUrl()
+      try {
+        const res = await this.$axios.$get(`${url}Events/${this.eventId}`)
+        console.debug('id', this.eventId)
+        if (res) {
+          console.debug(res)
+          this.eventStatus = res.data.Status
+        }
+      } catch (err) {
+        console.error(
+          `Error in config/templates/grids/registrationAttendees-grid/column-checkin.vue while making a GET call to Event model in method getEventDetails context:EventId: ${this.eventId} \n err:${err}`
         )
       }
     },
