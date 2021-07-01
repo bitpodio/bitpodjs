@@ -89,6 +89,13 @@ export default {
             function (value, data) {
               return /.+@.+\..+/.test(value) || 'E-mail must be valid'
             },
+            function (value, data) {
+              return (
+                /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/.test(
+                  value
+                ) || this.$t('Common.RemoveBlankSpace')
+              )
+            },
           ],
         },
         BusinessNumber: {

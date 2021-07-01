@@ -161,6 +161,13 @@ export default {
                 this.$t('Messages.Error.EmailRequired')
               )
             },
+            function (value, data) {
+              return (
+                /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/.test(
+                  value
+                ) || this.$t('Common.RemoveBlankSpace')
+              )
+            },
           ],
         },
         '_CurrentAddress.AddressLine': {
@@ -625,6 +632,13 @@ export default {
               return (
                 /.+@.+\..+/.test(value) ||
                 this.$t('Messages.Error.EmailRequired')
+              )
+            },
+            function (value, data) {
+              return (
+                /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/.test(
+                  value
+                ) || this.$t('Common.RemoveBlankSpace')
               )
             },
           ],
@@ -1353,6 +1367,13 @@ export default {
                 this.$t('Messages.Error.EmailRequired')
               )
             },
+            function (value, data) {
+              return (
+                /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/.test(
+                  value
+                ) || this.$t('Common.RemoveBlankSpace')
+              )
+            },
           ],
         },
         TicketName: {
@@ -1943,6 +1964,13 @@ export default {
               return (
                 /.+@.+\..+/.test(value) ||
                 this.$t('Messages.Error.EmailRequired')
+              )
+            },
+            function (value, data) {
+              return (
+                /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/.test(
+                  value
+                ) || this.$t('Common.RemoveBlankSpace')
               )
             },
           ],

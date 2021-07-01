@@ -386,8 +386,6 @@ export default {
               startDateMessage = this.$t('Messages.Error.ThisFieldRequired')
             else if (StartDate > EndDate)
               startDateMessage = this.$t('Messages.Error.StartEndDate')
-            else if (StartDate < new Date())
-              startDateMessage = this.$t('Messages.Error.EventStartDate')
             else startDateMessage = ''
             return startDateMessage || true
           },

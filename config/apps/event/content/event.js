@@ -1056,6 +1056,13 @@ export default {
                 this.$t('Messages.Error.EmailRequired')
               )
             },
+            function (value, data) {
+              return (
+                /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/.test(
+                  value
+                ) || this.$t('Common.RemoveBlankSpace')
+              )
+            },
           ],
         },
         'registration.FullName': {
@@ -1513,6 +1520,13 @@ export default {
               return (
                 /.+@.+\..+/.test(value) ||
                 this.$t('Messages.Error.EmailRequired')
+              )
+            },
+            function (value, data) {
+              return (
+                /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/.test(
+                  value
+                ) || this.$t('Common.RemoveBlankSpace')
               )
             },
           ],
@@ -2088,6 +2102,13 @@ export default {
                 this.$t('Messages.Error.EmailRequired')
               )
             },
+            function (value, data) {
+              return (
+                /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/.test(
+                  value
+                ) || this.$t('Common.RemoveBlankSpace')
+              )
+            },
           ],
         },
         BookingDate: {
@@ -2551,6 +2572,13 @@ export default {
                 this.$t('Messages.Error.EmailRequired')
               )
             },
+            function (value, data) {
+              return (
+                /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/.test(
+                  value
+                ) || this.$t('Common.RemoveBlankSpace')
+              )
+            },
           ],
         },
         Phone: {
@@ -2952,6 +2980,13 @@ export default {
               return (
                 /.+@.+\..+/.test(value) ||
                 this.$t('Messages.Error.EmailRequired')
+              )
+            },
+            function (value, data) {
+              return (
+                /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/.test(
+                  value
+                ) || this.$t('Common.RemoveBlankSpace')
               )
             },
           ],
@@ -4279,6 +4314,13 @@ export default {
               return (
                 /.+@.+\..+/.test(value) ||
                 this.$t('Messages.Error.EmailRequired')
+              )
+            },
+            function (value, data) {
+              return (
+                /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/.test(
+                  value
+                ) || this.$t('Common.RemoveBlankSpace')
               )
             },
           ],
@@ -5959,6 +6001,13 @@ export default {
             },
             function (value, data) {
               return /.+@.+\..+/.test(value) || 'E-mail must be valid'
+            },
+            function (value, data) {
+              return (
+                /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/.test(
+                  value
+                ) || this.$t('Common.RemoveBlankSpace')
+              )
             },
           ],
         },
