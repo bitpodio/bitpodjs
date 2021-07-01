@@ -113,7 +113,7 @@ export default {
         return intersection(appRoles, userRoles).length > 0
       })
       console.debug('before filterApps', filteredApps)
-      if (filteredApps.length > 0 || strategy === 'bitpod') {
+      if (filteredApps.length > 0 && strategy === 'bitpod') {
         console.debug('filteredApps length > 0', filteredApps)
         console.debug('strategy', strategy)
         return filteredApps
