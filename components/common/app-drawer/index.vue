@@ -71,18 +71,25 @@ export default {
   },
   computed: {
     userApps() {
+      debugger
       const strategy = this.$auth.$storage.getCookies()['auth.strategy']
+      console.debug('userApps >> Startegy', strategy)
       const userInfo = userUtils.userCurrentOrgInfo(this.$store) || {}
+      console.debug('userApps >> userInfo', userInfo)
       const userRoles = [
         ...(userInfo.roles || []),
         ...(this.$auth.$state.loggedIn ? ['$authenticated'] : []),
       ]
+      console.debug('userApps >> userRoles', userRoles)
       if (
         userRoles.includes('$orgowner') &&
         userInfo &&
         userInfo.id === 1 &&
         strategy === 'bitpod'
       ) {
+        console.debug('having orgowner access')
+        console.debug('having userInfo.id is 1', userInfo.id)
+        console.debug('having orgowner strategy bitpod', strategy)
         return this.apps
       }
 
@@ -92,21 +99,30 @@ export default {
         userInfo.id === 1 &&
         strategy === 'google'
       ) {
+        console.debug('having orgowner access')
+        console.debug('having userInfo.id is 1', userInfo.id)
+        console.debug('having orgowner strategy google', strategy)
         const filterApps = this.apps.filter((app) => {
           return app.name !== 'userprofile'
         })
+        console.debug('filterApps', filterApps)
         return filterApps
       }
       const filteredApps = this.apps.filter((app) => {
         const appRoles = [app.name, ...app.roles]
         return intersection(appRoles, userRoles).length > 0
       })
+      console.debug('before filterApps', filteredApps)
       if (filteredApps.length > 0 || strategy === 'bitpod') {
+        console.debug('filteredApps length > 0', filteredApps)
+        console.debug('strategy', strategy)
         return filteredApps
       } else {
         const filterApps = filteredApps.filter((app) => {
           return app.name !== 'userprofile'
         })
+        console.debug('filterApps length ', filterApps)
+        console.debug('strategy', strategy)
         return filterApps
       }
     },

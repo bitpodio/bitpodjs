@@ -1780,9 +1780,7 @@ export default {
     },
     async updateRegistrationPage() {
       const obj = this.updateSectionHeading
-      const URL = `https://${this.$bitpod.getApiUrl()}Events/${
-        this.$route.params.id
-      }`
+      const URL = `${this.$bitpod.getApiUrl()}Events/${this.$route.params.id}`
       try {
         const res = await this.$axios.$patch(URL, obj)
         if (res) {

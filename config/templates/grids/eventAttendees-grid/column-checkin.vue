@@ -11,6 +11,7 @@
       </div>
       <v-chip
         v-else
+        :disabled="item.Status === 'Cancelled'"
         class="ma-2 pb-0 mt-1"
         height="20"
         color="blue"

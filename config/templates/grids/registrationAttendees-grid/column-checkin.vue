@@ -6,6 +6,7 @@
       style="height: 10px;"
     >
       <v-chip
+        :disabled="item.Status === 'Cancelled'"
         class="ma-2 pb-0 mt-1"
         height="13"
         color="blue"
