@@ -4,7 +4,7 @@
     <div class="search-section mt-2">
       <div class="text-center">
         <div>
-          <h2 class="black--text pt-2 pb-0 text-h5">
+          <h2 class="black--text pt-0 pb-0 text-h5">
             {{ $t('Common.SearchRegistration') }}
           </h2>
         </div>
