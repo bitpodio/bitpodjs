@@ -70,7 +70,7 @@
         </div>
         <div class="px-4 fs-14 mt-1">
           {{ $t('Common.ContactMessage') }}
-          <span class="blue--text">support@bitpod.io</span>
+          <span class="blue--text"><i18n path="Common.SupportMail" /></span>
         </div>
       </v-card>
     </div>
