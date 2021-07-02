@@ -1294,7 +1294,7 @@ export default {
   width: 100%;
 }
 .event-ticket-name {
-  white-space: no;
+  white-space: nowrap;
 }
 @media screen and (max-width: 600px) {
   .background-event-img {
