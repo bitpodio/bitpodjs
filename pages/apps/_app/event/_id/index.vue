@@ -205,7 +205,7 @@
                       )
                     }}
                   </a>
-                  <a class="blue--text">
+                  <a v-if="!isStateExists" class="blue--text">
                     {{
                       formatAddressField(
                         data.event._VenueAddress &&
@@ -240,6 +240,14 @@
                       formatAddressField(
                         data.event._VenueAddress &&
                           data.event._VenueAddress.PostalCode
+                      )
+                    }}
+                  </a>
+                  <a v-else class="blue--text">
+                    {{
+                      formatAddressField(
+                        data.event._VenueAddress &&
+                          data.event._VenueAddress.AddressLine
                       )
                     }}
                   </a>
@@ -1807,6 +1815,7 @@ export default {
       layoutName: '',
       popupDialog: false,
       attendeeTest: {},
+      isStateExists: false,
     }
   },
   computed: {
@@ -2724,8 +2733,14 @@ export default {
         const eventSummary =
           (data.Event && data.Event.EventGetEventSummery) || {}
         this.eventData = event.length > 0 ? event[0] : {}
-        console.log('Logs for publish event data issue', this.eventData)
         this.badgeData = badge.length > 0 ? badge[0] : {}
+        this.isStateExists =
+          this.eventData._VenueAddress.AddressLine.includes(
+            this.eventData._VenueAddress.City
+          ) &&
+          this.eventData._VenueAddress.AddressLine.includes(
+            this.eventData._VenueAddress.Country
+          )
         this.eventData_sectionHeading =
           this.eventData._sectionHeading !== null
             ? this.eventData._sectionHeading
