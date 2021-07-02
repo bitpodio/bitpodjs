@@ -495,10 +495,10 @@ export default {
     },
     getAddressData(addressData, placeResultData, id) {
       this.addressClicked = true
-      this.VenueAddress.AddressLine = addressData.route
-      this.formData.VenueName = addressData.route
-      this.VenueAddress.Country = addressData.country
-      this.VenueAddress.City = addressData.locality
+      this.VenueAddress.AddressLine = addressData.route || ''
+      this.formData.VenueName = addressData.route || ''
+      this.VenueAddress.Country = addressData.country || ''
+      this.VenueAddress.City = addressData.locality || ''
       const venue = placeResultData.address_components.find(
         (i) =>
           addressData.administrative_area_level_1 &&
