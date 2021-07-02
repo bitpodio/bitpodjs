@@ -148,6 +148,11 @@ export default {
           inlineEdit: true,
           newForm: true,
           editForm: true,
+          rules: [
+            function (v) {
+              return !!v || this.$t('Messages.Error.TicketSelected')
+            },
+          ],
           dataSource: {
             query: registrationStatusOptions,
             itemText: 'value',
