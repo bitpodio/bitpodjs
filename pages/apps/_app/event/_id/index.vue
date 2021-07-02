@@ -1503,7 +1503,10 @@
               @change="updateReg"
             ></v-checkbox>
           </v-flex>
-          <v-flex class="d-block text-truncate">
+          <v-flex
+            v-if="data.event.LocationType === 'Bitpod Virtual'"
+            class="d-block text-truncate"
+          >
             <v-checkbox
               v-model="data.event.allowChat"
               dense
