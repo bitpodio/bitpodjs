@@ -881,7 +881,7 @@
               </div>
               <div v-else>
                 <v-flex my-3>
-                  <div class="body-1">
+                  <div class="body-1 text-justify">
                     {{
                       registration &&
                       registration.EventList &&
