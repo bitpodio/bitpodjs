@@ -251,6 +251,23 @@
             </div>
             <Grid view-name="departments" :content="content" class="mt-n12" />
           </div>
+          <div
+            v-if="content"
+            class="xs12 sm4 md4 lg4 boxview boxviewsmall pad-card mr-0 mb-4 pb-6 elevation-1 rounded-lg"
+          >
+            <div class="sticky d-flex flex-column justify-center boxview">
+              <v-flex
+                class="d-flex justify-center align-center pb-md-2 pt-md-2"
+              >
+                <h2 class="body-1 pb-0">
+                  Contact Tags
+                </h2>
+                <v-spacer></v-spacer>
+              </v-flex>
+              <v-divider></v-divider>
+            </div>
+            <Grid view-name="contacttags" :content="content" class="mt-n12" />
+          </div>
         </v-tab-item>
         <v-tab-item :value="'tab-6'">
           <div
