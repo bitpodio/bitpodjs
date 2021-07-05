@@ -826,6 +826,10 @@ table > tbody > tr:last-child .key-align {
 .theme--dark .slide-form h2 {
   color: #fff !important;
 }
+.wrap-word-break {
+  max-width: 100%;
+  word-wrap: break-word;
+}
 @media (min-width: 1904px) {
   .boxviewlarge .v-data-table__wrapper {
     margin-bottom: 0 !important;
