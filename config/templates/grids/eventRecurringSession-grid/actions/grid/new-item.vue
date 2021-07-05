@@ -1294,8 +1294,6 @@ export default {
         startTime = parseInt(startTime)
         endTime = parseInt(endTime)
         const newsObject = { start: startTime, end: endTime }
-        debugger
-        console.log(row)
         row._Exceptions.forEach((day) => {
           if (day.type === 'wday') {
             tempData.push({ ...newsObject, day: day.wday })
@@ -1370,7 +1368,6 @@ export default {
         let exceptionRes = null
 
         if (this.actionType === 'New') {
-          console.debug('New recurring session', this.session)
           try {
             res = await this.$axios.$post(`${baseUrl}Sessions`, {
               ...this.session,
@@ -1403,7 +1400,6 @@ export default {
             return exceptionRes
           }
         } else if (this.actionType === 'Edit') {
-          console.debug('Edit recurring session', this.session)
           try {
             res = await this.$axios.$patch(
               `${baseUrl}Sessions/${this.session.id}`,
