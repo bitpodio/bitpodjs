@@ -246,6 +246,13 @@
                   <a v-else class="blue--text">
                     {{
                       formatAddressField(
+                        data.event.VenueName !== ''
+                          ? data.event.VenueName + ','
+                          : ''
+                      )
+                    }}
+                    {{
+                      formatAddressField(
                         data.event._VenueAddress &&
                           data.event._VenueAddress.AddressLine
                       )
