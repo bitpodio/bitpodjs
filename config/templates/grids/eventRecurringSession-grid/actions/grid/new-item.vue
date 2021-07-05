@@ -1092,34 +1092,26 @@ export default {
       return arr[0].end
     },
 
-    partitionIntoOverlappingRanges(array) {
-      array.sort(function (a, b) {
-        if (a.start < b.start) return -1
-        if (a.start > b.start) return 1
-        return 0
+    partitionIntoOverlappingRanges(array, newSession) {
+      let isOverlap = false
+      array.forEach((session) => {
+        if (newSession.Days.some((i) => i === session.day)) {
+          const arr = []
+          let flag = false
+          for (let i = session.start; i <= session.end; i++) {
+            arr.push(i)
+          }
+          for (let i = newSession.StartTime; i <= newSession.EndTime; i++) {
+            if (arr.some((j) => j === i)) {
+              flag = true
+            }
+          }
+          if (flag) {
+            isOverlap = true
+          }
+        }
       })
-
-      const rarray = []
-      let g = 0
-      rarray[g] = [array[0]]
-
-      for (let i = 1, l = array.length; i < l; i++) {
-        if (
-          array[i].start >= array[i - 1].start &&
-          array[i].start < this.getMaxEnd(rarray[g])
-        ) {
-          rarray[g].push(array[i])
-        } else {
-          g++
-          rarray[g] = [array[i]]
-        }
-      }
-      for (let i = 0; i < rarray.length; i++) {
-        if (rarray[i].length > 1) {
-          return true
-        }
-      }
-      return false
+      return isOverlap
     },
     removeDay(day) {
       let removeIndex
@@ -1291,28 +1283,36 @@ export default {
       }
       const tempData = []
       const setDays = []
-      this.sessionResult.push({
-        StartTime: this.session.StartTime,
-        EndTime: this.session.EndTime,
-      })
+      const newSession = {
+        StartTime: parseInt(this.session.StartTime.replace(':', '.')),
+        EndTime: parseInt(this.session.EndTime.replace(':', '.')),
+        Days: this.selectedDays,
+      }
       this.sessionResult.forEach((row) => {
         let startTime = row.StartTime && row.StartTime.replace(':', '.')
         let endTime = row.EndTime && row.EndTime.replace(':', '.')
         startTime = parseInt(startTime)
         endTime = parseInt(endTime)
         const newsObject = { start: startTime, end: endTime }
-        tempData.push(newsObject)
+        row._Exceptions.forEach((day) => {
+          if (day.type === 'wday') {
+            tempData.push({ ...newsObject, day: day.wday })
+          }
+        })
       })
       this.selectedDays.forEach((x) => setDays.push(x))
       this.allSessionDays.forEach((y) => {
         setDays.push(y)
       })
       const isOverlappingDays = this.checkOverlappingDays(setDays)
-      const isInvalidSlot = this.partitionIntoOverlappingRanges(tempData)
+      const isInvalidSlot = this.partitionIntoOverlappingRanges(
+        tempData,
+        newSession
+      )
       if (
         this.actionType === 'Edit' ||
-        isInvalidSlot === false ||
         isOverlappingDays === false ||
+        isInvalidSlot === false ||
         (await this.$refs.confirm.open(
           this.$t('Drawer.SessionOverlaps'),
           this.$t('Messages.Warn.OverLapSessionMsg'),
@@ -1368,7 +1368,6 @@ export default {
         let exceptionRes = null
 
         if (this.actionType === 'New') {
-          console.debug('New recurring session', this.session)
           try {
             res = await this.$axios.$post(`${baseUrl}Sessions`, {
               ...this.session,
@@ -1401,7 +1400,6 @@ export default {
             return exceptionRes
           }
         } else if (this.actionType === 'Edit') {
-          console.debug('Edit recurring session', this.session)
           try {
             res = await this.$axios.$patch(
               `${baseUrl}Sessions/${this.session.id}`,
