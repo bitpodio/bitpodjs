@@ -93,6 +93,12 @@ export default {
       }
     },
   },
+  mounted() {
+    this.$eventBus.$on('itemContact', this.updateList)
+  },
+  beforeDestroy() {
+    this.$eventBus.$off('itemContact')
+  },
   methods: {
     onClose() {
       this.dialog = false
