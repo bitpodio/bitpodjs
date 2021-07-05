@@ -1222,7 +1222,7 @@ export default {
         hideFilter: false,
         hideSearch: true,
       },
-      itemTitle: 'Common.ContactTypes',
+      itemTitle: 'Common.ContactTags',
       default: false,
       fields: {
         type: {
