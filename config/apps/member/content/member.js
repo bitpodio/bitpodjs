@@ -150,7 +150,7 @@ export default {
           editForm: true,
           rules: [
             function (v) {
-              return !!v || this.$t('Messages.Error.TicketSelected')
+              return !!v || this.$t('Messages.Error.FieldRequired')
             },
           ],
           dataSource: {
