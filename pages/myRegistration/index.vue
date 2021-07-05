@@ -4,7 +4,7 @@
     <div class="search-section mt-2">
       <div class="text-center">
         <div>
-          <h2 class="black--text pt-5 pb-0 text-h5">
+          <h2 class="black--text pt-0 pb-0 text-h5">
             {{ $t('Common.SearchRegistration') }}
           </h2>
         </div>
@@ -45,7 +45,7 @@
                 ></v-text-field>
               </v-col> </v-row></v-form
         ></v-card-text>
-        <v-card-actions class="px-4">
+        <v-card-actions class="px-4 pt-0">
           <v-btn
             depressed
             block
@@ -68,9 +68,9 @@
         <div v-show="show" class="px-4 fs-14">
           {{ $t('Common.RegistrationMentioned') }}
         </div>
-        <div class="px-4 fs-14 mt-2">
+        <div class="px-4 fs-14 mt-1">
           {{ $t('Common.ContactMessage') }}
-          <span class="blue--text">support@bitpod.io</span>
+          <span class="blue--text"><i18n path="Common.SupportMail" /></span>
         </div>
       </v-card>
     </div>
