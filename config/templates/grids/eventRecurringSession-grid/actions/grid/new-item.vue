@@ -396,7 +396,7 @@
                   class="pb-0"
                 >
                   <CustomDate
-                    v-model="session.StartDate"
+                    v-model="StartDate"
                     :label="$t('Common.StartD')"
                     :field="startDateField"
                     type="date"
@@ -417,7 +417,7 @@
                   class="pb-0"
                 >
                   <CustomDate
-                    v-model="session.EndDate"
+                    v-model="EndDate"
                     :label="$t('Common.EndD')"
                     :field="endDateField"
                     type="date"
@@ -632,6 +632,10 @@ export default {
       addressClicked = true
     }
     return {
+      StartDate:
+        this.type === 'Edit' ? this.setEditDate(this.items[0].StartDate) : '',
+      EndDate:
+        this.type === 'Edit' ? this.setEditDate(this.items[0].EndDate) : '',
       rules: rules(this.$i18n),
       snackbar: false,
       timeout: 2000,
@@ -971,6 +975,11 @@ export default {
     this.getEventSessions()
   },
   methods: {
+    setEditDate(value) {
+      const date = new Date(value)
+      date.setHours(5, 30, 0, 0)
+      return date
+    },
     async getEventSessions() {
       const url = this.$bitpod.getApiUrl()
       try {
@@ -1368,7 +1377,13 @@ export default {
         let exceptionRes = null
 
         if (this.actionType === 'New') {
-          console.debug('New recurring session', this.session)
+          const sessionEndDate = new Date(this.EndDate)
+          sessionEndDate.setHours(0, 0, 0, 0)
+          this.session.EndDate = sessionEndDate.toISOString()
+          const sessionStartDate = new Date(this.StartDate)
+          sessionStartDate.setHours(0, 0, 0, 0)
+          this.session.StartDate = sessionStartDate.toISOString()
+          console.debug('New recurring session 111', this.session)
           try {
             res = await this.$axios.$post(`${baseUrl}Sessions`, {
               ...this.session,
@@ -1423,6 +1438,7 @@ export default {
         }
       }
     },
+
     checkOverlappingDays(array) {
       return new Set(array).size !== array.length
     },
