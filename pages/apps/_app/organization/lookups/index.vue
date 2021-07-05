@@ -260,7 +260,7 @@
                 class="d-flex justify-center align-center pb-md-2 pt-md-2"
               >
                 <h2 class="body-1 pb-0">
-                  Contact Tags
+                  <i18n path="Common.ContactTags" />
                 </h2>
                 <v-spacer></v-spacer>
               </v-flex>
