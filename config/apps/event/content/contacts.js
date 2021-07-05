@@ -110,9 +110,9 @@ export default {
         Job: {
           form: {
             caption: 'Common.FullJobTitle',
-            displayOrder: 10,
+            displayOrder: 4,
           },
-          displayOrder: 4,
+          displayOrder: 10,
           caption: 'Common.JobTitle',
           searchEnable: true,
           sortEnable: true,
@@ -226,9 +226,9 @@ export default {
         Organization: {
           form: {
             caption: 'Common.Organization',
-            displayOrder: 4,
+            displayOrder: 10,
           },
-          displayOrder: 7,
+          displayOrder: 4,
           caption: 'Common.Organization',
           searchEnable: true,
           sortEnable: true,
