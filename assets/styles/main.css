@@ -636,9 +636,6 @@ table > tbody > tr:last-child .key-align {
   margin-top: 5px;
   margin-bottom: 20px;
 }
-.public-page-main {
-  min-height: 355px;
-}
 .public-page-main .v-skeleton-loader__bone {
   width: 100% !important;
   height: 100% !important;
