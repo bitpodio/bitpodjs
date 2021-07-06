@@ -1103,6 +1103,7 @@ export default {
 
     partitionIntoOverlappingRanges(array, newSession) {
       let isOverlap = false
+
       array.forEach((session) => {
         if (newSession.Days.some((i) => i === session.day)) {
           const arr = []
@@ -1120,6 +1121,7 @@ export default {
           }
         }
       })
+
       return isOverlap
     },
     removeDay(day) {
@@ -1318,6 +1320,28 @@ export default {
         tempData,
         newSession
       )
+
+      const ObjectID5 = (
+        m = Math,
+        d = Date,
+        h = 16,
+        s = (s) => m.floor(s).toString(h)
+      ) =>
+        s(d.now() / 1000) + ' '.repeat(h).replace(/./g, () => s(m.random() * h))
+      const _Exceptions = this.selectedDays.map((item, key) => {
+        return {
+          id: ObjectID5(),
+          type: 'wday',
+          wday: item,
+          _intervals: [
+            {
+              id: ObjectID5(),
+              from: this.session.StartTime,
+              to: this.session.EndTime,
+            },
+          ],
+        }
+      })
       if (
         this.actionType === 'Edit' ||
         isOverlappingDays === false ||
@@ -1328,28 +1352,6 @@ export default {
           { color: 'warning' }
         ))
       ) {
-        const ObjectID5 = (
-          m = Math,
-          d = Date,
-          h = 16,
-          s = (s) => m.floor(s).toString(h)
-        ) =>
-          s(d.now() / 1000) +
-          ' '.repeat(h).replace(/./g, () => s(m.random() * h))
-        const _Exceptions = this.selectedDays.map((item, key) => {
-          return {
-            id: ObjectID5(),
-            type: 'wday',
-            wday: item,
-            _intervals: [
-              {
-                id: ObjectID5(),
-                from: this.session.StartTime,
-                to: this.session.EndTime,
-              },
-            ],
-          }
-        })
         this.session.RollingDays =
           this.session.RollingDays && parseInt(this.session.RollingDays)
         this.session.Duration = this.isCustomMin
@@ -1375,14 +1377,15 @@ export default {
         const baseUrl = this.$bitpod.getApiUrl()
         let res = null
         let exceptionRes = null
-
-        if (this.actionType === 'New') {
+        if (this.session.ScheduledType === 'Over a date range') {
           const sessionEndDate = new Date(this.EndDate)
           sessionEndDate.setHours(0, 0, 0, 0)
           this.session.EndDate = sessionEndDate.toISOString()
           const sessionStartDate = new Date(this.StartDate)
           sessionStartDate.setHours(0, 0, 0, 0)
           this.session.StartDate = sessionStartDate.toISOString()
+        }
+        if (this.actionType === 'New') {
           try {
             res = await this.$axios.$post(`${baseUrl}Sessions`, {
               ...this.session,
@@ -1415,6 +1418,10 @@ export default {
             return exceptionRes
           }
         } else if (this.actionType === 'Edit') {
+          const aaa = this
+          debugger
+          this.session._Exceptions = this.items[0]._Exceptions
+          const aba = this
           try {
             res = await this.$axios.$patch(
               `${baseUrl}Sessions/${this.session.id}`,
@@ -1442,6 +1449,14 @@ export default {
     },
     submitForm() {
       this.$eventBus.$emit('form-submitted', this.formName)
+    },
+    resolveException(exceptionArray) {
+      const excep = exceptionArray.map((e) => {
+        e.id = atob(e.id).split(':')[1]
+        debugger
+        return e
+      })
+      return excep
     },
   },
   apollo: {

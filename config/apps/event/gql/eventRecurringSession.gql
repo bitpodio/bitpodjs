@@ -37,7 +37,7 @@ query ($filters: JSON, $where: JSON) {
          createdBy
          modifiedDate
          __typename
-         _Exceptions { type date wday id }
+         _Exceptions { type date wday id _intervals { id from to } }
        }
        __typename
      }
