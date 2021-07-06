@@ -54,7 +54,9 @@ export default {
       this.dialog = false
       const check = await this.$refs.confirm.open(
         this.$t('Drawer.DeleteEventQuestion'),
-        this.$t('Messages.Warn.DeleteEventQuestion'),
+        this.$tc('Messages.Warn.DeleteWarning', this.items.length, {
+          subTitle: 'question',
+        }),
         { color: 'error lighten-1' }
       )
       if (check === true) {

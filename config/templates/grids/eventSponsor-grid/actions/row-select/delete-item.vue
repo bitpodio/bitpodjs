@@ -54,7 +54,9 @@ export default {
     confirmDelete() {
       this.$eventBus.$emit('toggle-confirm', this.viewName, 'delete-sponsor', {
         title: this.$t('Messages.Warn.DeleteSponsor'),
-        message: this.$t('Messages.Warn.DeleteSponsorMessage'),
+        message: this.$t('Messages.Warn.DeleteWarning', this.items.length, {
+          subTitle: 'sponsor',
+        }),
         options: { color: 'error lighten-1' },
       })
     },

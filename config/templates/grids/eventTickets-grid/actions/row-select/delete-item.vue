@@ -45,27 +45,42 @@ export default {
   methods: {
     confirmDelete() {
       this.$eventBus.$emit('toggle-confirm', this.viewName, 'delete-ticket', {
-        title: this.$t('Common.DeleteTicket'),
-        message: this.$t('Messages.Warn.DeleteTicket'),
+        title: this.$tc('Common.DeleteTicket'),
+        message: this.$tc('Messages.Warn.DeleteWarning', this.items.length, {
+          subTitle: 'ticket',
+        }),
         options: { color: 'error lighten-1' },
       })
     },
-    async onDeleteItem() {
+    toggleSnackbar() {
+      this.$eventBus.$emit(
+        'toggle-snackbar',
+        this.viewName,
+        this.$t('Common.TicketDeletedSuccessfully'),
+        1000
+      )
+    },
+    onDeleteItem() {
       const url = this.$bitpod.getApiUrl()
-      try {
-        await this.$axios.$delete(`${url}Tickets/${this.items[0].id}`)
-        this.$eventBus.$emit(
-          'toggle-snackbar',
-          this.viewName,
-          this.$t('Common.TicketDeletedSuccessfully'),
-          1000
+      this.items
+        .reduce((acc, e) => {
+          return acc
+            .then(() => {
+              return this.$axios.$delete(`${url}Tickets/${e.id}`)
+            })
+            .then((res) => {
+              return res
+            })
+        }, Promise.resolve())
+        .then(() => {
+          this.toggleSnackbar()
+          return true
+        })
+        .catch((e) =>
+          console.log(
+            `Error in templates/grids/eventTickets/actions/grid/row-select/delete-item.vue while making a DELETE call to Tickets model from method onDeleteItem \ncontext:-URL:-${url}\n error:${e}`
+          )
         )
-      } catch (e) {
-        console.log(
-          `Error in templates/grids/eventTickets/actions/grid/row-select/delete-item.vue while making a DELETE call to Tickets model from method onDeleteItem \ncontext:-URL:-${url}\n DeletedItemId:-${this.items[0].id} `,
-          e
-        )
-      }
     },
   },
 }
