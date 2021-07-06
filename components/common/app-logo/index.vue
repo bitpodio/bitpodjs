@@ -3,7 +3,7 @@
     <a href="/admin/apps/event/eventboard">
       <v-img
         v-if="!toggleFallbackImage"
-        :src="$config.cdnUri + getDomain() + '/logo.svg'"
+        :src="$config.cdnUri + getDomain() + getSubDomain() + '/logo.svg'"
         class="logofull mr-2"
         @error="setAltImg"
       ></v-img>
@@ -34,6 +34,14 @@ export default {
         if (window && window.location) {
           const url = window.location.hostname.split('.').slice(-2).join('.')
           return url
+        }
+      }
+    },
+    getSubDomain() {
+      if (process.client) {
+        if (window && window.location) {
+          const suburl = window.location.hostname.split('.')[0]
+          return suburl ? '/' + suburl : ''
         }
       }
     },
