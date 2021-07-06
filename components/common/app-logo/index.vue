@@ -8,6 +8,12 @@
         @error="setAltImg"
       ></v-img>
       <v-img
+        v-else-if="!toggleSubImage"
+        :src="$config.cdnUri + getDomain() + '/logo.svg'"
+        class="logofull mr-2"
+        @error="setSubImg"
+      ></v-img>
+      <v-img
         v-else
         :src="$config.cdnUri + 'bitpod-logo-blk2.svg'"
         class="logofull mr-2"
@@ -23,6 +29,7 @@ export default {
   data() {
     return {
       toggleFallbackImage: false,
+      toggleSubImage: false,
     }
   },
   methods: {
@@ -45,6 +52,9 @@ export default {
           return getSubDomain ? '/' + getSubDomain : ''
         }
       }
+    },
+    setSubImg() {
+      this.toggleSubImage = true
     },
   },
 }
