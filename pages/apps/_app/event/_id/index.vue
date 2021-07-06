@@ -246,6 +246,13 @@
                   <a v-else class="blue--text">
                     {{
                       formatAddressField(
+                        data.event.VenueName !== ''
+                          ? data.event.VenueName + ','
+                          : ''
+                      )
+                    }}
+                    {{
+                      formatAddressField(
                         data.event._VenueAddress &&
                           data.event._VenueAddress.AddressLine
                       )
@@ -1084,7 +1091,10 @@
                 "
                 class="mt-n14"
               >
-                <template #gridthreedot>
+                <template
+                  v-if="data.event.LocationType === 'Venue'"
+                  #gridthreedot
+                >
                   <v-list-item-group>
                     <seatmap-tickets />
                     <v-list-item v-if="showPrintManagement">
@@ -2738,15 +2748,21 @@ export default {
         this.eventData = event.length > 0 ? event[0] : {}
         this.badgeData = badge.length > 0 ? badge[0] : {}
         this.isStateExists =
+          this.eventData &&
+          this.eventData._VenueAddress &&
+          this.eventData._VenueAddress.AddressLine &&
           this.eventData._VenueAddress.AddressLine.includes(
             this.eventData._VenueAddress.City
           ) &&
+          this.eventData &&
+          this.eventData._VenueAddress &&
+          this.eventData._VenueAddress.AddressLine &&
           this.eventData._VenueAddress.AddressLine.includes(
             this.eventData._VenueAddress.Country
           )
         this.eventData_sectionHeading =
-          this.eventData._sectionHeading !== null
-            ? this.eventData._sectionHeading
+          this.eventData && this.eventData._sectionHeading !== null
+            ? this.eventData && this.eventData._sectionHeading
             : {}
         if (
           this.eventData.EndDate < new Date().toISOString() &&
