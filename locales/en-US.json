@@ -147,7 +147,7 @@
     "CostCenter": "Cost Center",
     "BusinessType": "Business Type",
     "EventLink": "Event Link",
-    "AllowCancelation": "Allow Cancelation",
+    "AllowCancelation": "Allow Cancellation",
     "AllowChat": "Allow Chat",
     "ValidateSessionTimingConflict": "Validate Session Timing Conflict",
     "ShowRemainingTicketsCount": "Show Remaining Tickets Count",
