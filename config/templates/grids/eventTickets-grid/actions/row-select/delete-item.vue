@@ -37,7 +37,7 @@ export default {
     }
   },
   mounted() {
-    this.$eventBus.$on('delete-ticket', this.onDeleteItem)
+    this.$eventBus.$on('delete-ticket', this.onDeleteMultipleItems)
   },
   beforeDestroy() {
     this.$eventBus.$off('delete-ticket')
@@ -60,27 +60,23 @@ export default {
         1000
       )
     },
-    onDeleteItem() {
+    onDeleteMultipleItems() {
+      this.items.forEach(async (ele) => {
+        await this.onDeleteItem(ele.id)
+      })
+      setTimeout(() => {
+        this.$eventBus.$emit('eventInvites-grid-refresh', this.viewName)
+      }, 2000)
+    },
+    onDeleteItem(id) {
       const url = this.$bitpod.getApiUrl()
-      this.items
-        .reduce((acc, e) => {
-          return acc
-            .then(() => {
-              return this.$axios.$delete(`${url}Tickets/${e.id}`)
-            })
-            .then((res) => {
-              return res
-            })
-        }, Promise.resolve())
-        .then(() => {
-          this.toggleSnackbar()
-          return true
-        })
-        .catch((e) =>
-          console.log(
-            `Error in templates/grids/eventTickets/actions/grid/row-select/delete-item.vue while making a DELETE call to Tickets model from method onDeleteItem \ncontext:-URL:-${url}\n error:${e}`
-          )
+      try {
+        return this.$axios.$delete(`${url}Tickets/${id}`)
+      } catch (err) {
+        console.log(
+          `Error in templates/grids/eventTickets/actions/grid/row-select/delete-item.vue while making a DELETE call to Tickets model from method onDeleteItem \ncontext:-URL:-${url}\n error:${err}`
         )
+      }
     },
   },
 }
