@@ -1094,7 +1094,10 @@
                 "
                 class="mt-n14"
               >
-                <template #gridthreedot>
+                <template
+                  v-if="data.event.LocationType === 'Venue'"
+                  #gridthreedot
+                >
                   <v-list-item-group>
                     <seatmap-tickets />
                     <v-list-item v-if="showPrintManagement">

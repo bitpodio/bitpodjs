@@ -61,24 +61,46 @@ export default {
       })
     },
     onDeleteItem() {
-      this.items.forEach((ele) => {
-        this.deleteItems(ele.id)
-      })
+      this.getEvents()
     },
-    async deleteItems(id) {
+    async getEvents() {
       const url = this.$bitpod.getApiUrl()
       try {
-        await this.$axios.$delete(
-          `${url}Events/${this.$route.params.id}/contacts/rel/${id}`
+        const getEvent = await this.$axios.$get(
+          `${url}Events/${this.$route.params.id}`
         )
-        this.$eventBus.$emit(
-          'toggle-snackbar',
-          this.viewName,
-          this.$t('Messages.Success.DeletedSuccessfully', {
-            modelName: 'Contact',
-          }),
-          3000
+        if (getEvent) {
+          const contacts = getEvent.contactlist
+          this.items.map((e) => {
+            contacts.pop(e)
+          })
+          this.deleteItems(contacts)
+        }
+      } catch (e) {
+        console.error(
+          `Error in templates/grids/eventSponsor-grid/actions/grid/row-select/delete-item.vue while making a DELETE call to Tickets model from method onDeleteItem \ncontext:-URL:-${url}\n DeletedItemId:-${this.items[0].id} `,
+          e
         )
+      }
+    },
+    async deleteItems(contactsArray) {
+      const url = this.$bitpod.getApiUrl()
+      const obj = { contactlist: contactsArray }
+      try {
+        const res = await this.$axios.$patch(
+          `${url}Events/${this.$route.params.id}`,
+          obj
+        )
+        if (res) {
+          this.$eventBus.$emit(
+            'toggle-snackbar',
+            this.viewName,
+            this.$t('Messages.Success.DeletedSuccessfully', {
+              modelName: 'Contact',
+            }),
+            3000
+          )
+        }
       } catch (e) {
         console.error(
           `Error in templates/grids/eventSponsor-grid/actions/grid/row-select/delete-item.vue while making a DELETE call to Tickets model from method onDeleteItem \ncontext:-URL:-${url}\n DeletedItemId:-${this.items[0].id} `,
