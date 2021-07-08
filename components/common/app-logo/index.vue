@@ -3,13 +3,13 @@
     <a href="/admin/apps/event/eventboard">
       <v-img
         v-if="!toggleFallbackImage"
-        :src="$config.cdnUri + getDomain() + getSubDomain() + '/logo.svg'"
+        :src="$config.cdnUri + getDomain() + getSubDomain() + '/logo.png'"
         class="logofull mr-2"
         @error="setAltImg"
       ></v-img>
       <v-img
         v-else-if="!toggleSubImage"
-        :src="$config.cdnUri + getDomain() + '/logo.svg'"
+        :src="$config.cdnUri + getDomain() + '/logo.png'"
         class="logofull mr-2"
         @error="setSubImg"
       ></v-img>
