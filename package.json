@@ -41,6 +41,7 @@
     "currency-formatter": "^1.5.8",
     "date-fns": "^2.15.0",
     "date-fns-tz": "^1.0.10",
+    "date-in-utc": "^0.0.2",
     "handlebars": "^4.7.7",
     "jodit-vue": "^2.2.1",
     "lodash": "^4.17.20",

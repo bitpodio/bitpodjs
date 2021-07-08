@@ -115,6 +115,7 @@
                     v-model="session.StartTime"
                     :field="startTimeProps"
                     :rules="[rules.required]"
+                    @change="changeStartTime"
                   />
                 </v-col>
                 <v-col cols="12" sm="6" md="4" class="pb-0">
@@ -122,6 +123,7 @@
                     v-model="session.EndTime"
                     :field="endTimeProps"
                     :rules="[rules.required]"
+                    @change="changeEndTime"
                   />
                 </v-col>
               </v-row>
@@ -971,6 +973,12 @@ export default {
     this.getEventSessions()
   },
   methods: {
+    changeStartTime() {
+      this.$refs.form.validate()
+    },
+    changeEndTime() {
+      this.$refs.form.validate()
+    },
     async getEventSessions() {
       const url = this.$bitpod.getApiUrl()
       try {
