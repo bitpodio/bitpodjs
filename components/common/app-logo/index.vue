@@ -48,7 +48,9 @@ export default {
       if (process.client) {
         if (window && window.location) {
           const suburl = window.location.hostname.split('.')[0]
-          const getSubDomain = suburl.split('-')[1]
+          const getSubDomain = suburl.includes('-')
+            ? suburl.split('-')[1]
+            : suburl
           return getSubDomain ? '/' + getSubDomain : ''
         }
       }
