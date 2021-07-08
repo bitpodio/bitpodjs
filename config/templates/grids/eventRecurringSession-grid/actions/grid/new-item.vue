@@ -1098,7 +1098,7 @@ export default {
         if (newSession.Days.some((i) => i === session.day)) {
           const arr = []
           let flag = false
-          for (let i = session.start; i <= session.end; i++) {
+          for (let i = session.start; i < session.end; i++) {
             arr.push(i)
           }
           for (let i = newSession.StartTime; i <= newSession.EndTime; i++) {

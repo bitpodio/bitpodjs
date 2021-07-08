@@ -13,7 +13,7 @@
         v-else
         :disabled="
           item.Status === 'Cancelled' ||
-          context.event.Status === 'Registration closed'
+          new Date(context.event.EndDate) < new Date()
         "
         class="ma-2 pb-0 mt-1"
         height="20"
