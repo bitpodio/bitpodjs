@@ -1,12 +1,7 @@
 <template>
   <v-app id="inspire">
     <v-app-bar app flat color="white">
-      <span class="bitpod-logo logo-ds px-3">
-        <v-img
-          :src="$config.cdnUri + 'bitpod-logo-blk2.svg'"
-          class="logo-full"
-        ></v-img>
-      </span>
+      <AppLogo />
       <v-spacer></v-spacer>
     </v-app-bar>
 
@@ -25,8 +20,12 @@
 </template>
 
 <script>
+import AppLogo from '~/components/common/app-logo'
 export default {
   layout: 'logoutlayout',
+  components: {
+    AppLogo,
+  },
 }
 </script>
 
