@@ -1880,16 +1880,16 @@ export default {
         },
         actions: {
           new: {
-            hidden: true,
+            hidden: false,
           },
           edit: {
-            hidden: true,
+            hidden: false,
           },
           delete: {
-            hidden: true,
+            hidden: false,
           },
           exportCsv: {
-            hidden: true,
+            hidden: false,
           },
         },
       },
