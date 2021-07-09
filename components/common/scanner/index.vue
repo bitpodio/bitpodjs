@@ -50,7 +50,7 @@
             </div>
             <div v-else-if="!loadingFeed && !hasCamera" class="qr-code-loader">
               <v-icon color="error">mdi-camera-off</v-icon>
-              <p class="error--text">No camera found</p>
+              <p class="error--text"><i18n path="Common.NoCameraFound" /></p>
             </div>
             <div v-else-if="!loadingFeed && !!feedError" class="qr-code-loader">
               <p class="error--text">{{ feedError }}</p>
@@ -194,19 +194,6 @@ export default {
       attendeeInfo: {},
     }
   },
-  mounted() {
-    QrScanner.WORKER_PATH = QrScannerWorkerPath
-    QrScanner.hasCamera()
-      .then((hasCam) => {
-        this.hasCamera = hasCam
-        this.loadingFeed = false
-        return hasCam
-      })
-      .catch((err) => {
-        this.hasCamera = false
-        console.error(err)
-      })
-  },
   watch: {
     dialog(newVal) {
       this.resetScanner()
@@ -239,6 +226,19 @@ export default {
         })
       }
     },
+  },
+  mounted() {
+    QrScanner.WORKER_PATH = QrScannerWorkerPath
+    QrScanner.hasCamera()
+      .then((hasCam) => {
+        this.hasCamera = hasCam
+        this.loadingFeed = false
+        return hasCam
+      })
+      .catch((err) => {
+        this.hasCamera = false
+        console.error(err)
+      })
   },
   methods: {
     closeForm() {
