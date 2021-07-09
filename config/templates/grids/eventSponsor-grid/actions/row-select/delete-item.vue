@@ -74,10 +74,9 @@ export default {
           const selectedList = this.items.map((e) => {
             return e.id
           })
-          const finalContacts = []
-          contacts.map((e) => {
+          const finalContacts = contacts.filter((e) => {
             if (!selectedList.includes(e)) {
-              finalContacts.push(e)
+              return e
             }
           })
           this.deleteItems(finalContacts)
