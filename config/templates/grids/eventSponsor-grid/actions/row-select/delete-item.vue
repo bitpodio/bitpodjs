@@ -71,10 +71,15 @@ export default {
         )
         if (getEvent) {
           const contacts = getEvent.contactlist
-          this.items.map((e) => {
-            contacts.pop(e)
+          const selectedList = this.items.map((e) => {
+            return e.id
           })
-          this.deleteItems(contacts)
+          const finalContacts = contacts.filter((e) => {
+            if (!selectedList.includes(e)) {
+              return e
+            }
+          })
+          this.deleteItems(finalContacts)
         }
       } catch (e) {
         console.error(
