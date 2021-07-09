@@ -1378,7 +1378,6 @@ export default {
     async loadRestData() {
       const dataSource = getViewDataSource(this.content, this.viewName)
       const dataSourceType = dataSource.type || 'graphql'
-      debugger
       if (dataSourceType === 'rest') {
         const { search, filters } = this
         const options = {
