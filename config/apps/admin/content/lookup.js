@@ -1,5 +1,6 @@
 import generalConfiguration from '~/config/apps/event/gql/registrationStatusOptions.gql'
 import product from '~/config/apps/member/gql/product.gql'
+import { requiredRule } from '~/utility/index.js'
 
 export default {
   views: {
@@ -51,7 +52,7 @@ export default {
           editForm: true,
           rules: [
             function (v) {
-              return !!v || this.$t('Messages.Error.KeyRequired')
+              return requiredRule(v, this.$i18n)
             },
           ],
         },
@@ -71,7 +72,7 @@ export default {
           editForm: true,
           rules: [
             function (v) {
-              return !!v || this.$t('Messages.Error.ValueRequired')
+              return requiredRule(v, this.$i18n)
             },
           ],
         },
@@ -158,7 +159,7 @@ export default {
           editForm: true,
           rules: [
             function (v) {
-              return !!v || this.$t('Messages.Error.KeyRequired')
+              return requiredRule(v, this.$i18n)
             },
           ],
         },
@@ -178,7 +179,7 @@ export default {
           editForm: true,
           rules: [
             function (v) {
-              return !!v || this.$t('Messages.Error.ValueRequired')
+              return requiredRule(v, this.$i18n)
             },
           ],
         },
@@ -267,7 +268,7 @@ export default {
           editForm: true,
           rules: [
             function (v) {
-              return !!v || this.$t('Messages.Error.KeyRequired')
+              return requiredRule(v, this.$i18n)
             },
           ],
         },
@@ -287,7 +288,7 @@ export default {
           editForm: true,
           rules: [
             function (v) {
-              return !!v || this.$t('Messages.Error.ValueRequired')
+              return requiredRule(v, this.$i18n)
             },
           ],
         },
@@ -376,7 +377,7 @@ export default {
           editForm: true,
           rules: [
             function (v) {
-              return !!v || this.$t('Messages.Error.KeyRequired')
+              return requiredRule(v, this.$i18n)
             },
           ],
         },
@@ -396,7 +397,7 @@ export default {
           editForm: true,
           rules: [
             function (v) {
-              return !!v || this.$t('Messages.Error.ValueRequired')
+              return requiredRule(v, this.$i18n)
             },
           ],
         },
@@ -485,7 +486,7 @@ export default {
           editForm: true,
           rules: [
             function (v) {
-              return !!v || this.$t('Messages.Error.KeyRequired')
+              return requiredRule(v, this.$i18n)
             },
           ],
         },
@@ -505,7 +506,7 @@ export default {
           editForm: true,
           rules: [
             function (v) {
-              return !!v || this.$t('Messages.Error.ValueRequired')
+              return requiredRule(v, this.$i18n)
             },
           ],
         },
@@ -595,7 +596,7 @@ export default {
           editForm: true,
           rules: [
             function (v) {
-              return !!v || this.$t('Messages.Error.KeyRequired')
+              return requiredRule(v, this.$i18n)
             },
           ],
         },
@@ -615,7 +616,7 @@ export default {
           editForm: true,
           rules: [
             function (v) {
-              return !!v || this.$t('Messages.Error.ValueRequired')
+              return requiredRule(v, this.$i18n)
             },
           ],
         },
@@ -704,7 +705,7 @@ export default {
           editForm: true,
           rules: [
             function (v) {
-              return !!v || this.$t('Messages.Error.KeyRequired')
+              return requiredRule(v, this.$i18n)
             },
           ],
         },
@@ -724,7 +725,7 @@ export default {
           editForm: true,
           rules: [
             function (v) {
-              return !!v || this.$t('Messages.Error.ValueRequired')
+              return requiredRule(v, this.$i18n)
             },
           ],
         },
@@ -813,7 +814,7 @@ export default {
           editForm: true,
           rules: [
             function (v) {
-              return !!v || this.$t('Messages.Error.KeyRequired')
+              return requiredRule(v, this.$i18n)
             },
           ],
         },
@@ -833,7 +834,7 @@ export default {
           editForm: true,
           rules: [
             function (v) {
-              return !!v || this.$t('Messages.Error.ValueRequired')
+              return requiredRule(v, this.$i18n)
             },
           ],
         },
@@ -922,7 +923,7 @@ export default {
           editForm: true,
           rules: [
             function (v) {
-              return !!v || this.$t('Messages.Error.KeyRequired')
+              return requiredRule(v, this.$i18n)
             },
           ],
         },
@@ -942,7 +943,7 @@ export default {
           editForm: true,
           rules: [
             function (v) {
-              return !!v || this.$t('Messages.Error.ValueRequired')
+              return requiredRule(v, this.$i18n)
             },
           ],
         },
@@ -1031,7 +1032,7 @@ export default {
           editForm: true,
           rules: [
             function (v) {
-              return !!v || this.$t('Messages.Error.KeyRequired')
+              return requiredRule(v, this.$i18n)
             },
           ],
         },
@@ -1051,7 +1052,7 @@ export default {
           editForm: true,
           rules: [
             function (v) {
-              return !!v || this.$t('Messages.Error.ValueRequired')
+              return requiredRule(v, this.$i18n)
             },
           ],
         },
@@ -1151,7 +1152,7 @@ export default {
           editForm: true,
           rules: [
             function (v) {
-              return !!v || this.$t('Messages.Error.KeyRequired')
+              return requiredRule(v, this.$i18n)
             },
           ],
         },
@@ -1171,7 +1172,7 @@ export default {
           editForm: true,
           rules: [
             function (v) {
-              return !!v || this.$t('Messages.Error.ValueRequired')
+              return requiredRule(v, this.$i18n)
             },
           ],
         },
@@ -1260,7 +1261,7 @@ export default {
           editForm: true,
           rules: [
             function (v) {
-              return !!v || this.$t('Messages.Error.KeyRequired')
+              return requiredRule(v, this.$i18n)
             },
           ],
         },
@@ -1280,7 +1281,7 @@ export default {
           editForm: true,
           rules: [
             function (v) {
-              return !!v || this.$t('Messages.Error.ValueRequired')
+              return requiredRule(v, this.$i18n)
             },
           ],
         },
@@ -1369,7 +1370,7 @@ export default {
           editForm: true,
           rules: [
             function (v) {
-              return !!v || this.$t('Messages.Error.KeyRequired')
+              return requiredRule(v, this.$i18n)
             },
           ],
         },
@@ -1389,7 +1390,7 @@ export default {
           editForm: true,
           rules: [
             function (v) {
-              return !!v || this.$t('Messages.Error.ValueRequired')
+              return requiredRule(v, this.$i18n)
             },
           ],
         },
@@ -1478,7 +1479,7 @@ export default {
           editForm: true,
           rules: [
             function (v) {
-              return !!v || this.$t('Messages.Error.KeyRequired')
+              return requiredRule(v, this.$i18n)
             },
           ],
         },
@@ -1498,7 +1499,7 @@ export default {
           editForm: true,
           rules: [
             function (v) {
-              return !!v || this.$t('Messages.Error.ValueRequired')
+              return requiredRule(v, this.$i18n)
             },
           ],
         },
@@ -1587,7 +1588,7 @@ export default {
           editForm: true,
           rules: [
             function (v) {
-              return !!v || this.$t('Messages.Error.KeyRequired')
+              return requiredRule(v, this.$i18n)
             },
           ],
         },
@@ -1607,7 +1608,7 @@ export default {
           editForm: true,
           rules: [
             function (v) {
-              return !!v || this.$t('Messages.Error.ValueRequired')
+              return requiredRule(v, this.$i18n)
             },
           ],
         },
@@ -1696,7 +1697,7 @@ export default {
           editForm: true,
           rules: [
             function (v) {
-              return !!v || this.$t('Messages.Error.KeyRequired')
+              return requiredRule(v, this.$i18n)
             },
           ],
         },
@@ -1716,7 +1717,7 @@ export default {
           editForm: true,
           rules: [
             function (v) {
-              return !!v || this.$t('Messages.Error.ValueRequired')
+              return requiredRule(v, this.$i18n)
             },
           ],
         },
@@ -1805,7 +1806,7 @@ export default {
           editForm: true,
           rules: [
             function (v) {
-              return !!v || this.$t('Messages.Error.KeyRequired')
+              return requiredRule(v, this.$i18n)
             },
           ],
         },
@@ -1825,7 +1826,7 @@ export default {
           editForm: true,
           rules: [
             function (v) {
-              return !!v || this.$t('Messages.Error.ValueRequired')
+              return requiredRule(v, this.$i18n)
             },
           ],
         },
@@ -1910,7 +1911,7 @@ export default {
           editForm: true,
           rules: [
             function (v) {
-              return !!v || this.$t('Messages.Error.ValueRequired')
+              return requiredRule(v, this.$i18n)
             },
           ],
         },

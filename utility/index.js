@@ -401,6 +401,16 @@ export function postGaData(action, formTitle) {
   window.ga('send', obj)
 }
 
+export function requiredRule(value, that) {
+  if (/^\s+/.test(value)) {
+    return that.t('Messages.Error.SpaceNotAllowed')
+  } else if (!(value && value.length) || typeof value === 'number') {
+    return that.t('Messages.Error.FieldRequired')
+  } else {
+    return true
+  }
+}
+
 export function getPriceWithCurrency(price, currency) {
   const currencyPrice = currencyFormatter.format(price, { code: currency })
   const totalPrice = currencyFormatter.unformat(currencyPrice, {

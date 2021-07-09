@@ -1155,7 +1155,7 @@ export default {
     onItemSelected(items) {
       this.selectedItems = items
       this.$emit('onSelectedListChange', this.selectedItems)
-      this.$eventBus.$emit('itemContact', this.updateList)
+      this.$eventBus.$emit('itemContact', this.selectedItems)
       this.$eventBus.$emit('itemSelected', {
         viewName: this.viewName,
         items: this.selectedItems,
@@ -1378,6 +1378,7 @@ export default {
     async loadRestData() {
       const dataSource = getViewDataSource(this.content, this.viewName)
       const dataSourceType = dataSource.type || 'graphql'
+      debugger
       if (dataSourceType === 'rest') {
         const { search, filters } = this
         const options = {
