@@ -17,7 +17,7 @@
       <template v-if="hasErrorTooltip" v-slot:message="{ message, key }">
         <v-tooltip bottom>
           <template v-slot:activator="{ on, attrs }">
-            <span v-bind="attrs" v-on="on" :key="key">{{ message }}</span>
+            <span :key="key" v-bind="attrs" v-on="on">{{ message }}</span>
           </template>
           <span :key="key">{{ message }}</span>
         </v-tooltip>
