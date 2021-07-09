@@ -156,7 +156,12 @@
             </v-flex>
             <v-divider></v-divider>
           </div>
-          <Grid view-name="connectedApps" class="mt-n12" :content="content" />
+          <Grid
+            view-name="connectedApps"
+            class="mt-n12"
+            :content="content"
+            :context="data"
+          />
         </div>
       </v-flex>
       <v-flex class="mxw-w30">
@@ -360,6 +365,12 @@ export default {
   },
   layout: 'user-profile',
   mixins: [configLoaderMixin],
+  props: {
+    context: {
+      type: Object,
+      default: () => {},
+    },
+  },
   data() {
     return {
       data: {
@@ -423,6 +434,7 @@ export default {
           this.timezoneItems.map((ele) => {
             if (ele.id === id) {
               this.timezone = ele.displayName
+              this.$store.commit('setUserProfileTimezone', this.timezone)
             }
           })
         }
