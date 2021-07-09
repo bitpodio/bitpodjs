@@ -841,6 +841,13 @@ table > tbody > tr:last-child .key-align {
     max-width: 1160px !important;
   }
 }
+@media (max-width: 960px) {
+  .mxw-w70,
+  .mxw-w30 {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+}
 @media (max-width: 800px) {
   .participantButton {
     font-size: 16px !important;
