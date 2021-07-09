@@ -701,6 +701,7 @@
     "CurrentAddressState": "_CurrentAddress.State",
     "CurrentAddressPostalCode": "_CurrentAddress.PostalCode",
     "CurrentAddressCountry": "_CurrentAddress.Pays",
+    "ShippingAddress": "adresse de livraison",
     "FullName": "Nom complet",
     "CampaignName": "Nom de la campagne",
     "SentBounce": "Envoyé / Bounce",

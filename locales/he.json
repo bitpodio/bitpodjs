@@ -702,6 +702,7 @@
     "CurrentAddressState": "_CurrentAddress.State",
     "CurrentAddressPostalCode": "_CurrentAddress.PostalCode",
     "CurrentAddressCountry": "_CurrentAddress.Country",
+    "ShippingAddress": "כתובת למשלוח",
     "FullName": "Full Name",
     "CampaignName": "Campaign Name",
     "SentBounce": "Sent/Bounce",

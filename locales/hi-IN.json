@@ -703,6 +703,7 @@
     "CurrentAddressState": "_CurrentAddress.State",
     "CurrentAddressPostalCode": "_CurrentAddress.PostalCode",
     "CurrentAddressCountry": "_CurrentAddress.Country",
+    "ShippingAddress": "Shipping Address",
     "FullName": "पूरा नाम",
     "CampaignName": "Campaign Name",
     "SentBounce": "Sent/Bounce",
