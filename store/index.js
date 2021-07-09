@@ -41,6 +41,7 @@ export const state = () => ({
   scrollPosition: '',
   parseUrl: '',
   gaId: '',
+  userProfileTimezone: '',
 })
 
 export const mutations = {
@@ -61,6 +62,9 @@ export const mutations = {
   },
   googleTrackingId(state, value) {
     state.gaId = value
+  },
+  setUserProfileTimezone(state, value) {
+    state.userProfileTimezone = value
   },
 }
 
