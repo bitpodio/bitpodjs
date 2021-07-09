@@ -22,8 +22,8 @@
         </v-card-title>
         <v-card-text class="px-xs-2 px-md-10 px-lg-10 px-xl-15 pt-0">
           <v-form
-            ref="form"
             id="edit-printedTicketTemplate-form"
+            ref="form"
             v-model="valid"
             @submit.prevent="submitForm"
           >

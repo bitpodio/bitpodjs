@@ -37,13 +37,6 @@
 <script>
 import { getID4ServerUrl } from '~/utility'
 export default {
-  data() {
-    return {
-      snackbar: false,
-      snackbarText: '',
-      timeout: 3000,
-    }
-  },
   props: {
     item: {
       type: Object,
@@ -55,6 +48,13 @@ export default {
       default: () => false,
       required: false,
     },
+  },
+  data() {
+    return {
+      snackbar: false,
+      snackbarText: '',
+      timeout: 3000,
+    }
   },
   methods: {
     async revokeAction() {

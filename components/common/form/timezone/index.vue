@@ -12,10 +12,10 @@
     outlined
     @change="onChange"
   >
-    <template v-slot:item="data" v-if="hasWrap">
+    <template v-if="hasWrap" v-slot:item="data">
       <v-list-item-content
-        v-text="data.item.label"
         class="wrap-slot"
+        v-text="data.item.label"
       ></v-list-item-content>
     </template>
   </v-autocomplete>

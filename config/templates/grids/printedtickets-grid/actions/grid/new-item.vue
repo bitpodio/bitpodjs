@@ -28,9 +28,9 @@
         </v-card-title>
         <v-card-text class="px-xs-2 px-md-10 px-lg-10 px-xl-15 pt-0">
           <v-form
+            id="new-printedTicketTemplate-form"
             ref="validTicketTemplateForm"
             v-model="valid"
-            id="new-printedTicketTemplate-form"
             @submit.prevent="submitForm"
           >
             <v-row>
@@ -40,10 +40,10 @@
                   :label="markRequired($t('Common.Name'))"
                   :rules="[rules.required]"
                   :error-messages="uniqueNameError"
-                  @input="checkUniqueName"
                   outlined
                   requierd
                   dense
+                  @input="checkUniqueName"
                 ></v-text-field>
               </v-col>
               <v-col cols="12" sm="6" md="6">
