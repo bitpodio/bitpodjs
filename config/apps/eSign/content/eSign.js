@@ -440,6 +440,7 @@ export default {
           caption: 'Common.FullName',
           searchEnable: true,
           sortEnable: true,
+          columnWidth: '150px',
           type: 'string',
         },
         type: {
@@ -447,6 +448,7 @@ export default {
           caption: 'Common.TypeCaption',
           searchEnable: true,
           sortEnable: true,
+          columnWidth: '150px',
           type: 'string',
         },
         Email: {
@@ -454,6 +456,7 @@ export default {
           caption: 'Common.EmailCaption',
           searchEnable: true,
           sortEnable: true,
+          columnWidth: '250px',
           type: 'string',
         },
         Status: {
@@ -461,6 +464,7 @@ export default {
           caption: 'Common.Status',
           searchEnable: true,
           sortEnable: true,
+          columnWidth: '150px',
           type: 'string',
         },
         SignedDate: {
@@ -468,6 +472,7 @@ export default {
           caption: 'Common.SignedOn',
           searchEnable: true,
           sortEnable: true,
+          columnWidth: '150px',
           type: 'date',
         },
       },
