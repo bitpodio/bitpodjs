@@ -26,9 +26,8 @@ export default {
   },
   methods: {
     getTimeStampDate(timestamp, Timezone) {
-      const timezoneOffset = parseInt(
-        this.userTimezone.split(')')[0].split('UTC')[1]
-      )
+      const timezoneOffset =
+        parseInt(this.userTimezone.split(')')[0].split('UTC')[1]) + 8
       const convertedDate = dateInUtc(
         timezoneOffset,
         new Date(timestamp)

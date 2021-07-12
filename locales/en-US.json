@@ -1,6 +1,6 @@
 {
   "Common": {
-    "RemoveBlankSpace":"Please remove the blank spaces",
+    "RemoveBlankSpace": "Please remove the blank spaces",
     "NoDecimalNumberAllowed": "No Decimal number allowed",
     "NewBusinessUnit": "New Business Unit",
     "EditBusinessUnit": "Edit Business Unit",
@@ -1077,6 +1077,7 @@
   },
   "Messages": {
     "Error": {
+      "EventStartDateValidationMsg": "StartDate should not be less than the event start date",
       "CredentialMismatch": "Old Credentials did not match.",
       "PasswordMismatch": "New Password did not match with the Confirm Password",
       "ID4PasswordValidationMsg": "Passwords must contain at least six characters, including uppercase, lowercase letters, special character and numbers.",
