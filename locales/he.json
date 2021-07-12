@@ -1079,6 +1079,7 @@
   },
   "Messages": {
     "Error": {
+      "EventStartDateValidationMsg": "StartDate לא אמור להיות פחות מתאריך התחלת האירוע",
       "CredentialMismatch": "האישורים הישנים לא התאימו.",
       "PasswordMismatch": "סיסמה חדשה לא התאימה לסיסמה אשר",
       "ID4PasswordValidationMsg": "על סיסמאות להכיל לפחות שש תווים, כולל אותיות רישיות, אותיות קטנות, תווים מיוחדים ומספרים.",

@@ -1078,6 +1078,7 @@
   },
   "Messages": {
     "Error": {
+      "EventStartDateValidationMsg": "StartDate ne doit pas être inférieur à la date de début de l'événement",
       "CredentialMismatch": "Les anciennes informations d'identification ne correspondaient pas.",
       "PasswordMismatch": "Le nouveau mot de passe ne correspond pas au mot de passe de confirmation",
       "ID4PasswordValidationMsg": "Les mots de passe doivent contenir au moins six caractères, dont des majuscules, des minuscules, des caractères spéciaux et des chiffres.",
