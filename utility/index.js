@@ -385,7 +385,9 @@ export function postGaData(action, formTitle) {
     hitType: 'event',
     eventCategory: 'Form',
     eventAction:
-      action.toLowerCase() === 'new' || action.toLowerCase() === 'edit'
+      action.toLowerCase() === 'new' ||
+      action.toLowerCase() === 'edit' ||
+      action.toLowerCase() === 'upload'
         ? 'Show'
         : action.toLowerCase() === 'close'
         ? 'Close'
