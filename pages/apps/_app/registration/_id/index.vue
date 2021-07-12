@@ -562,13 +562,13 @@
               "
             >
               <v-chip class="ma-2" small label color="blue" text-color="white">
-                {{ 'Answer' }}
+                <i18n path="Common.Answer" />
               </v-chip>
               <span v-for="ele in item.Answer" :key="ele">{{ ele }}</span>
             </div>
             <div v-else-if="item.ControlType === 'date'">
               <v-chip class="ma-2" small label color="blue" text-color="white">
-                {{ 'Answer' }}
+                <i18n path="Common.Answer" />
               </v-chip>
               <span v-for="ele in item.Answer" :key="ele">{{
                 formatDate(ele)
@@ -576,7 +576,7 @@
             </div>
             <div v-else>
               <v-chip class="ma-2" small label color="blue" text-color="white">
-                {{ 'Answer' }}
+                <i18n path="Common.Answer" />
               </v-chip>
               <span v-for="(ele, index) in item.Answer" :key="index"
                 >{{ ele
