@@ -636,9 +636,6 @@ table > tbody > tr:last-child .key-align {
   margin-top: 5px;
   margin-bottom: 20px;
 }
-.public-page-main {
-  min-height: 355px;
-}
 .public-page-main .v-skeleton-loader__bone {
   width: 100% !important;
   height: 100% !important;
@@ -842,6 +839,13 @@ table > tbody > tr:last-child .key-align {
   }
   .eSignRequest-eSign .grid-actions-container {
     max-width: 1160px !important;
+  }
+}
+@media (max-width: 960px) {
+  .mxw-w70,
+  .mxw-w30 {
+    width: 100% !important;
+    max-width: 100% !important;
   }
 }
 @media (max-width: 800px) {

@@ -14,20 +14,6 @@
       <div class="px-4 pt-3 pb-1">
         <i18n path="Common.AdminApp" class="app-title-text text--primary" />
       </div>
-      <div class="d-block d-sm-none my-3">
-        <v-btn
-          v-bind="attrs"
-          color="blue darken-2"
-          dark
-          small
-          depressed
-          class="mx-3 wd-full"
-          v-on="on"
-          @click.native="dialog = true"
-        >
-          <i18n path="Drawer.CreateUser" />
-        </v-btn>
-      </div>
       <v-list shaped>
         <template v-for="item in items">
           <v-row v-if="item.heading" :key="item.heading" align="center">
@@ -144,20 +130,6 @@
         <v-spacer></v-spacer>
       </v-toolbar-title>
       <v-spacer></v-spacer>
-      <div class="d-none d-sm-flex">
-        <v-btn
-          v-bind="attrs"
-          color="blue darken-2"
-          dark
-          depressed
-          small
-          class="mx-3"
-          v-on="on"
-          @click.native="dialog = true"
-        >
-          <i18n path="Drawer.CreateUser" />
-        </v-btn>
-      </div>
       <Help class="d-none d-sm-inline" />
       <LanguageSwitcher />
       <AppDrawer />

@@ -6,9 +6,7 @@
       style="height: 10px;"
     >
       <v-chip
-        :disabled="
-          item.Status === 'Cancelled' || eventStatus === 'Registration closed'
-        "
+        :disabled="item.Status === 'Cancelled' || eventEndDate < new Date()"
         class="ma-2 pb-0 mt-1"
         height="13"
         color="blue"
@@ -144,7 +142,7 @@ export default {
       eventTitle: '',
       eventType: '',
       printBadgeOnCheckIn: false,
-      eventStatus: '',
+      eventEndDate: '',
     }
   },
   mounted() {
@@ -267,7 +265,7 @@ export default {
       try {
         const res = await this.$axios.$get(`${url}Events/${this.eventId}`)
         if (res) {
-          this.eventStatus = res.data.Status
+          this.eventEndDate = new Date(res.data.EndDate)
         }
       } catch (err) {
         console.error(

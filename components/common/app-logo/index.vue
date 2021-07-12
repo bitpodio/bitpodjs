@@ -3,9 +3,15 @@
     <a href="/admin/apps/event/eventboard">
       <v-img
         v-if="!toggleFallbackImage"
-        :src="$config.cdnUri + getDomain() + '/logo.svg'"
+        :src="$config.cdnUri + getDomain() + getSubDomain() + '/logo.png'"
         class="logofull mr-2"
         @error="setAltImg"
+      ></v-img>
+      <v-img
+        v-else-if="!toggleSubImage"
+        :src="$config.cdnUri + getDomain() + '/logo.png'"
+        class="logofull mr-2"
+        @error="setSubImg"
       ></v-img>
       <v-img
         v-else
@@ -23,6 +29,7 @@ export default {
   data() {
     return {
       toggleFallbackImage: false,
+      toggleSubImage: false,
     }
   },
   methods: {
@@ -36,6 +43,20 @@ export default {
           return url
         }
       }
+    },
+    getSubDomain() {
+      if (process.client) {
+        if (window && window.location) {
+          const suburl = window.location.hostname.split('.')[0]
+          const getSubDomain = suburl.includes('-')
+            ? suburl.split('-')[1]
+            : suburl
+          return getSubDomain ? '/' + getSubDomain : ''
+        }
+      }
+    },
+    setSubImg() {
+      this.toggleSubImage = true
     },
   },
 }

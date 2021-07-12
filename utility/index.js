@@ -385,7 +385,9 @@ export function postGaData(action, formTitle) {
     hitType: 'event',
     eventCategory: 'Form',
     eventAction:
-      action.toLowerCase() === 'new' || action.toLowerCase() === 'edit'
+      action.toLowerCase() === 'new' ||
+      action.toLowerCase() === 'edit' ||
+      action.toLowerCase() === 'upload'
         ? 'Show'
         : action.toLowerCase() === 'close'
         ? 'Close'
@@ -399,6 +401,16 @@ export function postGaData(action, formTitle) {
   }
   console.debug('Post Data', obj)
   window.ga('send', obj)
+}
+
+export function requiredRule(value, that) {
+  if (/^\s+/.test(value)) {
+    return that.t('Messages.Error.SpaceNotAllowed')
+  } else if (!(value && value.length) || typeof value === 'number') {
+    return that.t('Messages.Error.FieldRequired')
+  } else {
+    return true
+  }
 }
 
 export function getPriceWithCurrency(price, currency) {

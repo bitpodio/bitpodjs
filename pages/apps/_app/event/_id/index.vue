@@ -109,7 +109,10 @@
                       /></v-list-item-title>
                     </v-list-item-content>
                   </v-list-item>
-                  <v-list-item @click="eventCheckIn">
+                  <v-list-item
+                    :disabled="new Date(data.event.EndDate) < new Date()"
+                    @click="eventCheckIn"
+                  >
                     <v-list-item-icon class="mr-2">
                       <i class="fa fa-check mt-1" aria-hidden="true"></i>
                     </v-list-item-icon>

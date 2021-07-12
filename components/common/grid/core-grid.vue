@@ -1155,7 +1155,7 @@ export default {
     onItemSelected(items) {
       this.selectedItems = items
       this.$emit('onSelectedListChange', this.selectedItems)
-      this.$eventBus.$emit('itemContact', this.updateList)
+      this.$eventBus.$emit('itemContact', this.selectedItems)
       this.$eventBus.$emit('itemSelected', {
         viewName: this.viewName,
         items: this.selectedItems,
