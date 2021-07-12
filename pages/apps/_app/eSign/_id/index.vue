@@ -231,7 +231,7 @@
             <Grid
               view-name="eSignRequestRecipients"
               :content="content"
-              class="mt-12"
+              class="mt-n12"
             />
           </div>
         </div>
@@ -253,7 +253,7 @@
             view-name="eSignTasks"
             :content="content"
             :context="data"
-            class="mt-12"
+            class="mt-n12"
           />
         </div>
         <div
