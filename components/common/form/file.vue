@@ -46,6 +46,7 @@
 </template>
 <script>
 import { formFieldMixin } from '~/utility/form-control'
+import { postGaData } from '~/utility/index.js'
 export default {
   mixins: [formFieldMixin],
   props: {
@@ -100,6 +101,7 @@ export default {
   watch: {
     openFileDialog(newVal, oldVal) {
       this.uploadClicked()
+      postGaData('Upload', this.label)
     },
     value(newVal, oldVal) {
       if (!newVal.length) {
