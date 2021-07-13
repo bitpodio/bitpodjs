@@ -46,12 +46,12 @@ export default {
           .split('UTC')[1]
           .split(')')[0]
           .split(':')
-        this.dateObj.hours = parseInt(timezoneOffset[0])
-        this.dateObj.minutes = parseInt(timezoneOffset[1])
+        this.dateObj.hours = Math.abs(parseInt(timezoneOffset[0]))
+        this.dateObj.minutes = Math.abs(parseInt(timezoneOffset[1]))
         if (timezoneOffset[0].includes('+')) {
           convertedDate = add(new Date(timestamp), this.dateObj)
         } else {
-          convertedDate = sub(new Date(timestamp), Math.abs(this.dateObj))
+          convertedDate = sub(new Date(timestamp), this.dateObj)
         }
         const newDate = this.$d(
           new Date(convertedDate),
