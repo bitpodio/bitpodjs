@@ -1,11 +1,13 @@
 <template>
-  <div v-if="date !== undefined && date">
+  <div v-if="date !== undefined && date && Timezone !== ''">
     {{ getTimeStampDate(date, userTimezone) }}
+  </div>
+  <div v-else>
+    {{ $d(new Date(date), 'long', $i18n.locale) }}
   </div>
 </template>
 
 <script>
-import dateInUtc from 'date-in-utc'
 export default {
   props: {
     item: {
@@ -21,18 +23,24 @@ export default {
   data() {
     return {
       date: this.item.timeStamp,
-      userTimezone: this.$store.state.userProfileTimezone,
+      userTimezone: this.$store.state.userProfileTimezone || '',
     }
   },
   methods: {
+    getDate(timestampDate) {
+      const newDate = this.$d(
+        new Date(timestampDate),
+        'long',
+        this.$i18n.locale
+      )
+      return newDate
+    },
     getTimeStampDate(timestamp, Timezone) {
       const timezoneOffset = parseInt(
         this.userTimezone.split(')')[0].split('UTC')[1]
       )
-      const convertedDate = dateInUtc(
-        timezoneOffset,
-        new Date(timestamp)
-      ).toLocaleString()
+      const convertedDate =
+        new Date(timestamp).getTime() + 3600000 * timezoneOffset
       const newDate = this.$d(
         new Date(convertedDate),
         'long',
