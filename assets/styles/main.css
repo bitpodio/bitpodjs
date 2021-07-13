@@ -827,6 +827,9 @@ table > tbody > tr:last-child .key-align {
   max-width: 100%;
   word-wrap: break-word;
 }
+.seo-desciption img {
+  display: none;
+}
 @media (min-width: 1904px) {
   .boxviewlarge .v-data-table__wrapper {
     margin-bottom: 0 !important;
