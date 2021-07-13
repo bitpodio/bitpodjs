@@ -1,6 +1,6 @@
 <template>
   <div class="esign-section">
-    <div class="greybg">
+    <div class="greybg eSignRequest-eSign-view">
       <div class="esign-action">
         <v-btn text small @click="handleNewTemplate">
           <v-icon left class="fs-16">mdi-plus</v-icon
@@ -317,7 +317,7 @@ export default {
 </script>
 
 <style lang="scss">
-.eSignRequest-eSign {
+.eSignRequest-eSign-view {
   --esign-tile-width: 280px;
   .eventtiles {
     max-width: var(--esign-tile-width);
