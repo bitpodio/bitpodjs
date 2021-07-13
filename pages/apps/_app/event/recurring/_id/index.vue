@@ -1033,11 +1033,10 @@
               {{ formatField(data.event.SEOTitle) }}
             </div>
           </v-flex>
-          <v-flex my-3>
+          <v-flex my-3 class="seo-desciption">
             <i18n path="Common.SEODescription" class="body-2 text--secondary" />
-            <div class="body-1 d-flex flex-wrap braek-all">
-              {{ formatField(data.event.SEODesc) }}
-            </div>
+            <!-- eslint-disable-next-line vue/no-v-html -->
+            <div v-html="formatField(data.event.Description)" />
           </v-flex>
           <v-flex my-3>
             <i18n path="Common.SEOKeywords" class="body-2 text--secondary" />
