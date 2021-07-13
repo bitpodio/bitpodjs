@@ -1430,7 +1430,7 @@
           <v-flex my-3 class="seo-desciption">
             <i18n path="Common.SEODescription" class="body-2 text--secondary" />
             <!-- eslint-disable-next-line vue/no-v-html -->
-            <div v-html="data.event.Description" />
+            <div v-html="formatField(data.event.Description)" />
           </v-flex>
           <v-flex my-3>
             <i18n path="Common.SEOKeywords" class="body-2 text--secondary" />
