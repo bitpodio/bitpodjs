@@ -51,7 +51,7 @@ export default {
         if (timezoneOffset[0].includes('+')) {
           convertedDate = add(new Date(timestamp), this.dateObj)
         } else {
-          convertedDate = sub(new Date(timestamp), this.dateObj)
+          convertedDate = sub(new Date(timestamp), Math.abs(this.dateObj))
         }
         const newDate = this.$d(
           new Date(convertedDate),
