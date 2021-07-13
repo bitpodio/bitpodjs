@@ -50,7 +50,7 @@ export default {
   data() {
     return {
       eventList: [],
-      eventTitle: this.$route.query.eventId,
+      eventTitle: this.$route.params.id,
       eventId: '',
       items: [],
       isGrid: false,
@@ -150,6 +150,9 @@ export default {
     onChange() {
       this.fetchEventData()
       this.$emit('change', this.eventTitle)
+      this.$router.push(
+        this.localePath(`/apps/event/event-attendees/${this.eventTitle}`)
+      )
     },
   },
 }

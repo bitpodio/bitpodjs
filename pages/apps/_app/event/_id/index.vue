@@ -1998,9 +1998,7 @@ export default {
     },
     eventCheckIn() {
       this.$router.push(
-        this.localePath(
-          `/apps/event/event-attendees?eventId=${this.$route.params.id}`
-        )
+        this.localePath(`/apps/event/event-attendees/${this.$route.params.id}`)
       )
     },
     getEventEndDate() {
