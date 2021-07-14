@@ -39,7 +39,7 @@ export default {
       return newDate
     },
     getTimeStampDate(timestamp, Timezone) {
-      if (Timezone !== '') {
+      if (Timezone !== '' && Timezone !== '(UTC) Coordinated Universal Time') {
         let convertedDate
         const timezoneOffset = Timezone.match(/([A-Z]+[\\+-][0-9]+.*)/)[1]
           .split(' ')[0]
