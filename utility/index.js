@@ -353,7 +353,7 @@ export const configLoaderMixin = {
   },
   methods: {
     postUrlTracking() {
-      if (this.$store.state.parseUrl !== this.$route.path) {
+      if (localStorage.getItem('parseUrl') !== this.$route.path) {
         const murmurhash = require('murmurhash')
         const checkId = murmurhash.v2(
           this.$auth.user.data.email,
@@ -361,6 +361,7 @@ export const configLoaderMixin = {
         )
         this.$store.commit('googleTrackingId', checkId)
         this.$store.commit('setTrackingPath', this.$route.path)
+        localStorage.setItem('parseUrl', this.$route.path)
         setTimeout(() => {
           if (process.client) {
             if (window && window.ga) {

@@ -101,7 +101,6 @@ export default {
   watch: {
     openFileDialog(newVal, oldVal) {
       this.uploadClicked()
-      postGaData('Upload', this.label)
     },
     value(newVal, oldVal) {
       if (!newVal.length) {
@@ -133,6 +132,7 @@ export default {
     },
     uploadClicked() {
       this.$refs.test.$el.firstElementChild.firstElementChild.firstElementChild.click()
+      postGaData('Upload', this.label)
     },
     clearInput(event) {
       event.target.value = ''
