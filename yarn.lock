@@ -4675,11 +4675,6 @@ date-fns@^2.15.0:
   resolved "https://registry.yarnpkg.com/date-fns/-/date-fns-2.15.0.tgz#424de6b3778e4e69d3ff27046ec136af58ae5d5f"
   integrity sha512-ZCPzAMJZn3rNUvvQIMlXhDr4A+Ar07eLeGsGREoWU19a3Pqf5oYa+ccd+B3F6XVtQY6HANMFdOQ8A+ipFnvJdQ==
 
-date-in-utc@^0.0.2:
-  version "0.0.2"
-  resolved "https://registry.yarnpkg.com/date-in-utc/-/date-in-utc-0.0.2.tgz#8fd20a7bf162079d95d5a8fd370360d626a02be0"
-  integrity sha512-/dqRytMSfBhA9Hh1kQiiTJY4aVrh9snE4vb2tMPc3C3EIYEzIKxmMpa/fDOKbwpSY/hN88SUwDd6P74s9LMt6A==
-
 de-indent@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/de-indent/-/de-indent-1.0.2.tgz#b2038e846dc33baa5796128d0804b455b8c1e21d"
