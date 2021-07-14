@@ -53,8 +53,8 @@ export default {
   methods: {
     confirmDelete() {
       this.$eventBus.$emit('toggle-confirm', this.viewName, 'delete-sponsor', {
-        title: this.$t('Messages.Warn.DeleteSponsor'),
-        message: this.$t('Messages.Warn.DeleteWarning', this.items.length, {
+        title: this.$tc('Messages.Warn.DeleteSponsor'),
+        message: this.$tc('Messages.Warn.DeleteWarning', this.items.length, {
           subTitle: 'sponsor',
         }),
         options: { color: 'error lighten-1' },
