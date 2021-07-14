@@ -3938,9 +3938,12 @@ export default {
       },
       dataSource: {
         type: 'rest',
-        getData: (ctx, isExporting = false) =>
-          getData(`Events/${ctx.$route.params.id}/Survey`, isExporting),
+        getData: (ctx) =>
+          getCustomData(
+            `Events/${ctx.$route.params.id}/Survey?filter={"order":"createdDate DESC"}`
+          ),
       },
+      sortBy: 'createdDate DESC',
       title: 'eventRegistrationQuestion',
       type: 'list',
     },
