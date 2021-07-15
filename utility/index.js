@@ -329,7 +329,7 @@ export const configLoaderMixin = {
     if (strategy === 'bitpod' || strategy === 'google') {
       if (
         this.token.split(' ')[1] !==
-        this.$auth.$storage.getCrocookies()['apollo-token']
+        this.$auth.$storage.getCookies()['apollo-token']
       ) {
         let token = this.$auth.strategy.token.get()
         if (token) {
@@ -355,33 +355,33 @@ export const configLoaderMixin = {
     postUrlTracking() {
       console.debug('process', process)
       console.debug('process.client', process.client)
-      if (process.client) {
-        console.debug('its client ===>1')
-        if (localStorage.getItem('parseUrl') !== this.$route.path) {
-          console.debug('its client ===>2', localStorage.getItem('parseUrl'))
-          const murmurhash = require('murmurhash')
-          console.debug('its client ===>3')
-          const checkId = murmurhash.v2(
-            this.$auth.user.data.email,
-            this.$config.seedValue
-          )
-          console.debug('its client ===>4')
-          this.$store.commit('googleTrackingId', checkId)
-          this.$store.commit('setTrackingPath', this.$route.path)
-          localStorage.setItem('parseUrl', this.$route.path)
-          console.debug('its client ===>5')
-          setTimeout(() => {
-            if (process.client) {
-              if (window && window.ga) {
-                console.debug('URL tracking start for url', this.$route.path)
-                window.ga('create', this.$config.gaTrackingCode, 'auto')
-                window.ga('set', 'userId', checkId)
-                window.ga('send', 'pageview', this.$route.path)
-              }
-            }
-          }, 1500)
-        }
-      }
+      // if (process.client) {
+      //   console.debug('its client ===>1')
+      //   if (localStorage.getItem('parseUrl') !== this.$route.path) {
+      //     console.debug('its client ===>2', localStorage.getItem('parseUrl'))
+      //     const murmurhash = require('murmurhash')
+      //     console.debug('its client ===>3')
+      //     const checkId = murmurhash.v2(
+      //       this.$auth.user.data.email,
+      //       this.$config.seedValue
+      //     )
+      //     console.debug('its client ===>4')
+      //     this.$store.commit('googleTrackingId', checkId)
+      //     this.$store.commit('setTrackingPath', this.$route.path)
+      //     localStorage.setItem('parseUrl', this.$route.path)
+      //     console.debug('its client ===>5')
+      //     setTimeout(() => {
+      //       if (process.client) {
+      //         if (window && window.ga) {
+      //           console.debug('URL tracking start for url', this.$route.path)
+      //           window.ga('create', this.$config.gaTrackingCode, 'auto')
+      //           window.ga('set', 'userId', checkId)
+      //           window.ga('send', 'pageview', this.$route.path)
+      //         }
+      //       }
+      //     }, 1500)
+      //   }
+      // }
     },
   },
 }
