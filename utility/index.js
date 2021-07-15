@@ -353,13 +353,13 @@ export const configLoaderMixin = {
   },
   methods: {
     postUrlTracking() {
-      debugger
-      console.log('processss', process)
-      console.log('processss', process.client)
-      const path = this.$auth.$storage.getCookies()['auth.parseUrl']
-      debugger
+      // debugger
+      // console.log('processss', process)
+      // console.log('processss', process.client)
+      // const path = this.$auth.$storage.getCookies()['auth.parseUrl']
+      // debugger
 
-      if (path !== this.$route.path) {
+      if (this.$store.state.parseUrl !== this.$route.path) {
         const murmurhash = require('murmurhash')
         const checkId = murmurhash.v2(
           this.$auth.user.data.email,
