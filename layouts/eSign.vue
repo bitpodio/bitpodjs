@@ -12,18 +12,11 @@
           class="ml-0 mx-md-2 mr-0 d-inline d-sm-none"
           @click.stop="drawer = !drawer"
         ></v-app-bar-nav-icon>
-        <span class="bitpod-logo logo-ds px-3">
-          <a href="/admin/apps/event/eventboard">
-            <v-img
-              :src="$config.cdnUri + 'bitpod-logo-new.png'"
-              class="logofull mr-2"
-            ></v-img>
-          </a>
-        </span>
+        <AppLogo />
         <v-spacer></v-spacer>
       </v-toolbar-title>
       <v-spacer></v-spacer>
-      <div class="d-none">
+      <div>
         <v-btn
           v-bind="attrs"
           color="blue darken-2"
@@ -157,6 +150,7 @@ import OrgnaizationList from '~/components/common/organization-list'
 import AppDrawer from '~/components/common/app-drawer'
 import Help from '~/components/common/help'
 import OldSite from '~/components/common/oldsite'
+import AppLogo from '~/components/common/app-logo'
 import Upgrade from '~/components/common/upgrade'
 import userUtils from '~/utility/userApps'
 export default {
@@ -169,6 +163,7 @@ export default {
     OldSite,
     Upgrade,
     ESignForm,
+    AppLogo,
   },
   props: {
     refresh: {
@@ -243,14 +238,14 @@ export default {
         this.$apolloHelpers.onLogout()
       }
     },
+    handleNewTemplate() {
+      this.dialog = true
+    },
   },
   head() {
     return {
       title: this.$t('Common.ESignature') + ' ' + this.$t('Common.Bitpod'),
     }
-  },
-  handleNewTemplate() {
-    this.dialog = true
   },
 }
 </script>
@@ -260,9 +255,20 @@ export default {
   width: 70% !important;
   margin: 0 auto;
 }
+@media (min-width: 1900px) {
+  .esign-app-title {
+    padding-left: 80px;
+  }
+}
+@media (max-width: 1400px) {
+  .esign-app-title {
+    padding-left: 40px;
+  }
+}
 @media (max-width: 600px) {
   .esign-app-title {
     width: 100% !important;
+    padding-left: 0;
   }
 }
 </style>

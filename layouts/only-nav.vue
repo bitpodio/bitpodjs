@@ -12,12 +12,7 @@
           class="ml-0 ml-md-2 mr-2 mr-md-3"
           @click.stop="drawer = !drawer"
         ></v-app-bar-nav-icon>
-        <span class="bitpod-logo logo-ds d-none d-sm-flex">
-          <v-img
-            :src="$config.cdnUri + 'bitpod-logo-new.png'"
-            class="logofull mr-2"
-          ></v-img>
-        </span>
+        <AppLogo />
         <v-spacer></v-spacer>
       </v-toolbar-title>
       <v-spacer></v-spacer>
@@ -95,11 +90,13 @@
 
 <script>
 import Help from '~/components/common/help'
+import AppLogo from '~/components/common/app-logo'
 export default {
   layout: 'only-nav',
   middleware: ['authorization'],
   components: {
     Help,
+    AppLogo,
   },
   data() {
     return {

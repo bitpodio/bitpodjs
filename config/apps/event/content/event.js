@@ -13,6 +13,7 @@ import eventTasks from '../gql/eventTasks.gql'
 import location from '../gql/location.gql'
 import eventRecurringSession from '../gql/eventRecurringSession.gql'
 import { getData, getLookupData, getCustomData } from '../rest'
+import { emailRule } from '~/utility/index.js'
 import marketingTemplates from '~/config/apps/admin/gql/marketingTemplates.gql'
 
 export default {
@@ -202,13 +203,7 @@ export default {
           editForm: true,
           rules: [
             function (v) {
-              return !!v || this.$t('Messages.Error.EmailRequired')
-            },
-            function (value, data) {
-              return (
-                /.+@.+\..+/.test(value) ||
-                this.$t('Messages.Error.EmailRequired')
-              )
+              return emailRule(v, this.$i18n)
             },
           ],
         },
@@ -1048,13 +1043,7 @@ export default {
           editForm: true,
           rules: [
             function (v) {
-              return !!v || this.$t('Messages.Error.EmailRequired')
-            },
-            function (value, data) {
-              return (
-                /.+@.+\..+/.test(value) ||
-                this.$t('Messages.Error.EmailRequired')
-              )
+              return emailRule(v, this.$i18n)
             },
           ],
         },
@@ -1470,7 +1459,7 @@ export default {
         hideDefaultFooter: false,
         showExpand: false,
         singleExpand: false,
-        showSelect: true,
+        showSelect: false,
         hideFilter: false,
         hideSearch: false,
       },
@@ -1507,13 +1496,7 @@ export default {
           editForm: true,
           rules: [
             function (v) {
-              return !!v || this.$t('Messages.Error.EmailRequired')
-            },
-            function (value, data) {
-              return (
-                /.+@.+\..+/.test(value) ||
-                this.$t('Messages.Error.EmailRequired')
-              )
+              return emailRule(v, this.$i18n)
             },
           ],
         },
@@ -1599,7 +1582,7 @@ export default {
         CheckIn: {
           displayOrder: 10,
           caption: 'Common.CheckIn',
-          searchEnable: false,
+          searchEnable: true,
           sortEnable: true,
           columnWidth: '250px',
           type: 'string',
@@ -1611,7 +1594,7 @@ export default {
         createdDate: {
           displayOrder: 11,
           caption: 'Common.CreatedDate',
-          searchEnable: false,
+          searchEnable: true,
           sortEnable: true,
           columnWidth: '150px',
           type: 'date',
@@ -1672,7 +1655,15 @@ export default {
           filterEnable: false,
           rules: [
             function (v) {
-              return !!v || this.$t('Messages.Error.FirstNameRequired')
+              if (v && v.length && /^\s+/.test(v)) {
+                return this.$t('Messages.Error.SpaceNotAllowed')
+              } else {
+                return (
+                  !!(v && v.length) ||
+                  typeof v === 'number' ||
+                  this.$t('Messages.Error.FieldRequired')
+                )
+              }
             },
           ],
         },
@@ -1693,7 +1684,15 @@ export default {
           filterEnable: false,
           rules: [
             function (v) {
-              return !!v || this.$t('Messages.Error.LastNameRequired')
+              if (v && v.length && /^\s+/.test(v)) {
+                return this.$t('Messages.Error.SpaceNotAllowed')
+              } else {
+                return (
+                  !!(v && v.length) ||
+                  typeof v === 'number' ||
+                  this.$t('Messages.Error.FieldRequired')
+                )
+              }
             },
           ],
         },
@@ -2080,13 +2079,7 @@ export default {
           editForm: true,
           rules: [
             function (v) {
-              return !!v || this.$t('Messages.Error.EmailRequired')
-            },
-            function (value, data) {
-              return (
-                /.+@.+\..+/.test(value) ||
-                this.$t('Messages.Error.EmailRequired')
-              )
+              return emailRule(v, this.$i18n)
             },
           ],
         },
@@ -2543,13 +2536,7 @@ export default {
           editForm: true,
           rules: [
             function (v) {
-              return !!v || this.$t('Messages.Error.EmailRequired')
-            },
-            function (value, data) {
-              return (
-                /.+@.+\..+/.test(value) ||
-                this.$t('Messages.Error.EmailRequired')
-              )
+              return emailRule(v, this.$i18n)
             },
           ],
         },
@@ -2946,13 +2933,7 @@ export default {
           editForm: true,
           rules: [
             function (v) {
-              return !!v || this.$t('Messages.Error.EmailRequired')
-            },
-            function (value, data) {
-              return (
-                /.+@.+\..+/.test(value) ||
-                this.$t('Messages.Error.EmailRequired')
-              )
+              return emailRule(v, this.$i18n)
             },
           ],
         },
@@ -3391,7 +3372,7 @@ export default {
         hideDefaultFooter: false,
         showExpand: false,
         singleExpand: false,
-        showSelect: false,
+        showSelect: true,
         hideFilter: false,
         hideSearch: true,
       },
@@ -3680,7 +3661,7 @@ export default {
         hideDefaultFooter: false,
         showExpand: false,
         singleExpand: false,
-        showSelect: false,
+        showSelect: true,
         hideFilter: false,
         hideSearch: true,
       },
@@ -3897,7 +3878,7 @@ export default {
         hideDefaultFooter: false,
         showExpand: false,
         singleExpand: false,
-        showSelect: false,
+        showSelect: true,
         hideFilter: false,
         hideSearch: true,
       },
@@ -3957,9 +3938,12 @@ export default {
       },
       dataSource: {
         type: 'rest',
-        getData: (ctx, isExporting = false) =>
-          getData(`Events/${ctx.$route.params.id}/Survey`, isExporting),
+        getData: (ctx) =>
+          getCustomData(
+            `Events/${ctx.$route.params.id}/Survey?filter={"order":"createdDate DESC"}`
+          ),
       },
+      sortBy: 'createdDate DESC',
       title: 'eventRegistrationQuestion',
       type: 'list',
     },
@@ -3969,7 +3953,7 @@ export default {
         hideDefaultFooter: false,
         showExpand: false,
         singleExpand: false,
-        showSelect: false,
+        showSelect: true,
         hideFilter: false,
         hideSearch: true,
       },
@@ -4191,7 +4175,7 @@ export default {
         hideDefaultFooter: false,
         showExpand: false,
         singleExpand: false,
-        showSelect: false,
+        showSelect: true,
         hideFilter: false,
         hideSearch: true,
       },
@@ -4273,13 +4257,7 @@ export default {
           editForm: true,
           rules: [
             function (v) {
-              return !!v || this.$t('Messages.Error.EmailRequired')
-            },
-            function (value, data) {
-              return (
-                /.+@.+\..+/.test(value) ||
-                this.$t('Messages.Error.EmailRequired')
-              )
+              return emailRule(v, this.$i18n)
             },
           ],
         },
@@ -4430,7 +4408,7 @@ export default {
         hideDefaultFooter: false,
         showExpand: false,
         singleExpand: false,
-        showSelect: false,
+        showSelect: true,
         hideFilter: false,
         hideSearch: true,
       },
@@ -4939,7 +4917,7 @@ export default {
         hideDefaultFooter: false,
         showExpand: false,
         singleExpand: false,
-        showSelect: false,
+        showSelect: true,
         hideFilter: false,
         hideSearch: true,
       },
@@ -5955,10 +5933,7 @@ export default {
           cssClasses: 'col-6 col-md-6',
           rules: [
             function (v) {
-              return !!v || this.$t('Messages.Error.EmailRequired')
-            },
-            function (value, data) {
-              return /.+@.+\..+/.test(value) || 'E-mail must be valid'
+              return emailRule(v, this.$i18n)
             },
           ],
         },

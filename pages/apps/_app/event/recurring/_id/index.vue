@@ -1033,11 +1033,10 @@
               {{ formatField(data.event.SEOTitle) }}
             </div>
           </v-flex>
-          <v-flex my-3>
+          <v-flex my-3 class="seo-desciption">
             <i18n path="Common.SEODescription" class="body-2 text--secondary" />
-            <div class="body-1 d-flex flex-wrap braek-all">
-              {{ formatField(data.event.SEODesc) }}
-            </div>
+            <!-- eslint-disable-next-line vue/no-v-html -->
+            <div v-html="formatField(data.event.Description)" />
           </v-flex>
           <v-flex my-3>
             <i18n path="Common.SEOKeywords" class="body-2 text--secondary" />
@@ -1126,7 +1125,10 @@
               @change="updateReg()"
             ></v-checkbox>
           </v-flex>
-          <v-flex class="d-block text-truncate">
+          <v-flex
+            v-if="data.event.LocationType === 'Bitpod Virtual'"
+            class="d-block text-truncate"
+          >
             <v-checkbox
               v-model="data.event.allowChat"
               dense
@@ -1221,28 +1223,6 @@
             <div class="body-1">
               {{ formatField(data.event.RegistrationSiteTemplate) }}
             </div>
-          </v-flex>
-          <v-flex>
-            <v-checkbox
-              v-model="registrationSetting.showimagegallery"
-              dense
-              height="20"
-              class="ma-0 pa-0"
-              :label="$t('Common.ShowImageGallery')"
-              color="green"
-              @change="updateReg1()"
-            ></v-checkbox>
-          </v-flex>
-          <v-flex>
-            <v-checkbox
-              v-model="registrationSetting.showeventreviews"
-              dense
-              height="20"
-              class="ma-0 pa-0"
-              :label="$t('Common.ShowEventReviews')"
-              color="green"
-              @change="updateReg1()"
-            ></v-checkbox>
           </v-flex>
         </div>
         <v-snackbar v-model="snackbar" :timeout="timeout" :top="true">
@@ -1802,9 +1782,7 @@ export default {
     },
     async updateRegistrationPage() {
       const obj = this.updateSectionHeading
-      const URL = `https://${this.$bitpod.getApiUrl()}Events/${
-        this.$route.params.id
-      }`
+      const URL = `${this.$bitpod.getApiUrl()}Events/${this.$route.params.id}`
       try {
         const res = await this.$axios.$patch(URL, obj)
         if (res) {

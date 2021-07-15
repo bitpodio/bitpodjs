@@ -9,6 +9,7 @@ import currencyFormatter from 'currency-formatter'
 import startOfDay from 'date-fns/startOfDay'
 import endOfDay from 'date-fns/endOfDay'
 import MissingComponent from './missing-component.vue'
+import nuxtconfig from '~/nuxt.config'
 
 export function importTemplate(templatePath) {
   return () => import(`~/config/${templatePath}`)
@@ -114,6 +115,10 @@ export const formValidationMixin = {
   },
 }
 
+export function getID4ServerUrl() {
+  const url = nuxtconfig.auth.strategies.bitpod.userInfoEndPointUrl
+  return url.split('auth/')[0]
+}
 export function getContentByName(ctx, contentName) {
   const contents = ctx.contentFactory(ctx)
   return contents[contentName]
@@ -348,7 +353,7 @@ export const configLoaderMixin = {
   },
   methods: {
     postUrlTracking() {
-      if (this.$store.state.parseUrl !== this.$route.path) {
+      if (localStorage.getItem('parseUrl') !== this.$route.path) {
         const murmurhash = require('murmurhash')
         const checkId = murmurhash.v2(
           this.$auth.user.data.email,
@@ -356,6 +361,7 @@ export const configLoaderMixin = {
         )
         this.$store.commit('googleTrackingId', checkId)
         this.$store.commit('setTrackingPath', this.$route.path)
+        localStorage.setItem('parseUrl', this.$route.path)
         setTimeout(() => {
           if (process.client) {
             if (window && window.ga) {
@@ -380,7 +386,9 @@ export function postGaData(action, formTitle) {
     hitType: 'event',
     eventCategory: 'Form',
     eventAction:
-      action.toLowerCase() === 'new' || action.toLowerCase() === 'edit'
+      action.toLowerCase() === 'new' ||
+      action.toLowerCase() === 'edit' ||
+      action.toLowerCase() === 'upload'
         ? 'Show'
         : action.toLowerCase() === 'close'
         ? 'Close'
@@ -396,10 +404,34 @@ export function postGaData(action, formTitle) {
   window.ga('send', obj)
 }
 
+export function requiredRule(value, that) {
+  if (/^\s+/.test(value)) {
+    return that.t('Messages.Error.SpaceNotAllowed')
+  } else if (!(value && value.length) || typeof value === 'number') {
+    return that.t('Messages.Error.FieldRequired')
+  } else {
+    return true
+  }
+}
+
 export function getPriceWithCurrency(price, currency) {
   const currencyPrice = currencyFormatter.format(price, { code: currency })
   const totalPrice = currencyFormatter.unformat(currencyPrice, {
     code: currency,
   })
   return totalPrice
+}
+
+export function emailRule(value, that) {
+  if (!/.+@.+\..+/.test(value)) {
+    return that.t('Messages.Error.EmailRequired')
+  } else if (
+    !/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/.test(
+      value
+    )
+  ) {
+    return that.t('Common.RemoveBlankSpace')
+  } else {
+    return true
+  }
 }

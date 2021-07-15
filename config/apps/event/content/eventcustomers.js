@@ -1,4 +1,5 @@
 import memberList from '../gql/memberList.gql'
+import { emailRule } from '~/utility/index.js'
 
 export default {
   dataSource: {
@@ -84,10 +85,7 @@ export default {
           editForm: true,
           rules: [
             function (v) {
-              return !!v || this.$t('Messages.Error.EmailRequired')
-            },
-            function (value, data) {
-              return /.+@.+\..+/.test(value) || 'E-mail must be valid'
+              return emailRule(v, this.$i18n)
             },
           ],
         },

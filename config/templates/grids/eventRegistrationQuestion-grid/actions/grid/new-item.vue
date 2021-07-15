@@ -66,8 +66,8 @@
               </v-col>
               <v-col cols="12">
                 <v-text-field
-                  v-model="formData.DisplayOrder"
                   ref="questionField"
+                  v-model="formData.DisplayOrder"
                   :rules="[rules.required]"
                   :label="$t('Common.DisplayOrder')"
                   type="number"

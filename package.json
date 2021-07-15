@@ -1,6 +1,6 @@
 {
   "name": "bitpodjs",
-  "version": "1.1.19",
+  "version": "1.1.20",
   "private": true,
   "scripts": {
     "dev": "nuxt",
@@ -49,6 +49,7 @@
     "nuxt": "^2.13.0",
     "nuxt-gmaps": "^1.2.5",
     "nuxt-i18n": "^6.15.1",
+    "qr-scanner": "^1.2.0",
     "rrule": "2.6.4",
     "video.js": "^7.10.2",
     "videojs-contrib-hls": "^5.15.0",
@@ -65,6 +66,7 @@
     "eslint-plugin-nuxt": "^1.0.0",
     "eslint-plugin-prettier": "^3.1.4",
     "eslint-plugin-promise": "^4.2.1",
+    "file-loader": "^6.2.0",
     "prettier": "^2.0.5",
     "stylelint": "^13.6.1",
     "stylelint-config-prettier": "^8.0.1",

@@ -14,20 +14,6 @@
       <div class="px-4 pt-3 pb-1">
         <i18n path="Common.AdminApp" class="app-title-text text--primary" />
       </div>
-      <div class="d-block d-sm-none my-3">
-        <v-btn
-          v-bind="attrs"
-          color="blue darken-2"
-          dark
-          small
-          depressed
-          class="mx-3 wd-full"
-          v-on="on"
-          @click.native="dialog = true"
-        >
-          <i18n path="Drawer.CreateUser" />
-        </v-btn>
-      </div>
       <v-list shaped>
         <template v-for="item in items">
           <v-row v-if="item.heading" :key="item.heading" align="center">
@@ -140,39 +126,10 @@
           class="ml-0 mr-0 d-lg-none"
           @click.stop="drawer = !drawer"
         ></v-app-bar-nav-icon>
-        <span v-if="!$vuetify.theme.dark" class="bitpod-logo logo-ds px-3">
-          <a href="/admin/apps/event/eventboard">
-            <v-img
-              :src="$config.cdnUri + 'bitpod-logo-blk2.svg'"
-              class="logofull mr-2"
-            ></v-img>
-          </a>
-        </span>
-        <span v-if="$vuetify.theme.dark" class="bitpod-logo logo-ds px-3">
-          <a href="/admin/apps/event/eventboard">
-            <v-img
-              :src="$config.cdnUri + 'bitpod-logo-white.svg'"
-              class="logofull mr-2"
-            ></v-img>
-          </a>
-        </span>
+        <AppLogo />
         <v-spacer></v-spacer>
       </v-toolbar-title>
       <v-spacer></v-spacer>
-      <div class="d-none d-sm-flex">
-        <v-btn
-          v-bind="attrs"
-          color="blue darken-2"
-          dark
-          depressed
-          small
-          class="mx-3"
-          v-on="on"
-          @click.native="dialog = true"
-        >
-          <i18n path="Drawer.CreateUser" />
-        </v-btn>
-      </div>
       <Help class="d-none d-sm-inline" />
       <LanguageSwitcher />
       <AppDrawer />
@@ -282,13 +239,8 @@
                       :rules="[rules.email, rules.required]"
                       outlined
                       dense
+                      :error-messages="duplicateMessage"
                     ></v-text-field>
-                    <div
-                      v-if="duplicateMessage !== ''"
-                      class="red--text pa-3 pt-0 body-1 mt-n5"
-                    >
-                      {{ duplicateMessage }}
-                    </div>
                   </v-col>
                 </v-row>
               </v-form>
@@ -353,6 +305,7 @@ import Help from '~/components/common/help'
 import OldSite from '~/components/common/oldsite'
 import Upgrade from '~/components/common/upgrade'
 import Theme from '~/components/common/theme'
+import AppLogo from '~/components/common/app-logo'
 import userUtils from '~/utility/userApps'
 export default {
   middleware: ['auth', 'authorization'],
@@ -363,6 +316,7 @@ export default {
     OldSite,
     Upgrade,
     Theme,
+    AppLogo,
   },
   props: {
     refresh: {
@@ -381,7 +335,6 @@ export default {
       dialog: false,
       notifications: false,
       sound: true,
-      tabs: null,
       account: false,
       message: false,
       valid: false,
@@ -390,6 +343,7 @@ export default {
       rules: rules(this.$i18n),
       userPlanData: '',
       duplicateMessage: '',
+      toggleFallbackImage: false,
       formData: {
         emailId: '',
       },
@@ -412,19 +366,9 @@ export default {
           to: '/apps/admin/list/marketingtemplates/template',
         },
         {
-          icon: 'fa fa-id-badge',
-          text: 'Badges Templates',
-          to: '/apps/admin/list/badge/badge',
-        },
-        {
           icon: 'fa fa-file-text-o',
           text: 'Registration Form',
           to: '/apps/admin/list/registrationformdetails/registration form',
-        },
-        {
-          icon: 'fa fa-ticket',
-          text: 'Ticket Templates',
-          to: '/apps/admin/list/printedtickets/printed-tickets',
         },
         { heading: 'Security' },
         {
@@ -470,9 +414,11 @@ export default {
     onClose() {
       this.dialog = false
       this.onReset()
+      this.duplicateMessage = ''
     },
     onReset() {
       this.$refs.form.reset()
+      this.duplicateMessage = ''
     },
     async onSave() {
       if (this.valid) {
@@ -493,6 +439,9 @@ export default {
         } catch (e) {
           if (e.response.status === 400) {
             this.duplicateMessage = this.$t('Messages.Error.UserExists')
+            setTimeout(() => {
+              this.duplicateMessage = ''
+            }, 1000)
           }
           console.log(
             `Error in layouts/admin.vue while making a POST call to Users model from method onSave context:-URL:-${url}\n OrgId:-${orgId}\n formData:-${this.formData} `,

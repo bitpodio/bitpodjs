@@ -111,7 +111,7 @@
           </div>
         </v-card-title>
         <v-card-text class="px-xs-2 px-md-10 px-lg-10 px-xl-15 pt-0">
-          <v-form v-model="editTemplateFormValid">
+          <v-form ref="editTemplateForm" v-model="editTemplateFormValid">
             <v-row>
               <v-col cols="12" class="pb-0">
                 <v-text-field
@@ -173,7 +173,7 @@
           </div>
         </v-card-title>
         <v-card-text class="px-xs-2 px-md-10 px-lg-10 px-xl-15 pt-0">
-          <v-form v-model="addNewTemplateFormValid">
+          <v-form ref="newTemplateForm" v-model="addNewTemplateFormValid">
             <v-row>
               <v-col cols="12" class="pb-0">
                 <v-text-field
@@ -249,7 +249,7 @@
           </div>
         </v-card-title>
         <v-card-text class="px-xs-2 px-md-10 px-lg-10 px-xl-15 pt-0">
-          <v-form v-model="addNewRecipientFormValid">
+          <v-form ref="newRecipientForm" v-model="addNewRecipientFormValid">
             <v-row>
               <v-col cols="12" class="pb-0">
                 <v-text-field
@@ -375,7 +375,7 @@
                   small
                   color="primary"
                   class="py-0"
-                  @click="addNewTemplateFormDialog = true"
+                  @click="addTemplateFormOpen"
                   ><v-icon small>mdi-plus</v-icon
                   ><i18n path="Common.NewTemplate"
                 /></v-btn>
@@ -501,13 +501,7 @@
 
                               <v-list dense>
                                 <v-list-item
-                                  @click="
-                                    editTemplateDialog = true
-                                    editTemplateId = item.id
-                                    editTemplateFormName = item.Name
-                                    editTemplateFormURL = item.DocumentUrl
-                                    editTemplateFormCategory = item.Category
-                                  "
+                                  @click="editTemplateFormOpen(item)"
                                 >
                                   <v-list-item-icon class="mr-2">
                                     <i
@@ -1200,6 +1194,7 @@ export default {
         if (response) {
           this.$emit('update:newTemplateDialog', false)
           this.refresh()
+          this.$eventBus.$emit('eventInvites-grid-refresh', 'eSign')
         }
       } catch (err) {
         console.error(
@@ -1307,9 +1302,23 @@ export default {
       this.toggleLoading = !this.toggleLoading
       this.addNewRecipientFormDialog = false
     },
+    addTemplateFormOpen() {
+      this.addNewTemplateFormDialog = true
+      if (this.$refs.newTemplateForm) this.$refs.newTemplateForm.reset()
+    },
+    editTemplateFormOpen(item) {
+      this.editTemplateDialog = true
+      if (this.$refs.editTemplateForm)
+        this.$refs.editTemplateForm.resetValidation()
+      this.editTemplateId = item.id
+      this.editTemplateFormName = item.Name
+      this.editTemplateFormURL = item.DocumentUrl
+      this.editTemplateFormCategory = item.Category
+    },
     addRecipientFormOpen(index) {
       this.newRecipientIndex = index
       this.addNewRecipientFormDialog = true
+      if (this.$refs.newRecipientForm) this.$refs.newRecipientForm.reset()
     },
     async getExistingTemplate() {
       let bitpodURL = `${this.$bitpod.getApiUrl()}ESIGNTEMPLATES`
@@ -1609,6 +1618,8 @@ export default {
           })
           this.templateItems = updatedTemplateItems
         }
+        this.snackbarText = 'The template has been edited successfully'
+        this.snackbar = true
       } catch (err) {
         this.snackbar = true
         this.snackbarText = 'Request Failed'
@@ -1633,8 +1644,16 @@ export default {
             (item) => item.id !== this.deleteTemplateId
           )
           this.templateItems = updatedTemplateItems
+          this.snackbarText = 'The template has been deleted successfully'
+          this.snackbar = true
         }
       } catch (err) {
+        this.snackbarText = 'Request Failed'
+        this.snackbar = true
+        console.error(
+          `Error in eSign-grid/ESignForm.vue in deleteTemplate while making a DELETE call to a built in API, context: ${bitpodURL}`,
+          err
+        )
       } finally {
         this.toggleLoading = !this.toggleLoading
         this.deleteTemplateDialog = false

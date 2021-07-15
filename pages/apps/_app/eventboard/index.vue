@@ -321,8 +321,8 @@
               class="rounded chartHeight"
             >
               <v-img
-                src="https://res.cloudinary.com/mytestlogo/image/upload/v1574258140/GeoChartBlank_cde6u6.png"
-                lazy-src="https://res.cloudinary.com/mytestlogo/image/upload/v1574258140/GeoChartBlank_cde6u6.png"
+                :src="$config.cdnUri + 'geochartblank.png'"
+                :lazy-src="$config.cdnUri + 'geochartblank.png'"
                 aspect-ratio="1"
                 min-height="316"
                 max-height="316"

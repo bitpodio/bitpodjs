@@ -8,6 +8,7 @@ query($filters: JSON) {
           Template
           Size
           EventId
+          Name
         }
       }
     }

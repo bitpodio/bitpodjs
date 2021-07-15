@@ -6,6 +6,7 @@
       </div>
     </v-snackbar>
     <confirm ref="confirm"></confirm>
+    <TemplateTabs />
     <v-flex
       class="d-flex flex-wrap greybg pa-0 justify-center justify-md-start"
     >
@@ -142,9 +143,10 @@
 
 <script>
 import editPrintedTicketTemplate from '~/pages/apps/_app/organization/_id/editPrintedTicketTemplate.vue'
+import TemplateTabs from '~/components/common/template-tabs'
 
 export default {
-  components: { editPrintedTicketTemplate },
+  components: { editPrintedTicketTemplate, TemplateTabs },
   props: {
     items: { type: Array, default: () => [] },
     refresh: {
@@ -194,3 +196,18 @@ export default {
   },
 }
 </script>
+<style>
+.printedtickets-printed-tickets .grid-actions-container {
+  max-width: 900px;
+}
+@media (min-width: 1904px) {
+  .printedtickets-printed-tickets .grid-actions-container {
+    max-width: 1100px;
+  }
+}
+@media (min-width: 600px) {
+  .printedtickets-printed-tickets .grid-actions-container {
+    max-width: 100%;
+  }
+}
+</style>
