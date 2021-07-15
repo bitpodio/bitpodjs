@@ -15,7 +15,9 @@
       <v-card-actions class="pt-0">
         <v-spacer></v-spacer>
         <div v-if="buttonTrueText">
-          <v-btn color="primary" text @click.native="agree">Okay</v-btn>
+          <v-btn color="primary" text @click.native="agree"
+            ><i18n path="Common.Okay"
+          /></v-btn>
         </div>
         <div v-else>
           <v-btn color="grey" text @click.native="cancel"
