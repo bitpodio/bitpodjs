@@ -648,7 +648,7 @@
                     <template v-slot:default>
                       <thead>
                         <tr>
-                          <th class="text-left">
+                          <th class="text-left event-ticket-name">
                             <i18n path="Common.Name" />
                           </th>
                           <th class="text-left">
@@ -881,7 +881,7 @@
               </div>
               <div v-else>
                 <v-flex my-3>
-                  <div class="body-1">
+                  <div class="body-1 text-justify wrap-word-break">
                     {{
                       registration &&
                       registration.EventList &&
@@ -1292,6 +1292,9 @@ export default {
 }
 .ticket-view-table {
   width: 100%;
+}
+.event-ticket-name {
+  white-space: nowrap;
 }
 @media screen and (max-width: 600px) {
   .background-event-img {

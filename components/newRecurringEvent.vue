@@ -532,7 +532,7 @@
           class="pl-md-10 pl-lg-10 pl-xl-15 pr-1 pb-0 pt-1 d-flex align-start"
         >
           <h2 class="black--text pt-4 pb-0 text-h5">
-            <i18n path="Common.Location" />
+            <i18n path="Common.TypeCaption" />
           </h2>
           <v-spacer></v-spacer>
           <div>
@@ -1725,33 +1725,23 @@ export default {
       return new Set(array).size !== array.length
     },
     partitionIntoOverlappingRanges(array) {
-      array.sort(function (a, b) {
-        if (a.start < b.start) return -1
-        if (a.start > b.start) return 1
-        return 0
+      const obj = {}
+      let flag = false
+      array.forEach((ele) => {
+        ele.day.forEach((d) => {
+          if (!obj[d]) {
+            obj[d] = []
+          }
+          for (let x = ele.start; x < ele.end; x++) {
+            if (!obj[d][`${x}_${x + 1}`]) {
+              obj[d][`${x}_${x + 1}`] = {}
+            } else {
+              flag = true
+            }
+          }
+        })
       })
-
-      const rarray = []
-      let g = 0
-      rarray[g] = [array[0]]
-
-      for (let i = 1, l = array.length; i < l; i++) {
-        if (
-          array[i].start >= array[i - 1].start &&
-          array[i].start < this.getMaxEnd(rarray[g])
-        ) {
-          rarray[g].push(array[i])
-        } else {
-          g++
-          rarray[g] = [array[i]]
-        }
-      }
-      for (let i = 0; i < rarray.length; i++) {
-        if (rarray[i].length > 1) {
-          return true
-        }
-      }
-      return false
+      return flag
     },
     changeAddressData(value) {
       if (value === '') {
@@ -2350,7 +2340,7 @@ export default {
           endTime = parseInt(endTime)
           const newsObject = { start: startTime, end: endTime }
           row.Days.forEach((x) => setDays.push(x))
-          tempData.push(newsObject)
+          tempData.push({ ...newsObject, day: row.Days })
         })
         const isOverlappingDays = this.checkOverlappingDays(setDays)
         const isInvalidSlot = this.partitionIntoOverlappingRanges(tempData)

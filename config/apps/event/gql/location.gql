@@ -27,6 +27,12 @@ query($filters: JSON, $ticketFilters: JSON, $sessionFilters: JSON) {
           id
           StartTime
           EndTime
+          _Exceptions {
+            type
+            date
+            wday
+            id
+          }
         }
       }
     }

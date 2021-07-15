@@ -381,14 +381,24 @@ export default {
           (v) => {
             const StartDate = v && new Date(v)
             const EndDate = new Date(this.EndDate)
+            const prevEventStartDate = new Date(
+              this.data.event.StartDate
+            ).setSeconds(0)
             let startDateMessage = ''
-            if (!StartDate)
+            if (!StartDate) {
               startDateMessage = this.$t('Messages.Error.ThisFieldRequired')
-            else if (StartDate > EndDate)
+            } else if (StartDate > EndDate) {
               startDateMessage = this.$t('Messages.Error.StartEndDate')
-            else if (StartDate < new Date())
-              startDateMessage = this.$t('Messages.Error.EventStartDate')
-            else startDateMessage = ''
+            } else if (
+              StartDate !== prevEventStartDate &&
+              StartDate < prevEventStartDate
+            ) {
+              startDateMessage = this.$t(
+                'Messages.Error.EventStartDateValidationMsg'
+              )
+            } else {
+              startDateMessage = ''
+            }
             return startDateMessage || true
           },
         ],
@@ -451,7 +461,7 @@ export default {
       this.$refs.dateTimeComponent.okHandler()
       this.$refs.dateTimeComponent1.okHandler()
     },
-    changeStartDate() {
+    changeStartDate(v) {
       this.$refs.dateform && this.$refs.dateform.validate()
       if (this.$refs.dateTimeComponent) {
         this.$refs.dateTimeComponent.$children[0].onClickOutside = this.outsideClicked
@@ -497,10 +507,10 @@ export default {
     },
     getAddressData(addressData, placeResultData, id) {
       this.addressClicked = true
-      this.VenueAddress.AddressLine = addressData.route
-      this.formData.VenueName = addressData.route
-      this.VenueAddress.Country = addressData.country
-      this.VenueAddress.City = addressData.locality
+      this.VenueAddress.AddressLine = addressData.route || ''
+      this.formData.VenueName = addressData.route || ''
+      this.VenueAddress.Country = addressData.country || ''
+      this.VenueAddress.City = addressData.locality || ''
       const venue = placeResultData.address_components.find(
         (i) =>
           addressData.administrative_area_level_1 &&

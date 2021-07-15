@@ -46,6 +46,7 @@
 </template>
 <script>
 import { formFieldMixin } from '~/utility/form-control'
+import { postGaData } from '~/utility/index.js'
 export default {
   mixins: [formFieldMixin],
   props: {
@@ -131,6 +132,7 @@ export default {
     },
     uploadClicked() {
       this.$refs.test.$el.firstElementChild.firstElementChild.firstElementChild.click()
+      postGaData('Upload', this.label)
     },
     clearInput(event) {
       event.target.value = ''

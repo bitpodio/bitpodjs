@@ -148,6 +148,11 @@ export default {
           inlineEdit: true,
           newForm: true,
           editForm: true,
+          rules: [
+            function (v) {
+              return !!v || this.$t('Messages.Error.FieldRequired')
+            },
+          ],
           dataSource: {
             query: registrationStatusOptions,
             itemText: 'value',

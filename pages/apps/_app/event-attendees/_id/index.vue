@@ -9,6 +9,7 @@
         :items="items"
         :item-text="itemText"
         :item-value="itemValue"
+        :placeholder="pastEventName"
         single-line
         outlined
         dense
@@ -26,7 +27,13 @@
         />
       </div>
     </div>
-    <Scanner class="scan-btn pt-2" />
+    <Scanner
+      view-name="eventAttendeesInEvent"
+      :has-event-ended="isPastEventEnd"
+      :event-info="eventData"
+      :event-id="eventTitle"
+      class="scan-btn py-2"
+    />
   </div>
 </template>
 <script>
@@ -43,12 +50,15 @@ export default {
   data() {
     return {
       eventList: [],
-      eventTitle: this.$route.query.eventId,
+      eventTitle: this.$route.params.id,
       eventId: '',
       items: [],
       isGrid: false,
       itemText: 'Title',
       itemValue: 'id',
+      isPastEventEnd: false,
+      pastEventName: '',
+      eventData: {},
     }
   },
   computed: {
@@ -65,6 +75,7 @@ export default {
   },
   mounted() {
     this.eventProps()
+    this.fetchEventData()
   },
   methods: {
     async eventProps() {
@@ -94,11 +105,54 @@ export default {
         )
       }
     },
+    async fetchEventData() {
+      const filter = { where: { id: this.eventTitle } }
+      const url = `${this.$bitpod.getApiUrl()}Events/findOne?filter=${JSON.stringify(
+        filter
+      )}`
+      try {
+        const res = await this.$axios.$get(url)
+        if (res) {
+          this.eventData = res
+          if (res.EndDate) {
+            const eventEnd = new Date(res.EndDate)
+            const eventEndDate = new Date(
+              Date.UTC(
+                eventEnd.getFullYear(),
+                eventEnd.getMonth(),
+                eventEnd.getDate()
+              )
+            )
+            const todayDate = new Date()
+            const today = new Date(
+              Date.UTC(
+                todayDate.getFullYear(),
+                todayDate.getMonth(),
+                todayDate.getDate()
+              )
+            )
+            this.isPastEventEnd = today > eventEndDate
+            if (this.isPastEventEnd) {
+              this.pastEventName = res.Title
+            }
+          }
+        }
+      } catch (e) {
+        console.error(
+          `Error in pages/apps/_app/event-attendee/index.vue while getting event context:${url}`,
+          e
+        )
+      }
+    },
     goBack() {
       this.$router.back()
     },
     onChange() {
+      this.fetchEventData()
       this.$emit('change', this.eventTitle)
+      this.$router.push(
+        this.localePath(`/apps/event/event-attendees/${this.eventTitle}`)
+      )
     },
   },
 }
@@ -171,7 +225,7 @@ export default {
     border: none !important;
   }
   #eventAttendeesInEvent .v-skeleton-loader {
-    max-height: calc(100vh - 250px);
+    max-height: calc(100vh - 260px);
     overflow-y: auto;
   }
 }

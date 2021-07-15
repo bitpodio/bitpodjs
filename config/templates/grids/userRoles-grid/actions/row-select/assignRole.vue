@@ -47,6 +47,7 @@
               </v-col>
               <v-col cols="12">
                 <v-select
+                  :ref="rolesField"
                   v-model="roles"
                   :rules="[rules.required]"
                   :items="rolesDropDown"
@@ -67,6 +68,7 @@
             color="primary"
             :disabled="!valid || roles === ''"
             depressed
+            :reset="reset"
             type="submit"
             form="assign-role-form"
             ><i18n path="Drawer.Save"
@@ -98,6 +100,7 @@ export default {
       formData: {},
       message: '',
       error: '',
+      reset: false,
     }
   },
   watch: {
@@ -122,6 +125,7 @@ export default {
       postGaData('Close', this.$t('Common.AssignRole'))
     },
     async onSave() {
+      this.reset = false
       postGaData(this.$t('Drawer.Save'), this.$t('Common.AssignRole'))
       if (this.roles !== '') {
         this.message = ''
@@ -148,8 +152,16 @@ export default {
           this.message = this.$t('Messages.Error.roleAlreadyExits', {
             roles: this.roles,
           })
+          this.reset = !this.reset
+          setTimeout(() => {
+            this.message = ''
+          }, 1000)
         } else {
           this.message = this.$t('Messages.Error.UnableToAssignRole')
+          this.reset = !this.reset
+          setTimeout(() => {
+            this.message = ''
+          }, 1000)
         }
         console.log(
           `Error in templates/grids/userRoles-grid/actions/row-select/assignRole.vue while making a POST call to User model from method onSave context:-URL:-${url}\n formData:-${this.formData}\n OrganizationId:-${this.$attrs.items[0].orgId}\n UserName:-${this.userName} `,

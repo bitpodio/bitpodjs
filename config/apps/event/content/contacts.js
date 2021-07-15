@@ -3,6 +3,7 @@ import contactList from '../gql/contactList.gql'
 import registrationList from '../gql/registrationList.gql'
 import eventInvites from '../gql/eventInvites.gql'
 import eventTasks from '../gql/eventTasks.gql'
+import { emailRule } from '~/utility/index.js'
 
 export default {
   dataSouce: {
@@ -111,7 +112,7 @@ export default {
             caption: 'Common.FullJobTitle',
             displayOrder: 4,
           },
-          displayOrder: 4,
+          displayOrder: 10,
           caption: 'Common.JobTitle',
           searchEnable: true,
           sortEnable: true,
@@ -201,10 +202,7 @@ export default {
           cssClasses: 'col-6 col-md-6',
           rules: [
             function (v) {
-              return !!v || this.$t('Messages.Error.EmailRequired')
-            },
-            function (value, data) {
-              return /.+@.+\..+/.test(value) || 'E-mail must be valid'
+              return emailRule(v, this.$i18n)
             },
           ],
         },
@@ -230,7 +228,7 @@ export default {
             caption: 'Common.Organization',
             displayOrder: 10,
           },
-          displayOrder: 7,
+          displayOrder: 4,
           caption: 'Common.Organization',
           searchEnable: true,
           sortEnable: true,

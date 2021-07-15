@@ -8,7 +8,7 @@
     <v-flex d-flex flex-md-row flex-lg-row flex-column>
       <v-flex column class="mxw-w70">
         <div
-          class="xs12 sm8 md8 lg8 boxview pa-3 mr-2 mb-4 pb-2 elevation-1 rounded-lg public-page-main"
+          class="xs12 sm8 md8 lg8 boxview pa-3 mr-2 mb-4 pb-2 elevation-1 rounded-lg public-page-main d-flex flex-column"
         >
           <v-flex class="d-flex pb-1 flex-column flex-md-row">
             <div class="text-h4 text-capitalize event-title">
@@ -109,7 +109,10 @@
                       /></v-list-item-title>
                     </v-list-item-content>
                   </v-list-item>
-                  <v-list-item @click="eventCheckIn">
+                  <v-list-item
+                    :disabled="new Date(data.event.EndDate) < new Date()"
+                    @click="eventCheckIn"
+                  >
                     <v-list-item-icon class="mr-2">
                       <i class="fa fa-check mt-1" aria-hidden="true"></i>
                     </v-list-item-icon>
@@ -123,18 +126,20 @@
               </v-menu>
             </div>
           </v-flex>
-          <v-chip
-            v-if="
-              data.event.StartDate !== undefined &&
-              data.event.EndDate !== undefined
-            "
-            small
-            class="mt-1 mb-3 event-datechip greybg"
-            label
-          >
-            {{ getEventStartDate() }} - {{ getEventEndDate() }} -
-            {{ formatField(data.event.Timezone) }}
-          </v-chip>
+          <div>
+            <v-chip
+              v-if="
+                data.event.StartDate !== undefined &&
+                data.event.EndDate !== undefined
+              "
+              small
+              class="mt-1 mb-3 event-datechip greybg"
+              label
+            >
+              {{ getEventStartDate() }} - {{ getEventEndDate() }} -
+              {{ formatField(data.event.Timezone) }}
+            </v-chip>
+          </div>
           <v-skeleton-loader
             :loading="!eventDataLoaded"
             :tile="true"
@@ -203,7 +208,7 @@
                       )
                     }}
                   </a>
-                  <a class="blue--text">
+                  <a v-if="!isStateExists" class="blue--text">
                     {{
                       formatAddressField(
                         data.event._VenueAddress &&
@@ -238,6 +243,21 @@
                       formatAddressField(
                         data.event._VenueAddress &&
                           data.event._VenueAddress.PostalCode
+                      )
+                    }}
+                  </a>
+                  <a v-else class="blue--text">
+                    {{
+                      formatAddressField(
+                        data.event.VenueName !== ''
+                          ? data.event.VenueName + ','
+                          : ''
+                      )
+                    }}
+                    {{
+                      formatAddressField(
+                        data.event._VenueAddress &&
+                          data.event._VenueAddress.AddressLine
                       )
                     }}
                   </a>
@@ -421,7 +441,7 @@
               </v-stepper-step>
             </v-stepper-header>
           </v-stepper>
-
+          <v-spacer></v-spacer>
           <v-divider></v-divider>
           <v-flex class="d-flex flex-row align-center flex-wrap pt-2 pt-sm-0">
             <v-chip pill class="greybg" v-on="on">
@@ -448,7 +468,7 @@
           </v-flex>
         </div>
         <div
-          class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-4 elevation-1 rounded-lg"
+          class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-4 elevation-1 rounded-lg image-view-grid"
         >
           <v-flex class="d-flex justify-center align-center pb-2">
             <h2 class="body-1 pb-0">
@@ -1074,7 +1094,10 @@
                 "
                 class="mt-n14"
               >
-                <template #gridthreedot>
+                <template
+                  v-if="data.event.LocationType === 'Venue'"
+                  #gridthreedot
+                >
                   <v-list-item-group>
                     <seatmap-tickets />
                     <v-list-item v-if="showPrintManagement">
@@ -1114,9 +1137,7 @@
             :content="content"
             :no-action="!data.event.HasTickets"
             :has-custom-no-data-text="
-              !data.event.HasTickets
-                ? $t('Common.TicketsNotRequiredToggle')
-                : ''
+              !data.event.HasTickets ? $t('Common.DiscountCodeNotRequired') : ''
             "
             class="mt-n12"
           />
@@ -1402,20 +1423,17 @@
           <v-divider></v-divider>
           <v-flex my-3>
             <i18n path="Common.SEOTitle" class="body-2 text--secondary" />
-
             <div class="body-1">
               {{ formatField(data.event.SEOTitle) }}
             </div>
           </v-flex>
-          <v-flex my-3>
+          <v-flex my-3 class="seo-desciption">
             <i18n path="Common.SEODescription" class="body-2 text--secondary" />
-            <div class="body-1 d-flex flex-wrap braek-all">
-              {{ formatField(data.event.SEODesc) }}
-            </div>
+            <!-- eslint-disable-next-line vue/no-v-html -->
+            <div v-html="formatField(data.event.Description)" />
           </v-flex>
           <v-flex my-3>
             <i18n path="Common.SEOKeywords" class="body-2 text--secondary" />
-
             <div class="body-1 d-flex flex-wrap braek-all">
               {{ formatField(data.event.SEOKeywords) }}
             </div>
@@ -1495,7 +1513,10 @@
               @change="updateReg"
             ></v-checkbox>
           </v-flex>
-          <v-flex class="d-block text-truncate">
+          <v-flex
+            v-if="data.event.LocationType === 'Bitpod Virtual'"
+            class="d-block text-truncate"
+          >
             <v-checkbox
               v-model="data.event.allowChat"
               dense
@@ -1807,6 +1828,7 @@ export default {
       layoutName: '',
       popupDialog: false,
       attendeeTest: {},
+      isStateExists: false,
     }
   },
   computed: {
@@ -1928,6 +1950,7 @@ export default {
           if (res) {
             this.snackbarText = this.$t('Common.PastEventMessage')
             this.snackbar = true
+            this.refresh()
           }
         } catch (err) {
           console.error(
@@ -1975,9 +1998,7 @@ export default {
     },
     eventCheckIn() {
       this.$router.push(
-        this.localePath(
-          `/apps/event/event-attendees?eventId=${this.$route.params.id}`
-        )
+        this.localePath(`/apps/event/event-attendees/${this.$route.params.id}`)
       )
     },
     getEventEndDate() {
@@ -2723,17 +2744,28 @@ export default {
         const eventSummary =
           (data.Event && data.Event.EventGetEventSummery) || {}
         this.eventData = event.length > 0 ? event[0] : {}
-        console.log('Logs for publish event data issue', this.eventData)
         this.badgeData = badge.length > 0 ? badge[0] : {}
+        this.isStateExists =
+          this.eventData &&
+          this.eventData._VenueAddress &&
+          this.eventData._VenueAddress.AddressLine &&
+          this.eventData._VenueAddress.AddressLine.includes(
+            this.eventData._VenueAddress.City
+          ) &&
+          this.eventData &&
+          this.eventData._VenueAddress &&
+          this.eventData._VenueAddress.AddressLine &&
+          this.eventData._VenueAddress.AddressLine.includes(
+            this.eventData._VenueAddress.Country
+          )
         this.eventData_sectionHeading =
-          this.eventData._sectionHeading !== null
-            ? this.eventData._sectionHeading
+          this.eventData && this.eventData._sectionHeading !== null
+            ? this.eventData && this.eventData._sectionHeading
             : {}
         if (
           this.eventData.EndDate < new Date().toISOString() &&
           this.eventData.Status !== 'Registration closed'
         ) {
-          this.eventData.Status = 'Registration closed'
           this.checkEventStatus()
         }
         this.getOrgInfo()
