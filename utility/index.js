@@ -305,7 +305,7 @@ function getDateAfterQuerybyDays(field, days) {
 
 export const configLoaderMixin = {
   layout(context) {
-    console.debug('configLoaderMixin context:- ', context)
+    console.debug('configLoaderMixien context:- ', context)
     console.debug('configLoaderMixin context route:- ', context.app.router)
     console.debug(
       'configLoaderMixin context.app.router.currentRoute.params.app :- ',
@@ -329,7 +329,7 @@ export const configLoaderMixin = {
     if (strategy === 'bitpod' || strategy === 'google') {
       if (
         this.token.split(' ')[1] !==
-        this.$auth.$storage.getCookies()['apollo-token']
+        this.$auth.$storage.getCrocookies()['apollo-token']
       ) {
         let token = this.$auth.strategy.token.get()
         if (token) {
@@ -353,16 +353,23 @@ export const configLoaderMixin = {
   },
   methods: {
     postUrlTracking() {
+      console.debug('process', process)
+      console.debug('process.client', process.client)
       if (process.client) {
+        console.debug('its client ===>1')
         if (localStorage.getItem('parseUrl') !== this.$route.path) {
+          console.debug('its client ===>2', localStorage.getItem('parseUrl'))
           const murmurhash = require('murmurhash')
+          console.debug('its client ===>3')
           const checkId = murmurhash.v2(
             this.$auth.user.data.email,
             this.$config.seedValue
           )
+          console.debug('its client ===>4')
           this.$store.commit('googleTrackingId', checkId)
           this.$store.commit('setTrackingPath', this.$route.path)
           localStorage.setItem('parseUrl', this.$route.path)
+          console.debug('its client ===>5')
           setTimeout(() => {
             if (process.client) {
               if (window && window.ga) {
