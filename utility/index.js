@@ -353,25 +353,27 @@ export const configLoaderMixin = {
   },
   methods: {
     postUrlTracking() {
-      if (localStorage.getItem('parseUrl') !== this.$route.path) {
-        const murmurhash = require('murmurhash')
-        const checkId = murmurhash.v2(
-          this.$auth.user.data.email,
-          this.$config.seedValue
-        )
-        this.$store.commit('googleTrackingId', checkId)
-        this.$store.commit('setTrackingPath', this.$route.path)
-        localStorage.setItem('parseUrl', this.$route.path)
-        setTimeout(() => {
-          if (process.client) {
-            if (window && window.ga) {
-              console.debug('URL tracking start for url', this.$route.path)
-              window.ga('create', this.$config.gaTrackingCode, 'auto')
-              window.ga('set', 'userId', checkId)
-              window.ga('send', 'pageview', this.$route.path)
+      if (process.client) {
+        if (localStorage.getItem('parseUrl') !== this.$route.path) {
+          const murmurhash = require('murmurhash')
+          const checkId = murmurhash.v2(
+            this.$auth.user.data.email,
+            this.$config.seedValue
+          )
+          this.$store.commit('googleTrackingId', checkId)
+          this.$store.commit('setTrackingPath', this.$route.path)
+          localStorage.setItem('parseUrl', this.$route.path)
+          setTimeout(() => {
+            if (process.client) {
+              if (window && window.ga) {
+                console.debug('URL tracking start for url', this.$route.path)
+                window.ga('create', this.$config.gaTrackingCode, 'auto')
+                window.ga('set', 'userId', checkId)
+                window.ga('send', 'pageview', this.$route.path)
+              }
             }
-          }
-        }, 1500)
+          }, 1500)
+        }
       }
     },
   },
