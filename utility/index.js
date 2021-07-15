@@ -353,7 +353,13 @@ export const configLoaderMixin = {
   },
   methods: {
     postUrlTracking() {
-      if (localStorage.getItem('parseUrl') !== this.$route.path) {
+      debugger
+      console.log('processss', process)
+      console.log('processss', process.client)
+      const path = this.$auth.$storage.getCookies()['auth.parseUrl']
+      debugger
+
+      if (path !== this.$route.path) {
         const murmurhash = require('murmurhash')
         const checkId = murmurhash.v2(
           this.$auth.user.data.email,
@@ -361,7 +367,7 @@ export const configLoaderMixin = {
         )
         this.$store.commit('googleTrackingId', checkId)
         this.$store.commit('setTrackingPath', this.$route.path)
-        localStorage.setItem('parseUrl', this.$route.path)
+        this.$auth.$storage.setCookie('parseUrl', this.$route.path)
         setTimeout(() => {
           if (process.client) {
             if (window && window.ga) {

@@ -55,6 +55,9 @@ export default function (context) {
   }
   if (
     context.route.path !== `/get-started` &&
+    context &&
+    context.req &&
+    context.req.headers &&
     !context.req.headers.host.includes('localhost')
   ) {
     return redirect('/unauthorized')
