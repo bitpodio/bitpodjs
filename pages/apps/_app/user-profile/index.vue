@@ -124,7 +124,7 @@
         </div>
         <div
           v-if="content"
-          class="xs12 sm8 md8 lg8 boxview pad-card pb-6 mr-2 mb-4 pa-3 pb-2 elevation-1 rounded-lg"
+          class="xs12 sm8 md8 lg8 boxview boxviewsmall pad-card pb-6 mr-2 mb-4 pa-3 pb-2 elevation-1 rounded-lg"
         >
           <div class="sticky d-flex flex-column justify-center boxview">
             <v-flex
@@ -142,7 +142,7 @@
         </div>
         <div
           v-if="content"
-          class="xs12 sm8 md8 lg8 boxview pad-card pa-3 pb-6 mr-2 mb-4 pb-2 elevation-1 rounded-lg"
+          class="xs12 sm8 md8 lg8 boxview boxviewsmall pad-card pa-3 pb-6 mr-2 mb-4 pb-2 elevation-1 rounded-lg"
         >
           <div class="sticky d-flex flex-column justify-center boxview">
             <v-flex
