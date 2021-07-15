@@ -112,13 +112,16 @@ app.get('/connect/userinfo', async (req, res) => {
       userData = userResponse.data
     } else {
       const userResponse = await axios.get(urls.userInfoEndPointUrl, config)
+      console.debug('userResponse from server1', userResponse)
       userData = userResponse.data
+      console.debug('userResponse from server2', userData)
     }
     const userOrgsDetails = await fetchUserOrgsDetails(req)
     const userDetails = {
       ...userOrgsDetails,
       ...userData,
     }
+    console.debug('userDetails', userDetails)
     res.json({
       status: 200,
       data: userDetails,
@@ -157,7 +160,9 @@ async function fetchUserOrgs(req) {
       `${origin}${apiEndpoint}Organizations/list`,
       config
     )
+    console.log('orgResponse1', orgResponse)
     userOrgList = orgResponse.data
+    console.log('orgResponse2', userOrgList)
   } catch (error) {
     userOrgList = {
       error,
@@ -169,6 +174,7 @@ async function fetchUserOrgs(req) {
 async function fetchUserOrgsDetails(req) {
   let userDetails = {}
   const orgList = await fetchUserOrgs(req)
+  console.debug('fethUserDetils', orgList)
   userDetails = {
     orgList,
   }
