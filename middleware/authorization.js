@@ -32,16 +32,27 @@ const getUsersOrg = (store) => {
 
 export default function (context) {
   const { store, route, redirect } = context
+  console.debug('authorization1')
   const userOrgStore = getUsersOrg(store)
+  console.debug('userOrgStore2', userOrgStore)
   if (userOrgStore && userOrgStore.name) {
+    console.debug('userOrgStore3', userOrgStore.name)
     if (process.server) {
+      console.debug('userOrgStore4', process.server)
       const { req } = context
+      console.debug('userOrgStore5', req)
       const hostName = req.headers.host
+      console.debug('userOrgStore6', hostName)
       const publicDomain = process.env.PUBLIC_DOMAIN
+      console.debug('userOrgStore7', publicDomain)
       if (!hostName.includes('localhost')) {
+        console.debug('userOrgStore7 does not include hostname')
         if (hostName === publicDomain) {
+          console.debug('both are same')
           const userFirstOrgName = userOrgStore.name || ''
+          console.debug('userorgstore8', userFirstOrgName)
           const basePath = process.env.PUBLIC_PATH || ''
+          console.debug('userorgstore8', basePath)
           return redirect(
             `https://${publicDomain}${basePath}/forwardLogin?targetDomain=${userFirstOrgName}`
           )
@@ -57,6 +68,7 @@ export default function (context) {
     context.route.path !== `/get-started` &&
     !context.req.headers.host.includes('localhost')
   ) {
+    console.debug('unauthorized')
     return redirect('/unauthorized')
   }
 }
