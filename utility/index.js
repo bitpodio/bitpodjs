@@ -116,7 +116,6 @@ export const formValidationMixin = {
 
 export function getID4ServerUrl(that) {
   const url = that.$config.id4ServerUrl
-  console.debug('url in utility', that.$config.id4ServerUrl)
   return url
 }
 export function getContentByName(ctx, contentName) {

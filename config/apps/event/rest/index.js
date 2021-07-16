@@ -130,7 +130,6 @@ export function getLoginData(modelName) {
     const itemsPerPage = options.itemsPerPage || 10
     const skip = (page - 1) * (itemsPerPage || 10)
     const limit = itemsPerPage === -1 ? 0 : itemsPerPage
-    console.log('on api side', this)
     const apiUrl = this.$config.id4ServerUrl
     const res = await this.$axios.$get(`${apiUrl}${modelName}`)
 

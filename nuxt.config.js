@@ -275,7 +275,8 @@ export default {
     gaGtmCode: process.env.GET_GTM_CODE || 'GTM-54VGK22',
     seedValue:
       process.env.GET_SEED_VALUE || '2da90066-c9d9-43d0-bdce-5f6bb07e9dea',
-    id4ServerUrl: process.env.GET_IDENTITY_SERVER_URL,
+    id4ServerUrl:
+      process.env.GET_IDENTITY_SERVER_URL || 'https://login.bitpod.io/',
     cdnUri:
       'https://res.cloudinary.com/mytestlogo/image/upload/bitpodjs/images/',
     cdnCsvUri: 'https://res.cloudinary.com/mytestlogo/raw/upload/',
