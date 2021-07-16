@@ -409,7 +409,7 @@ export default {
       this.updateExternalUserDialog = true
     },
     async getConnectedApps() {
-      const url = `${getID4ServerUrl()}api/tiers/${
+      const url = `${getID4ServerUrl(this)}api/tiers/${
         this.$auth.state.user.data.TierHierarchy[0].Id
       }/users/${this.$auth.state.user.data.sub}/connectedapps`
       try {
@@ -424,7 +424,7 @@ export default {
       }
     },
     async getTimezone(id) {
-      const url = `${getID4ServerUrl()}api/tiers/${
+      const url = `${getID4ServerUrl(this)}api/tiers/${
         this.$auth.state.user.data.TierHierarchy[0].Id
       }/users/${this.$auth.state.user.data.id}/timeZones`
       try {
@@ -445,7 +445,7 @@ export default {
       }
     },
     async getUserData() {
-      const url = `${getID4ServerUrl()}api/tiers/${
+      const url = `${getID4ServerUrl(this)}api/tiers/${
         this.$auth.state.user.data.TierHierarchy[0].Id
       }/users/${this.$auth.state.user.data.sub}`
       try {
@@ -461,7 +461,7 @@ export default {
       }
     },
     async toggle2FA() {
-      const url = `${getID4ServerUrl()}api/tiers/${
+      const url = `${getID4ServerUrl(this)}api/tiers/${
         this.$auth.state.user.data.TierHierarchy[0].Id
       }/users/${this.$auth.state.user.data.id}/enabletwofactor`
       try {

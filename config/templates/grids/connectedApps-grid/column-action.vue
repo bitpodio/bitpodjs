@@ -58,7 +58,7 @@ export default {
   },
   methods: {
     async revokeAction() {
-      const url = `${getID4ServerUrl()}${this.item.revokeAction}`
+      const url = `${getID4ServerUrl(this)}${this.item.revokeAction}`
       const res1 = await this.$refs.confirm.open(
         this.$t('Common.RevokeAction'),
         this.$t('Messages.Warn.AppClientDeleteWarn'),

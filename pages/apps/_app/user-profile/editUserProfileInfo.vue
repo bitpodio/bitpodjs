@@ -217,7 +217,7 @@ export default {
       this.$eventBus.$emit('form-submitted', this.formName)
     },
     async getTimezone() {
-      const url = `${getID4ServerUrl()}api/tiers/${
+      const url = `${getID4ServerUrl(this)}api/tiers/${
         this.$auth.state.user.data.TierHierarchy[0].Id
       }/users/${this.$auth.state.user.data.id}/timeZones`
       try {
@@ -232,7 +232,7 @@ export default {
       }
     },
     async getUserData() {
-      const url = `${getID4ServerUrl()}api/tiers/${
+      const url = `${getID4ServerUrl(this)}api/tiers/${
         this.$auth.state.user.data.TierHierarchy[0].Id
       }/users/${this.$auth.state.user.data.sub}`
       try {
@@ -276,7 +276,7 @@ export default {
       this.formData.contact.zipCode = this.zipCode || ''
       this.formData.enableTwoFactor = this.resData.enableTwoFactor
       this.formData.isExternal = this.resData.isExternal
-      const url = `${getID4ServerUrl()}api/tiers/${
+      const url = `${getID4ServerUrl(this)}api/tiers/${
         this.$auth.state.user.data.TierHierarchy[0].Id
       }/users/${this.$auth.state.user.data.id}`
       try {

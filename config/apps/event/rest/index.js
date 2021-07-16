@@ -1,5 +1,5 @@
 // import nuxtconfig from '~/nuxt.config'
-import { getOrderQuery, buildQueryVariables, getID4ServerUrl } from '~/utility'
+import { getOrderQuery, buildQueryVariables } from '~/utility'
 
 export function getData(modelName, isExporting = false) {
   return async function query(options) {
@@ -130,8 +130,8 @@ export function getLoginData(modelName) {
     const itemsPerPage = options.itemsPerPage || 10
     const skip = (page - 1) * (itemsPerPage || 10)
     const limit = itemsPerPage === -1 ? 0 : itemsPerPage
-
-    const apiUrl = getID4ServerUrl()
+    console.log('on api side', this)
+    const apiUrl = this.$config.id4ServerUrl
     const res = await this.$axios.$get(`${apiUrl}${modelName}`)
 
     const skipRes = res.slice(skip)

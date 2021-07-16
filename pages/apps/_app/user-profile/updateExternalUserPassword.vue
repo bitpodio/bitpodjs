@@ -199,7 +199,7 @@ export default {
       this.$eventBus.$emit('form-submitted', this.formName)
     },
     async onSave() {
-      const url = `${getID4ServerUrl()}api/tiers/users/${
+      const url = `${getID4ServerUrl(this)}api/tiers/users/${
         this.$auth.state.user.data.email
       }/verifyOTP`
       try {
@@ -219,7 +219,7 @@ export default {
       }
     },
     async onUpdatePassword() {
-      const url = `${getID4ServerUrl()}api/tiers/users/${
+      const url = `${getID4ServerUrl(this)}api/tiers/users/${
         this.$auth.state.user.data.id
       }/updateBitpodPassword`
       this.formData.NewPassword = this.newPassword
@@ -244,7 +244,7 @@ export default {
     },
     async getVerificationCode() {
       this.beforeIsVerified = true
-      const url = `${getID4ServerUrl()}api/tiers/users/${
+      const url = `${getID4ServerUrl(this)}api/tiers/users/${
         this.$auth.state.user.data.email
       }/sendotppasswordupdate`
       try {
