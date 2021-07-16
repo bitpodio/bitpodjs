@@ -66,19 +66,4 @@ export const appList = (store) => [
     route: '/apps/eSign/list/eSignRequest/eSign',
     roles: [],
   },
-  {
-    name: 'userprofile',
-    label: 'Common.UserProfileApp',
-    css: 'fa fa-user fs-36 success--text',
-    type: 'route',
-    route: '/apps/userprofile/user-profile',
-    roles: [
-      '$authenticated',
-      '$orguser',
-      '$orgowner',
-      'EventAdmin',
-      'EventManager',
-      '$developer',
-    ],
-  },
 ]
