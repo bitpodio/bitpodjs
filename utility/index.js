@@ -9,7 +9,6 @@ import currencyFormatter from 'currency-formatter'
 import startOfDay from 'date-fns/startOfDay'
 import endOfDay from 'date-fns/endOfDay'
 import MissingComponent from './missing-component.vue'
-// import nuxtconfig from '~/nuxt.config'
 export function importTemplate(templatePath) {
   return () => import(`~/config/${templatePath}`)
 }
