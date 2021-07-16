@@ -1337,6 +1337,8 @@ export default {
         })
         if (itemDeleted) {
           this.refresh()
+          this.$eventBus.$emit('event-refresh')
+          this.$eventBus.$emit('recurring-event-refresh')
           this.snackbarText =
             ids.length > 1
               ? this.$t('Messages.Success.DeleteSuccess', {
