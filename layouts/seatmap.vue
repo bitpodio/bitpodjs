@@ -75,6 +75,9 @@
                 </v-list-item-content>
               </v-list-item>
             </v-list>
+            <v-list-item v-if="notShowUserProfile">
+              <UserProfile />
+            </v-list-item>
             <v-list-item>
               <OrgnaizationList />
             </v-list-item>
@@ -158,6 +161,7 @@ export default {
       allowUpgrade: false,
       userPlanData: '',
       logoutClicked: false,
+      notShowUserProfile: true,
     }
   },
   async created() {
@@ -170,6 +174,7 @@ export default {
     }
   },
   mounted() {
+    this.notShowUserProfile = !this.$store.state.auth.strategy === 'google'
     const userInfo = userUtils.userCurrentOrgInfo(this.$store) || {}
     const userRoles = userInfo.roles || []
     this.allowUpgrade = userRoles.includes('$orgowner')

@@ -158,7 +158,7 @@
                 </v-list-item-content>
               </v-list-item>
             </v-list>
-            <v-list-item v-if="$auth.strategy !== 'google'">
+            <v-list-item v-if="notShowUserProfile">
               <UserProfile />
             </v-list-item>
             <v-list-item>
@@ -239,6 +239,7 @@ export default {
     activeClass: ' v-list-item--active',
     userPlanData: '',
     items: [],
+    notShowUserProfile: false,
   }),
   computed: {
     currentPage() {
@@ -266,6 +267,7 @@ export default {
     })
   },
   mounted() {
+    this.notShowUserProfile = !this.$store.state.auth.strategy === 'google'
     const userInfo = userUtils.userCurrentOrgInfo(this.$store) || {}
     const userRoles = userInfo.roles || []
     this.allowUpgrade = userRoles.includes('$orgowner')

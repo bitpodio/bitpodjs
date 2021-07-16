@@ -89,7 +89,7 @@
                 </v-list-item-content>
               </v-list-item>
             </v-list>
-            <v-list-item v-if="$auth.strategy !== 'google'">
+            <v-list-item v-if="notShowUserProfile">
               <UserProfile />
             </v-list-item>
             <v-list-item>
@@ -191,6 +191,7 @@ export default {
       allowUpgrade: false,
       userPlanData: '',
       logoutClicked: false,
+      notShowUserProfile: true,
     }
   },
   async created() {
@@ -201,6 +202,7 @@ export default {
     await this.$apolloHelpers.onLogin(token, undefined, { expires: 7 })
   },
   mounted() {
+    this.notShowUserProfile = !this.$store.state.auth.strategy === 'google'
     const userInfo = userUtils.userCurrentOrgInfo(this.$store) || {}
     const userRoles = userInfo.roles || []
     this.allowUpgrade = userRoles.includes('$orgowner')
