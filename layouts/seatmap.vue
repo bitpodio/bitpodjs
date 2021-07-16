@@ -174,7 +174,9 @@ export default {
     }
   },
   mounted() {
-    this.notShowUserProfile = !this.$store.state.auth.strategy === 'google'
+    if (this.$store.state.auth.strategy === 'google') {
+      this.notShowUserProfile = false
+    }
     const userInfo = userUtils.userCurrentOrgInfo(this.$store) || {}
     const userRoles = userInfo.roles || []
     this.allowUpgrade = userRoles.includes('$orgowner')

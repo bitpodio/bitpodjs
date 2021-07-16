@@ -468,7 +468,9 @@ export default {
     await this.$apolloHelpers.onLogin(token, undefined, { expires: 7 })
   },
   mounted() {
-    this.notShowUserProfile = !this.$store.state.auth.strategy === 'google'
+    if (this.$store.state.auth.strategy === 'google') {
+      this.notShowUserProfile = false
+    }
     const userInfo = userUtils.userCurrentOrgInfo(this.$store) || {}
     const userRoles = userInfo.roles || []
     this.allowUser = userRoles.length === 1 && userRoles.includes('$orguser')
