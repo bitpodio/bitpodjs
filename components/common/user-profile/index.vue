@@ -15,12 +15,15 @@ export default {
   methods: {
     onUserSettings() {
       const baseUrl = window.location.hostname
-      if (!baseUrl.includes('localhost')) {
-        const url = `https://${baseUrl}${process.env.PUBLIC_PATH}/apps/userprofile/user-profile`
-        window.open(`${url}`, '_blank')
-      } else {
-        const url = `http://${window.location.host}/apps/userprofile/user-profile`
-        window.open(`${url}`, '_blank')
+      const basePath = process.env.PUBLIC_PATH
+      if (process.client) {
+        if (!baseUrl.includes('localhost')) {
+          const url = `https://${baseUrl}${basePath}/apps/userprofile/user-profile`
+          window.open(`${url}`, '_blank')
+        } else {
+          const url = `http://${window.location.host}/apps/userprofile/user-profile`
+          window.open(`${url}`, '_blank')
+        }
       }
     },
   },
