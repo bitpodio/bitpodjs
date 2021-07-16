@@ -17,7 +17,7 @@ export default {
       const baseUrl = window.location.href.split('/apps')[0]
       if (process.client) {
         if (!baseUrl.includes('localhost')) {
-          const url = `https://${baseUrl}/apps/userprofile/user-profile`
+          const url = `${baseUrl}/apps/userprofile/user-profile`
           window.open(`${url}`, '_blank')
         } else {
           const url = `http://${window.location.host}/apps/userprofile/user-profile`
