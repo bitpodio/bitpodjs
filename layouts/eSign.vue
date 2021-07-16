@@ -89,6 +89,9 @@
                 </v-list-item-content>
               </v-list-item>
             </v-list>
+            <v-list-item v-if="$auth.strategy !== 'google'">
+              <UserProfile />
+            </v-list-item>
             <v-list-item>
               <OrgnaizationList />
             </v-list-item>

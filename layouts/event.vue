@@ -301,6 +301,9 @@
                 </v-list-item-content>
               </v-list-item>
             </v-list>
+            <v-list-item v-if="$auth.strategy !== 'google'">
+              <UserProfile />
+            </v-list-item>
             <v-list-item>
               <OrgnaizationList />
             </v-list-item>
@@ -362,6 +365,7 @@ import AppLogo from '~/components/common/app-logo'
 import Upgrade from '~/components/common/upgrade'
 import userUtils from '~/utility/userApps'
 import { postGaData } from '~/utility/index.js'
+import UserProfile from '~/components/common/user-profile'
 export default {
   middleware: ['auth', 'authorization'],
   components: {
@@ -372,6 +376,7 @@ export default {
     Upgrade,
     Theme,
     AppLogo,
+    UserProfile,
   },
   props: {
     source: { type: String, default: '' },
