@@ -71,6 +71,7 @@ export default {
   },
   computed: {
     userApps() {
+      const allApps = this.apps.filter((ele) => ele.name !== 'userprofile')
       const strategy = this.$auth.$storage.getCookies()['auth.strategy']
       const userInfo = userUtils.userCurrentOrgInfo(this.$store) || {}
       const userRoles = [
@@ -83,7 +84,7 @@ export default {
         userInfo.id === 1 &&
         strategy === 'bitpod'
       ) {
-        return this.apps
+        return allApps
       }
 
       if (
@@ -92,12 +93,12 @@ export default {
         userInfo.id === 1 &&
         strategy === 'google'
       ) {
-        const filterApps = this.apps.filter((app) => {
+        const filterApps = allApps.filter((app) => {
           return app.name !== 'userprofile'
         })
         return filterApps
       }
-      const filteredApps = this.apps.filter((app) => {
+      const filteredApps = allApps.filter((app) => {
         const appRoles = [app.name, ...app.roles]
         return intersection(appRoles, userRoles).length > 0
       })
