@@ -16,7 +16,7 @@
             <div
               v-for="(data, index) in eventSummaryData"
               :key="index"
-              class="white d-inline-block elevation-2 rounded"
+              class="boxview d-inline-block elevation-2 rounded"
               :class="{ 'mr-5': index < 4 }"
               style="width: 200px; height: 60px;"
             >
