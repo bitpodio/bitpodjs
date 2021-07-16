@@ -168,7 +168,7 @@ export default {
     },
     async onSave() {
       this.reset = false
-      const url = `${getID4ServerUrl()}api/tiers/${
+      const url = `${getID4ServerUrl(this)}api/tiers/${
         this.$auth.state.user.data.TierHierarchy[0].Id
       }/users/${this.$auth.state.user.data.id}/UpdateCredentials`
       try {

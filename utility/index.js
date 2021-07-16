@@ -9,8 +9,6 @@ import currencyFormatter from 'currency-formatter'
 import startOfDay from 'date-fns/startOfDay'
 import endOfDay from 'date-fns/endOfDay'
 import MissingComponent from './missing-component.vue'
-import nuxtconfig from '~/nuxt.config'
-
 export function importTemplate(templatePath) {
   return () => import(`~/config/${templatePath}`)
 }
@@ -115,9 +113,9 @@ export const formValidationMixin = {
   },
 }
 
-export function getID4ServerUrl() {
-  const url = nuxtconfig.auth.strategies.bitpod.userInfoEndPointUrl
-  return url.split('auth/')[0]
+export function getID4ServerUrl(that) {
+  const url = that.$config.id4ServerUrl
+  return url
 }
 export function getContentByName(ctx, contentName) {
   const contents = ctx.contentFactory(ctx)
