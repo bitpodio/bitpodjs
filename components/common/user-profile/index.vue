@@ -14,11 +14,10 @@
 export default {
   methods: {
     onUserSettings() {
-      const baseUrl = window.location.hostname
-      const basePath = process.env.PUBLIC_PATH
+      const baseUrl = window.location.href.split('/apps')[0]
       if (process.client) {
         if (!baseUrl.includes('localhost')) {
-          const url = `https://${baseUrl}${basePath}/apps/userprofile/user-profile`
+          const url = `https://${baseUrl}/apps/userprofile/user-profile`
           window.open(`${url}`, '_blank')
         } else {
           const url = `http://${window.location.host}/apps/userprofile/user-profile`
