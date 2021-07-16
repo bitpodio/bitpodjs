@@ -1426,6 +1426,7 @@ export default {
   },
   mounted() {
     this.$eventBus.$on('update-event-details', this.refresh)
+    this.$eventBus.$on('recurring-event-refresh', this.tileRefresh)
   },
   beforeDestroy() {
     this.$eventBus.$off('update-event-details')
@@ -1683,6 +1684,9 @@ export default {
           e
         )
       }
+    },
+    tileRefresh() {
+      this.refresh()
     },
     async publishEvent() {
       const eventObj = {

@@ -552,7 +552,9 @@
           </v-flex>
           <v-divider></v-divider>
           <div v-for="item in resArray" :key="item" class="pt-2">
-            <span class="pl-2">Q: {{ item.Question }}</span>
+            <span class="pl-2"
+              ><i18n path="Common.Answer" /> {{ item.Question }}</span
+            >
             <div
               v-if="
                 item.ControlType !== 'date' &&
@@ -562,13 +564,13 @@
               "
             >
               <v-chip class="ma-2" small label color="blue" text-color="white">
-                {{ 'Answer' }}
+                <i18n path="Common.Answer" />
               </v-chip>
               <span v-for="ele in item.Answer" :key="ele">{{ ele }}</span>
             </div>
             <div v-else-if="item.ControlType === 'date'">
               <v-chip class="ma-2" small label color="blue" text-color="white">
-                {{ 'Answer' }}
+                <i18n path="Common.Answer" />
               </v-chip>
               <span v-for="ele in item.Answer" :key="ele">{{
                 formatDate(ele)
@@ -576,7 +578,7 @@
             </div>
             <div v-else>
               <v-chip class="ma-2" small label color="blue" text-color="white">
-                {{ 'Answer' }}
+                <i18n path="Common.Answer" />
               </v-chip>
               <span v-for="(ele, index) in item.Answer" :key="index"
                 >{{ ele

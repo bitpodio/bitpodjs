@@ -153,7 +153,7 @@ export default {
           caption: 'Drawer.Action',
           searchEnable: true,
           sortEnable: true,
-          columnWidth: '120px',
+          columnWidth: '140px',
           type: 'string',
           newForm: false,
           editForm: false,

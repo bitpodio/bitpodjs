@@ -132,6 +132,9 @@ export default {
 .badge-badge .grid-actions-container {
   max-width: 950px;
 }
+.badge-view .theme--dark.v-card {
+  color: #000000 !important;
+}
 @media (min-width: 1904px) {
   .badge-badge .grid-actions-container {
     max-width: 1150px;

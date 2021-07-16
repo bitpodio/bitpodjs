@@ -1179,6 +1179,8 @@ export default {
       }
       if (userCreated) {
         this.$apollo.queries.tableData.refresh()
+        this.$eventBus.$emit('recurring-event-refresh')
+        this.$eventBus.$emit('event-refresh')
         this.snackbarText = this.$t('Messages.Success.CreatedSuccessfully', {
           modelName: this.$t(dataSource.singularEntity) || modelName,
         })
@@ -1335,6 +1337,8 @@ export default {
         })
         if (itemDeleted) {
           this.refresh()
+          this.$eventBus.$emit('event-refresh')
+          this.$eventBus.$emit('recurring-event-refresh')
           this.snackbarText =
             ids.length > 1
               ? this.$t('Messages.Success.DeleteSuccess', {

@@ -1904,6 +1904,7 @@ export default {
     this.$eventBus.$on('update-seat-reservation', this.updateSeatReservation)
     this.$eventBus.$on('seat-map-triggered', this.getScrollPosition)
     this.$eventBus.$on('update-event-details', this.refresh)
+    this.$eventBus.$on('event-refresh', this.refresh)
   },
   beforeDestroy() {
     this.$eventBus.$off('update-seat-reservation')

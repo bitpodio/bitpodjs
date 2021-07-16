@@ -1373,6 +1373,9 @@ export default {
             res = await this.$axios.$post(`${baseUrl}Sessions`, {
               ...this.session,
             })
+            if (res) {
+              this.$eventBus.$emit('recurring-event-refresh')
+            }
           } catch (e) {
             console.error(
               `Error in Recurring session grid new session form on Save function - context: create Recurring session, eventId - ${this.session.EventId} baseUrl - ${baseUrl} session - ${this.session}, error:${e}`
